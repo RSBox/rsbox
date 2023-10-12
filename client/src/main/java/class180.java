@@ -1,0 +1,65 @@
+public final class class180 {
+	boolean[] field1240;
+	boolean[] field1258;
+	byte field1246;
+	byte[] field1233;
+	byte[] field1242;
+	byte[] field1243;
+	byte[] field1249;
+	byte[] field1263;
+	byte[] field1264;
+	byte[][] field1265;
+	int field1239;
+	int field1241;
+	int field1244;
+	int field1245;
+	int field1247;
+	int field1250;
+	int field1251;
+	int field1252;
+	int field1253;
+	int field1254;
+	int field1255;
+	int field1257;
+	int field1259;
+	int field1267;
+	int field1270;
+	int[] field1256;
+	int[] field1262;
+	int[] field1266;
+	int[] field1269;
+	int[][] field1235;
+	int[][] field1248;
+	int[][] field1268;
+	final int field1234;
+	final int field1236;
+	final int field1237;
+	final int field1238;
+	final int field1260;
+	final int field1261;
+
+	class180() {
+		this.field1261 = 4096;
+		this.field1234 = 16;
+		this.field1260 = 258;
+		this.field1236 = 6;
+		this.field1237 = 50;
+		this.field1238 = 18002;
+		this.field1267 = 0;
+		this.field1254 = 0;
+		this.field1266 = new int[256];
+		this.field1256 = new int[257];
+		this.field1258 = new boolean[256];
+		this.field1240 = new boolean[16];
+		this.field1233 = new byte[256];
+		this.field1242 = new byte[4096];
+		this.field1262 = new int[16];
+		this.field1263 = new byte[18002];
+		this.field1264 = new byte[18002];
+		this.field1265 = new byte[6][258];
+		this.field1248 = new int[6][258];
+		this.field1235 = new int[6][258];
+		this.field1268 = new int[6][258];
+		this.field1269 = new int[6];
+	}
+}

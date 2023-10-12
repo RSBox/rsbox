@@ -1,0 +1,9 @@
+.idea/
+.gradle/
+build/
+out/
+*.jar
+!gradle-wrapper.jar
+data/
+modulus.txt
+jrebel.xml
