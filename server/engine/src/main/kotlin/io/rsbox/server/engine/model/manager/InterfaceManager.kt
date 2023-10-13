@@ -14,7 +14,7 @@ class InterfaceManager(private val player: Player) {
     val gameframe: MutableMap<Component, Component> = mutableMapOf()
 
     fun init() {
-        openGameFrame(GameFrame.Fixed)
+        openGameFrame(GameFrame.Resizable)
     }
 
     fun openGameFrame(gameframe: GameFrame) {

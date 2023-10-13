@@ -1,8 +1,8 @@
 package io.rsbox.server.engine.sync
 
-import io.rsbox.server.engine.sync.player.PlayerPostSyncTask
-import io.rsbox.server.engine.sync.player.PlayerPreSyncTask
-import io.rsbox.server.engine.sync.player.PlayerSyncTask
+import io.rsbox.server.engine.sync.task.PlayerPostSyncTask
+import io.rsbox.server.engine.sync.task.PlayerPreSyncTask
+import io.rsbox.server.engine.sync.task.PlayerSyncTask
 
 class SyncTaskList(
     private val tasks: MutableList<SyncTask> = mutableListOf()

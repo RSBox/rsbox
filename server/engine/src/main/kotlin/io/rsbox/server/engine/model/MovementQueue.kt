@@ -15,8 +15,7 @@ import kotlin.math.sign
 class MovementQueue(val entity: Entity, private val steps: LinkedList<Tile> = LinkedList()) : Deque<Tile> by steps {
 
     private val routeSteps = LinkedList<RouteCoordinates>()
-
-    private val collision = entity.world.collisionMap
+    private val collision get() = entity.world.collision
 
     fun cycle() {
         processRouteSteps()

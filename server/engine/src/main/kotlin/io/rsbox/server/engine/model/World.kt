@@ -4,9 +4,10 @@ import io.rsbox.server.cache.GameCache
 import io.rsbox.server.common.inject
 import io.rsbox.server.config.XteaConfig
 import io.rsbox.server.engine.Engine
-import io.rsbox.server.engine.model.collision.CollisionMap
+import io.rsbox.server.engine.model.map.CollisionMap
 import io.rsbox.server.engine.model.entity.EntityList
 import io.rsbox.server.engine.model.entity.Player
+import io.rsbox.server.engine.model.map.ZoneMap
 import org.tinylog.kotlin.Logger
 
 class World {
@@ -16,7 +17,8 @@ class World {
 
     val players: EntityList<Player> = EntityList(MAX_PLAYERS)
 
-    val collisionMap = CollisionMap()
+    val map = ZoneMap()
+    val collision = CollisionMap()
 
     internal fun load() {
         Logger.info("Loading game world.")
@@ -24,24 +26,26 @@ class World {
         /*
          * Load the game world's map collision.
          */
-        var regionCount = 0
-        XteaConfig.xteas.keys.forEach { regionId ->
-            val mapEntry = cache.mapArchive[regionId]
-            collisionMap.applyCollision(mapEntry)
-            regionCount++
+        var loaded = 0
+        XteaConfig.xteas.forEach { regionId, _ ->
+            val entry = cache.mapArchive[regionId]
+            collision.applyCollision(entry)
+            loaded++
         }
-        Logger.info("Successfully loaded $regionCount region collision maps.")
+        Logger.info("Loaded collision for $loaded regions.")
     }
 
-    fun cycle() {
+    suspend fun cycle() {
 
     }
 
     fun addPlayer(player: Player) {
+        map.getZone(player.tile).addEntity(player)
         players.add(player)
     }
 
     fun removePlayer(player: Player) {
+        map.getZone(player.tile).removeEntity(player)
         players.remove(player)
     }
 

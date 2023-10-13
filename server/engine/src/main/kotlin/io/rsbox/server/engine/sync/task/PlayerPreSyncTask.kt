@@ -1,13 +1,9 @@
-package io.rsbox.server.engine.sync.player
+package io.rsbox.server.engine.sync.task
 
 import io.rsbox.server.common.inject
-import io.rsbox.server.engine.model.Direction
-import io.rsbox.server.engine.model.MovementQueue
-import io.rsbox.server.engine.model.MovementType
 import io.rsbox.server.engine.model.World
 import io.rsbox.server.engine.model.entity.Player
 import io.rsbox.server.engine.sync.SyncTask
-import io.rsbox.server.engine.sync.update.PlayerUpdateFlag
 
 class PlayerPreSyncTask : SyncTask {
 

@@ -1,10 +1,11 @@
-package io.rsbox.server.engine.model.collision
+package io.rsbox.server.engine.model.map
 
 import io.rsbox.server.cache.GameCache
 import io.rsbox.server.cache.map.MapRegionEntry
 import io.rsbox.server.common.inject
 import io.rsbox.server.engine.model.Direction
 import io.rsbox.server.engine.model.GameObject
+import io.rsbox.server.engine.model.World
 import io.rsbox.server.engine.model.coord.Region
 import io.rsbox.server.engine.model.coord.Tile
 import org.rsmod.pathfinder.StepValidator
@@ -18,6 +19,7 @@ import org.rsmod.pathfinder.flag.CollisionFlag.FLOOR_DECORATION
 class CollisionMap(private val flags: ZoneFlags = ZoneFlags()) {
 
     private val cache: GameCache by inject()
+    private val world: World by inject()
 
     fun flags() = flags.flags
 
@@ -50,7 +52,7 @@ class CollisionMap(private val flags: ZoneFlags = ZoneFlags()) {
                         val tile = Tile(baseX + loc.x, baseY + loc.y, loc.level)
                         if(!cache.configArchive.objects.containsKey(loc.id)) return@forEach
                         val gameObject = GameObject(loc.id, tile, loc.shape, loc.rotation)
-                        addObjectCollision(gameObject)
+                        world.map.getZone(gameObject.tile).addObject(gameObject, isDynamic = false)
                     }
                 }
             }

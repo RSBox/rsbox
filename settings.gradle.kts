@@ -6,6 +6,8 @@ plugins {
 
 rootProject.name = "rsbox"
 
+include(":toolbox:cache-type-generator")
+
 include(":client")
 
 include(":server")

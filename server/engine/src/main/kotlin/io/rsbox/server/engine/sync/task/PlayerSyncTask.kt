@@ -1,4 +1,4 @@
-package io.rsbox.server.engine.sync.player
+package io.rsbox.server.engine.sync.task
 
 import io.netty.buffer.ByteBuf
 import io.rsbox.server.common.inject

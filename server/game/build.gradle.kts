@@ -15,14 +15,18 @@ dependencies {
 
 subprojects {
     dependencies {
-        implementation(project(":server:common"))
-        implementation(project(":server:util"))
+        compileOnly(project(":server:common"))
+        compileOnly(project(":server:util"))
         implementation(project(":server:script"))
-        implementation(project(":server:logger"))
-        implementation(project(":server:engine"))
-        implementation(project(":server:cache"))
-        implementation(project(":server:config"))
+        compileOnly(project(":server:logger"))
+        compileOnly(project(":server:engine"))
+        compileOnly(project(":server:cache"))
+        compileOnly(project(":server:config"))
         implementation(kotlin("scripting-common"))
         implementation(kotlin("script-runtime"))
+        project(":server:game").dependencyProject.subprojects.forEach { subproject ->
+            if(subproject.name == project.name) return@forEach
+            compileOnly(subproject)
+        }
     }
 }

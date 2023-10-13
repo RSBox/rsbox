@@ -37,6 +37,6 @@ abstract class Entity {
 
     abstract suspend fun cycle()
 
-    fun canTravel(tile: Tile, direction: Direction) = world.collisionMap.canTravel(tile, direction)
+    fun canTravel(tile: Tile, direction: Direction) = world.collision.canTravel(tile, direction)
 
 }

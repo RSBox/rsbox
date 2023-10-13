@@ -21,8 +21,6 @@ class MapArchive(private val entryMap: MutableMap<Int, MapRegionEntry> = mutable
         return entryMap[key]!!
     }
 
-
-
     companion object {
 
         const val id = 5

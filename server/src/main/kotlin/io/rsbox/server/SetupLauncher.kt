@@ -1,20 +1,28 @@
 package io.rsbox.server
 
+import dev.reimer.progressbar.ktx.progressBar
 import io.rsbox.server.cache.GameCache
 import io.rsbox.server.common.get
 import io.rsbox.server.config.ServerConfig
 import io.rsbox.server.config.XteaConfig
 import io.rsbox.server.util.security.RSA
+import me.tongfei.progressbar.ProgressBar
+import me.tongfei.progressbar.ProgressBarBuilder
+import me.tongfei.progressbar.ProgressBarStyle
 import org.koin.core.context.startKoin
 import org.tinylog.kotlin.Logger
 import java.io.File
+import java.net.URI
 import java.net.URL
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.util.zip.ZipFile
 import kotlin.system.exitProcess
 
 object SetupLauncher {
 
-    private const val CACHE_URL = "https://archive.openrs2.org/caches/runescape/1551/disk.zip"
+    private const val CACHE_URL = "https://archive.openrs2.org/caches/runescape/1563/disk.zip"
     private const val XTEAS_URL = "https://archive.openrs2.org/caches/runescape/1551/keys.json"
 
     private val DATA_DIR = File("data/")
@@ -62,10 +70,15 @@ object SetupLauncher {
     private fun downloadCacheAndXteas() {
         Logger.info("Downloading game cache files...")
 
-        val file = File.createTempFile("tmp-cache", ".zip")
-        file.deleteOnExit()
-        val cacheBytes = URL(CACHE_URL).openConnection().getInputStream().use { it.readBytes() }
-        file.writeBytes(cacheBytes)
+        val file = File(System.getProperty("user.home") + "/tmp/cache.zip")
+        file.parentFile.mkdirs()
+        if(file.exists()) file.deleteRecursively()
+
+        val client = HttpClient.newHttpClient()
+        val request = HttpRequest.newBuilder()
+            .uri(URI.create(CACHE_URL))
+            .GET().build()
+        client.send(request, HttpResponse.BodyHandlers.ofFile(file.toPath()))
 
         Logger.info("Extracting RSBox cache.zip files.")
 
@@ -73,7 +86,8 @@ object SetupLauncher {
             zip.entries().asSequence().forEach { entry ->
                 if(!entry.isDirectory) {
                     zip.getInputStream(entry).use { input ->
-                        File("data/cache/${entry.name}").outputStream().use { output ->
+                        val f = File("data/${entry.name}")
+                         f.outputStream().use { output ->
                             Logger.info("Extracting file: ${entry.name}.")
                             input.copyTo(output)
                         }
@@ -81,6 +95,8 @@ object SetupLauncher {
                 }
             }
         }
+
+        file.delete()
 
         Logger.info("Downloading XTEA encryption keys...")
 
@@ -110,5 +126,25 @@ object SetupLauncher {
     private fun createRsa() {
         Logger.info("Creating RSA encryption keys.")
         RSA.generateNewKeyPair()
+    }
+
+    private fun printProgressBar(current: Int, total: Int) {
+        val barWidth = 50
+        val progress = (current.toDouble() / total * barWidth).toInt()
+        val progressBar = StringBuilder()
+
+        progressBar.append("[")
+        for (i in 0 until barWidth) {
+            if (i < progress) {
+                progressBar.append("=")
+            } else if (i == progress) {
+                progressBar.append(">")
+            } else {
+                progressBar.append(" ")
+            }
+        }
+        progressBar.append("]")
+
+        print("\r$progressBar $current%")
     }
 }

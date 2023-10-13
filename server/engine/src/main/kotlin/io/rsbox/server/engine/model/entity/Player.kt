@@ -98,7 +98,7 @@ class Player internal constructor(val session: Session) : Entity() {
 
         private val world: World by inject()
 
-        private val pathFinder = SmartPathFinder(flags = world.collisionMap.flags(), defaultFlag = 0x0, useRouteBlockerFlags = false)
+        private val pathFinder = SmartPathFinder(flags = world.collision.flags(), defaultFlag = 0x0, useRouteBlockerFlags = false)
 
         fun create(request: LoginRequest): Player {
             val player = Player(request.session)

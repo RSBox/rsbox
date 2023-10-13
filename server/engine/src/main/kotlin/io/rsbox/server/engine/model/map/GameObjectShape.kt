@@ -1,4 +1,4 @@
-package io.rsbox.server.engine.model.collision
+package io.rsbox.server.engine.model.map
 
 object GameObjectShape {
 

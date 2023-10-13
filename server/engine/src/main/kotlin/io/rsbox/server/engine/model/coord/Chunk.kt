@@ -4,12 +4,18 @@ package io.rsbox.server.engine.model.coord
 value class Chunk(val packed: Int) {
 
     constructor(x: Int, y: Int, level: Int = 0) : this(
-        (x and 0x7FF) or ((y and 0x7FF) shl 11) or (level shl 22)
+        (x and 0x7FF) or ((y and 0x7FF) shl 11) or ((level and 0x3) shl 22)
     )
 
     val x get() = packed and 0x7FF
     val y get() = (packed shr 11) and 0x7FF
     val level get() = (packed shr 22) and 0x3
+
+    fun translate(dx: Int = 0, dy: Int = 0, dlevel: Int = 0) = Chunk(
+        x + dx,
+        y + dy,
+        level + dlevel
+    )
 
     fun toTile() = Tile(
         x * SIZE,
