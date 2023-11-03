@@ -1,6 +1,6 @@
-public class class119 {
-	public static int[] field785;
-	public static int[] field786;
+public class PlayerVarDomain {
+	public static int[] serverVars;
+	public static int[] clientVars;
 	static class183 field787;
 	static int[] field784;
 
@@ -13,8 +13,8 @@ public class class119 {
 			var0 += var0;
 		}
 
-		field785 = new int[5000];
-		field786 = new int[5000];
+		serverVars = new int[5000];
+		clientVars = new int[5000];
 	}
 
 	public static int method580(int var0) {
@@ -23,7 +23,7 @@ public class class119 {
 		int var4 = var2.field2328;
 		int var5 = var2.field2329;
 		int var6 = field784[var5 - var4];
-		return field786[var3] >> var4 & var6;
+		return clientVars[var3] >> var4 & var6;
 	}
 
 	public static void method581(int var0, int var1) {
@@ -37,6 +37,6 @@ public class class119 {
 		}
 
 		var7 <<= var5;
-		field786[var4] = field786[var4] & ~var7 | var1 << var5 & var7;
+		clientVars[var4] = clientVars[var4] & ~var7 | var1 << var5 & var7;
 	}
 }

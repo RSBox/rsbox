@@ -3,7 +3,9 @@ package io.rsbox.server.engine.model.ui
 import io.rsbox.server.cache.GameCache
 import io.rsbox.server.cache.config.EnumConfig
 import io.rsbox.server.common.inject
-import io.rsbox.server.engine.api.ui.*
+import io.rsbox.server.engine.api.component
+import io.rsbox.server.engine.api.interf
+import io.rsbox.server.engine.api.*
 
 @Suppress("UNCHECKED_CAST")
 sealed class GameFrame(val toplevel: UserInterface, enum: Int) {

@@ -66,7 +66,7 @@ public class class208 {
 			var11 = interfaceConfigs.method345(var1);
 			if (var11 != null && null != var11.field3576 && var11.field3576[0][0] == 5) {
 				var12 = var11.field3576[0][1];
-				class119.field786[var12] = 1 - class119.field786[var12];
+				PlayerVarDomain.clientVars[var12] = 1 - PlayerVarDomain.clientVars[var12];
 				Client.method1329(var12);
 			}
 		}
@@ -638,8 +638,8 @@ public class class208 {
 			var11 = interfaceConfigs.method345(var1);
 			if (var11 != null && null != var11.field3576 && var11.field3576[0][0] == 5) {
 				var12 = var11.field3576[0][1];
-				if (class119.field786[var12] != var11.field3649[0]) {
-					class119.field786[var12] = var11.field3649[0];
+				if (PlayerVarDomain.clientVars[var12] != var11.field3649[0]) {
+					PlayerVarDomain.clientVars[var12] = var11.field3649[0];
 					Client.method1329(var12);
 				}
 			}

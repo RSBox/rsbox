@@ -1,8 +1,9 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package io.rsbox.server.engine.net.game
+package io.rsbox.server.engine.net.packet
 
 import io.github.classgraph.ClassGraph
+import io.rsbox.server.engine.net.game.*
 import org.tinylog.kotlin.Logger
 import kotlin.reflect.KClass
 import kotlin.reflect.full.companionObjectInstance

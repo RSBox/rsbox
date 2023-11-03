@@ -1,4 +1,6 @@
-package io.rsbox.server.engine.api.ui
+@file:Suppress("UnusedReceiverParameter")
+
+package io.rsbox.server.engine.api
 
 import io.rsbox.server.engine.model.ui.UserInterface
 

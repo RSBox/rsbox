@@ -2,6 +2,9 @@ package io.rsbox.server.engine.model.entity
 
 import io.rsbox.server.common.inject
 import io.rsbox.server.config.ServerConfig
+import io.rsbox.server.engine.event.EventBus.publish
+import io.rsbox.server.engine.event.PlayerLoginEvent
+import io.rsbox.server.engine.event.PlayerLogoutEvent
 import io.rsbox.server.engine.model.Appearance
 import io.rsbox.server.engine.model.Direction
 import io.rsbox.server.engine.model.World
@@ -9,10 +12,12 @@ import io.rsbox.server.engine.model.coord.Tile
 import io.rsbox.server.engine.model.manager.GpiManager
 import io.rsbox.server.engine.model.manager.InterfaceManager
 import io.rsbox.server.engine.model.manager.SceneManager
+import io.rsbox.server.engine.model.manager.VarpManager
 import io.rsbox.server.engine.model.ui.DisplayMode
 import io.rsbox.server.engine.net.Session
 import io.rsbox.server.engine.net.game.Packet
 import io.rsbox.server.engine.net.login.LoginRequest
+import io.rsbox.server.engine.net.packet.server.RunClientScript
 import io.rsbox.server.engine.sync.update.PlayerUpdateFlag
 import org.rsmod.pathfinder.SmartPathFinder
 import org.rsmod.pathfinder.collision.CollisionStrategies
@@ -30,6 +35,7 @@ class Player internal constructor(val session: Session) : Entity() {
     val gpi = GpiManager(this)
     val scene = SceneManager(this)
     val ui = InterfaceManager(this)
+    val vars = VarpManager(this)
 
     override val sizeX = 1
     override val sizeY = 1
@@ -65,13 +71,14 @@ class Player internal constructor(val session: Session) : Entity() {
         Logger.info("[$username] has connected to the server.")
         this.init()
         updateFlags.add(PlayerUpdateFlag.APPEARANCE)
-        println("Hello")
+        publish(PlayerLoginEvent(this))
     }
 
     fun logout() {
         Logger.info("[$username] has disconnected from the server.")
         world.removePlayer(this)
         session.ctx.disconnect()
+        publish(PlayerLogoutEvent(this))
     }
 
     fun isOnline() = world.players.contains(this)
@@ -93,6 +100,10 @@ class Player internal constructor(val session: Session) : Entity() {
     fun write(packet: Packet) = session.write(packet)
     fun writeAndFlush(packet: Packet) = session.writeAndFlush(packet)
     fun flush() = session.flush()
+
+    fun runClientScript(id: Int, vararg args: Any) {
+        write(RunClientScript(id, *args))
+    }
 
     companion object {
 

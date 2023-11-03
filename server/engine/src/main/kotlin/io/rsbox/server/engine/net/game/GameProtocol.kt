@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf
 import io.rsbox.server.engine.net.Message
 import io.rsbox.server.engine.net.Protocol
 import io.rsbox.server.engine.net.Session
+import io.rsbox.server.engine.net.packet.GamePackets
 import io.rsbox.server.util.buffer.toJagBuf
 import org.tinylog.kotlin.Logger
 import kotlin.reflect.KClass

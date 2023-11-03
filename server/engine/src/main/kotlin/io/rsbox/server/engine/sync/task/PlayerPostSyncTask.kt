@@ -5,7 +5,6 @@ import io.rsbox.server.engine.model.World
 import io.rsbox.server.engine.model.entity.Player
 import io.rsbox.server.engine.model.MovementType
 import io.rsbox.server.engine.sync.SyncTask
-import org.tinylog.kotlin.Logger
 
 class PlayerPostSyncTask : SyncTask {
 
@@ -13,6 +12,7 @@ class PlayerPostSyncTask : SyncTask {
 
     override suspend fun execute() {
         world.players.forEachEntry { player ->
+            player.vars.sync()
             player.updateFlags.clear()
             player.resetMovement()
         }
@@ -31,7 +31,6 @@ class PlayerPostSyncTask : SyncTask {
             if(prevZone != curZone) {
                 prevZone.removeEntity(this)
                 curZone.addEntity(this)
-                Logger.info("Enter new chunk!")
             }
         }
     }

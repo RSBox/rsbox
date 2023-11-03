@@ -122,9 +122,9 @@ public class class156 extends class292 {
 	public final class156 method821() {
 		int var2 = -1;
 		if (this.field1079 != -1) {
-			var2 = class119.method580(this.field1079);
+			var2 = PlayerVarDomain.method580(this.field1079);
 		} else if (this.field1080 != -1) {
-			var2 = class119.field786[this.field1080];
+			var2 = PlayerVarDomain.clientVars[this.field1080];
 		}
 
 		int var3;

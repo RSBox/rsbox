@@ -374,9 +374,9 @@ public class class73 extends class292 {
 	public final class73 method363() {
 		int var2 = -1;
 		if (this.field515 != -1) {
-			var2 = class119.method580(this.field515);
+			var2 = PlayerVarDomain.method580(this.field515);
 		} else if (this.field503 != -1) {
-			var2 = class119.field786[this.field503];
+			var2 = PlayerVarDomain.clientVars[this.field503];
 		}
 
 		int var3;
@@ -395,9 +395,9 @@ public class class73 extends class292 {
 		} else {
 			int var2 = -1;
 			if (this.field515 != -1) {
-				var2 = class119.method580(this.field515);
+				var2 = PlayerVarDomain.method580(this.field515);
 			} else if (this.field503 != -1) {
-				var2 = class119.field786[this.field503];
+				var2 = PlayerVarDomain.clientVars[this.field503];
 			}
 
 			if (var2 >= 0 && var2 < this.field477.length) {

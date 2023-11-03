@@ -3178,8 +3178,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					for (toComponent = 0; toComponent < class319.field2324; ++toComponent) {
 						class319 var91 = class319.method1579(toComponent);
 						if (null != var91) {
-							class119.field785[toComponent] = 0;
-							class119.field786[toComponent] = 0;
+							PlayerVarDomain.serverVars[toComponent] = 0;
+							PlayerVarDomain.clientVars[toComponent] = 0;
 						}
 					}
 
@@ -3738,7 +3738,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				}
 
 				String var24;
-				if (ServerPacket.field3184 == var1.serverPacket) {
+				if (ServerPacket.RUN_CLIENTSCRIPT == var1.serverPacket) {
 					var24 = var4.readStringOrNull();
 					Object[] var87 = new Object[var24.length() + 1];
 
@@ -3901,12 +3901,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					return true;
 				}
 
-				if (ServerPacket.field3213 == var1.serverPacket) {
-					toComponent = var4.readUnsignedShortLE();
-					byte var84 = var4.readByte();
-					class119.field785[toComponent] = var84;
-					if (var84 != class119.field786[toComponent]) {
-						class119.field786[toComponent] = var84;
+				if (ServerPacket.VARP_SMALL == var1.serverPacket) {
+					toComponent = var4.readUnsignedShortLE(); // Varp id
+					byte var84 = var4.readByte(); // varp value
+					PlayerVarDomain.serverVars[toComponent] = var84;
+					if (var84 != PlayerVarDomain.clientVars[toComponent]) {
+						PlayerVarDomain.clientVars[toComponent] = var84;
 					}
 
 					method1329(toComponent);
@@ -4060,9 +4060,9 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					var27 = var4.readUnsignedByte() == 1;
 					if (var27) {
 						class101.field660 = class38.method108() - var4.readLong();
-						class119.field787 = new class183(var4, true);
+						PlayerVarDomain.field787 = new class183(var4, true);
 					} else {
-						class119.field787 = null;
+						PlayerVarDomain.field787 = null;
 					}
 
 					field2056 = field1977;
@@ -4666,12 +4666,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					return true;
 				}
 
-				if (ServerPacket.field3264 == var1.serverPacket) {
-					toComponent = var4.readUnsignedIntME();
-					fromComponent = var4.readUnsignedShortLE();
-					class119.field785[fromComponent] = toComponent;
-					if (class119.field786[fromComponent] != toComponent) {
-						class119.field786[fromComponent] = toComponent;
+				if (ServerPacket.VARP_LARGE == var1.serverPacket) {
+					toComponent = var4.readUnsignedIntME(); // varp value
+					fromComponent = var4.readUnsignedShortLE(); // varp id
+					PlayerVarDomain.serverVars[fromComponent] = toComponent;
+					if (PlayerVarDomain.clientVars[fromComponent] != toComponent) {
+						PlayerVarDomain.clientVars[fromComponent] = toComponent;
 					}
 
 					method1329(fromComponent);
@@ -4917,9 +4917,9 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				}
 
 				if (var1.serverPacket == ServerPacket.field3258) {
-					for (toComponent = 0; toComponent < class119.field786.length; ++toComponent) {
-						if (class119.field785[toComponent] != class119.field786[toComponent]) {
-							class119.field786[toComponent] = class119.field785[toComponent];
+					for (toComponent = 0; toComponent < PlayerVarDomain.clientVars.length; ++toComponent) {
+						if (PlayerVarDomain.serverVars[toComponent] != PlayerVarDomain.clientVars[toComponent]) {
+							PlayerVarDomain.clientVars[toComponent] = PlayerVarDomain.serverVars[toComponent];
 							method1329(toComponent);
 							field2028[++field1944 - 1 & 31] = toComponent;
 						}
@@ -6111,8 +6111,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		for (var1 = 0; var1 < class319.field2324; ++var1) {
 			class319 var4 = class319.method1579(var1);
 			if (var4 != null) {
-				class119.field785[var1] = 0;
-				class119.field786[var1] = 0;
+				PlayerVarDomain.serverVars[var1] = 0;
+				PlayerVarDomain.clientVars[var1] = 0;
 			}
 		}
 
@@ -6155,7 +6155,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			field2026[var1] = new class480();
 		}
 
-		class119.field787 = null;
+		PlayerVarDomain.field787 = null;
 		field1928 = false;
 	}
 
@@ -11560,7 +11560,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 
 					if (var7 == 5) {
-						var8 = class119.field786[var3[var5++]];
+						var8 = PlayerVarDomain.clientVars[var3[var5++]];
 					}
 
 					if (var7 == 6) {
@@ -11568,7 +11568,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 
 					if (var7 == 7) {
-						var8 = class119.field786[var3[var5++]] * 100 / 46875;
+						var8 = PlayerVarDomain.clientVars[var3[var5++]] * 100 / 46875;
 					}
 
 					if (var7 == 8) {
@@ -11607,14 +11607,14 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 
 					if (var7 == 13) {
-						var10 = class119.field786[var3[var5++]];
+						var10 = PlayerVarDomain.clientVars[var3[var5++]];
 						int var15 = var3[var5++];
 						var8 = (var10 & 1 << var15) != 0 ? 1 : 0;
 					}
 
 					if (var7 == 14) {
 						var10 = var3[var5++];
-						var8 = class119.method580(var10);
+						var8 = PlayerVarDomain.method580(var10);
 					}
 
 					if (var7 == 15) {
@@ -12673,7 +12673,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		class218.method1007();
 		int var2 = class319.method1579(var0).field2325;
 		if (var2 != 0) {
-			int var3 = class119.field786[var0];
+			int var3 = PlayerVarDomain.clientVars[var0];
 			if (var2 == 1) {
 				if (var3 == 1) {
 					method1378(0.9D);

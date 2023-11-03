@@ -5,7 +5,7 @@ import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.rsbox.server.config.ServerConfig
-import io.rsbox.server.engine.net.game.GamePackets
+import io.rsbox.server.engine.net.packet.GamePackets
 import io.rsbox.server.engine.net.pipeline.NetworkChannelInitializer
 import org.tinylog.kotlin.Logger
 import java.net.InetSocketAddress

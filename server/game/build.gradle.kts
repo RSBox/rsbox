@@ -24,9 +24,5 @@ subprojects {
         compileOnly(project(":server:config"))
         implementation(kotlin("scripting-common"))
         implementation(kotlin("script-runtime"))
-        project(":server:game").dependencyProject.subprojects.forEach { subproject ->
-            if(subproject.name == project.name) return@forEach
-            compileOnly(subproject)
-        }
     }
 }

@@ -152,10 +152,10 @@ public class class440 {
 								field2955[++field2956 - 1] = var8[var6];
 							} else if (var26 == 1) {
 								var14 = var8[var6];
-								field2955[++field2956 - 1] = class119.field786[var14];
+								field2955[++field2956 - 1] = PlayerVarDomain.clientVars[var14];
 							} else if (var26 == 2) {
 								var14 = var8[var6];
-								class119.field786[var14] = field2955[--field2956];
+								PlayerVarDomain.clientVars[var14] = field2955[--field2956];
 								Client.method1329(var14);
 							} else if (var26 == 3) {
 								field2965[++class176.field1224 - 1] = var1.field565[var6];
@@ -196,10 +196,10 @@ public class class440 {
 								class396.field2682 = var36.field3289;
 							} else if (var26 == 25) {
 								var14 = var8[var6];
-								field2955[++field2956 - 1] = class119.method580(var14);
+								field2955[++field2956 - 1] = PlayerVarDomain.method580(var14);
 							} else if (var26 == 27) {
 								var14 = var8[var6];
-								class119.method581(var14, field2955[--field2956]);
+								PlayerVarDomain.method581(var14, field2955[--field2956]);
 							} else if (var26 == 31) {
 								field2956 -= 2;
 								if (field2955[field2956] <= field2955[1 + field2956]) {
@@ -3268,15 +3268,15 @@ public class class440 {
 				boolean var12;
 				if (var0 == 3914) {
 					var12 = field2955[--field2956] == 1;
-					if (class119.field787 != null) {
-						class119.field787.method930(class183.field1276, var12);
+					if (PlayerVarDomain.field787 != null) {
+						PlayerVarDomain.field787.method930(class183.field1276, var12);
 					}
 
 					return 1;
 				} else if (var0 == 3915) {
 					var12 = field2955[--field2956] == 1;
-					if (class119.field787 != null) {
-						class119.field787.method930(class183.field1273, var12);
+					if (PlayerVarDomain.field787 != null) {
+						PlayerVarDomain.field787.method930(class183.field1273, var12);
 					}
 
 					return 1;
@@ -3284,49 +3284,49 @@ public class class440 {
 					field2956 -= 2;
 					var12 = field2955[field2956] == 1;
 					boolean var13 = field2955[1 + field2956] == 1;
-					if (class119.field787 != null) {
+					if (PlayerVarDomain.field787 != null) {
 						Client.field1994.field540 = var13;
-						class119.field787.method930(Client.field1994, var12);
+						PlayerVarDomain.field787.method930(Client.field1994, var12);
 					}
 
 					return 1;
 				} else if (var0 == 3917) {
 					var12 = field2955[--field2956] == 1;
-					if (class119.field787 != null) {
-						class119.field787.method930(class183.field1274, var12);
+					if (PlayerVarDomain.field787 != null) {
+						PlayerVarDomain.field787.method930(class183.field1274, var12);
 					}
 
 					return 1;
 				} else if (var0 == 3918) {
 					var12 = field2955[--field2956] == 1;
-					if (class119.field787 != null) {
-						class119.field787.method930(class183.field1277, var12);
+					if (PlayerVarDomain.field787 != null) {
+						PlayerVarDomain.field787.method930(class183.field1277, var12);
 					}
 
 					return 1;
 				} else if (var0 == 3919) {
-					field2955[++field2956 - 1] = null == class119.field787 ? 0 : class119.field787.field1275.size();
+					field2955[++field2956 - 1] = null == PlayerVarDomain.field787 ? 0 : PlayerVarDomain.field787.field1275.size();
 					return 1;
 				} else {
 					class70 var5;
 					if (var0 == 3920) {
 						var4 = field2955[--field2956];
-						var5 = (class70)class119.field787.field1275.get(var4);
+						var5 = (class70) PlayerVarDomain.field787.field1275.get(var4);
 						field2955[++field2956 - 1] = var5.field446;
 						return 1;
 					} else if (var0 == 3921) {
 						var4 = field2955[--field2956];
-						var5 = (class70)class119.field787.field1275.get(var4);
+						var5 = (class70) PlayerVarDomain.field787.field1275.get(var4);
 						field2965[++class176.field1224 - 1] = var5.method334();
 						return 1;
 					} else if (var0 == 3922) {
 						var4 = field2955[--field2956];
-						var5 = (class70)class119.field787.field1275.get(var4);
+						var5 = (class70) PlayerVarDomain.field787.field1275.get(var4);
 						field2965[++class176.field1224 - 1] = var5.method335();
 						return 1;
 					} else if (var0 == 3923) {
 						var4 = field2955[--field2956];
-						var5 = (class70)class119.field787.field1275.get(var4);
+						var5 = (class70) PlayerVarDomain.field787.field1275.get(var4);
 						long var6 = class38.method108() - class101.field660 - var5.field442;
 						int var8 = (int)(var6 / 3600000L);
 						int var9 = (int)((var6 - (long)(var8 * 3600000)) / 60000L);
@@ -3336,17 +3336,17 @@ public class class440 {
 						return 1;
 					} else if (var0 == 3924) {
 						var4 = field2955[--field2956];
-						var5 = (class70)class119.field787.field1275.get(var4);
+						var5 = (class70) PlayerVarDomain.field787.field1275.get(var4);
 						field2955[++field2956 - 1] = var5.field443.field3372;
 						return 1;
 					} else if (var0 == 3925) {
 						var4 = field2955[--field2956];
-						var5 = (class70)class119.field787.field1275.get(var4);
+						var5 = (class70) PlayerVarDomain.field787.field1275.get(var4);
 						field2955[++field2956 - 1] = var5.field443.field3374;
 						return 1;
 					} else if (var0 == 3926) {
 						var4 = field2955[--field2956];
-						var5 = (class70)class119.field787.field1275.get(var4);
+						var5 = (class70) PlayerVarDomain.field787.field1275.get(var4);
 						field2955[++field2956 - 1] = var5.field443.field3373;
 						return 1;
 					} else if (var0 == 3939) {
