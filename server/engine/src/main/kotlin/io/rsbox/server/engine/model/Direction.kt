@@ -2,7 +2,7 @@ package io.rsbox.server.engine.model
 
 import io.rsbox.server.engine.model.coord.Tile
 
-enum class Direction(val value: Int, val playerValue: Int) {
+enum class Direction(val npcValue: Int, val playerValue: Int) {
 
     NONE(-1, -1),
     NORTH_WEST(0, 5),
@@ -45,7 +45,7 @@ enum class Direction(val value: Int, val playerValue: Int) {
         val DELTA_X = intArrayOf(-1, 0, 1, -1, 1, -1, 0, 1)
         val DELTA_Y = intArrayOf(-1, -1, -1, 0, 0, 1, 1, 1)
 
-        fun fromValue(value: Int) = entries.firstOrNull { it.value == value }
+        fun fromValue(value: Int) = entries.firstOrNull { it.npcValue == value }
 
         fun between(from: Tile, to: Tile): Direction {
             val dx = to.x - from.x

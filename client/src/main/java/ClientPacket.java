@@ -48,7 +48,7 @@ public class ClientPacket implements class477 {
 	public static final ClientPacket field3096;
 	public static final ClientPacket field3097;
 	public static final ClientPacket field3098;
-	public static final ClientPacket field3099;
+	public static final ClientPacket CLIENT_CHEAT;
 	public static final ClientPacket field3100;
 	public static final ClientPacket field3101;
 	public static final ClientPacket field3102;
@@ -155,7 +155,7 @@ public class ClientPacket implements class477 {
 		field3131 = new ClientPacket(51, 8);
 		field3061 = new ClientPacket(52, -1);
 		field3098 = new ClientPacket(53, 3);
-		field3099 = new ClientPacket(54, -1);
+		CLIENT_CHEAT = new ClientPacket(54, -1);
 		field3081 = new ClientPacket(55, 0);
 		field3101 = new ClientPacket(56, 4);
 		field3102 = new ClientPacket(57, -1);

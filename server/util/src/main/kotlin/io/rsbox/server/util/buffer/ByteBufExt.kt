@@ -49,22 +49,89 @@ fun ByteBuf.writeJagString(value: String, charset: Charset = Charsets.CP_1252): 
     return this
 }
 
-fun ByteBuf.readIncrShortSmart(): Int {
-    var total = 0
-    var cur = readUnsignedShortSmart()
-    while (cur == Short.MAX_VALUE) {
-        total += Short.MAX_VALUE.toInt()
-        cur = readUnsignedShortSmart()
+fun ByteBuf.readIncrUnsignedShortSmart(): Int {
+    var value = 0
+    var curr = readUnsignedShortSmart()
+    while (curr == 0x7FFF) {
+        value += curr
+        curr = readUnsignedShortSmart()
     }
-    total += cur
-    return total
+    value += curr
+    return value
 }
 
-fun ByteBuf.readUnsignedShortSmart(): Short {
-    val peek = getByte(readerIndex()).toInt()
-    return if (peek >= 0) {
-        readUnsignedByte()
+fun ByteBuf.readShortSmart(): Int {
+    val peek = getUnsignedByte(readerIndex()).toInt()
+    return if ((peek and 0x80) == 0) {
+        readUnsignedByte().toInt() - 0x40
     } else {
-        (readUnsignedShort() and Short.MAX_VALUE.toInt()).toShort()
+        (readUnsignedShort() and 0x7FFF) - 0x4000
     }
+}
+
+fun ByteBuf.writeShortSmart(v: Int): ByteBuf {
+    when (v) {
+        in -0x40..0x3F -> writeByte(v + 0x40)
+        in -0x4000..0x3FFF -> writeShort(0x8000 or (v + 0x4000))
+        else -> throw IllegalArgumentException()
+    }
+
+    return this
+}
+
+fun ByteBuf.readUnsignedShortSmart(): Int {
+    val peek = getUnsignedByte(readerIndex()).toInt()
+    return if ((peek and 0x80) == 0) {
+        readUnsignedByte().toInt()
+    } else {
+        readUnsignedShort() and 0x7FFF
+    }
+}
+
+fun ByteBuf.writeUnsignedShortSmart(v: Int): ByteBuf {
+    when (v) {
+        in 0..0x7F -> writeByte(v)
+        in 0..0x7FFF -> writeShort(0x8000 or v)
+        else -> throw IllegalArgumentException()
+    }
+
+    return this
+}
+
+fun ByteBuf.readIntSmart(): Int {
+    val peek = getUnsignedByte(readerIndex()).toInt()
+    return if ((peek and 0x80) == 0) {
+        readUnsignedShort() - 0x4000
+    } else {
+        (readInt() and 0x7FFFFFFF) - 0x40000000
+    }
+}
+
+fun ByteBuf.writeIntSmart(v: Int): ByteBuf {
+    when (v) {
+        in -0x4000..0x3FFF -> writeShort(v + 0x4000)
+        in -0x40000000..0x3FFFFFFF -> writeInt(0x80000000.toInt() or (v + 0x40000000))
+        else -> throw IllegalArgumentException()
+    }
+
+    return this
+}
+
+fun ByteBuf.readUnsignedIntSmart(): Int {
+    val peek = getUnsignedByte(readerIndex()).toInt()
+    return if ((peek and 0x80) == 0) {
+        readUnsignedShort()
+    } else {
+        readInt() and 0x7FFFFFFF
+    }
+}
+
+fun ByteBuf.writeUnsignedIntSmart(v: Int): ByteBuf {
+    when (v) {
+        in 0..0x7FFF -> writeShort(v)
+        in 0..0x7FFFFFFF -> writeInt(0x80000000.toInt() or v)
+        else -> throw IllegalArgumentException()
+    }
+
+    return this
 }

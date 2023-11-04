@@ -80,7 +80,7 @@ public class class380 {
 	public static String method1792(Buffer var0) {
 		String var2;
 		try {
-			int var3 = var0.method2522();
+			int var3 = var0.readUnsignedSmartByteShort();
 			if (var3 > 32767) {
 				var3 = 32767;
 			}

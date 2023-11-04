@@ -1,5 +1,3 @@
-@file:Suppress("NO_TAIL_CALLS_FOUND")
-
 package io.rsbox.server.cache
 
 import io.netty.buffer.ByteBuf
@@ -7,7 +5,7 @@ import io.rsbox.server.cache.map.MapRegionEntry
 import io.rsbox.server.cache.map.MapRegionLocation
 import io.rsbox.server.cache.map.MapRegionTerrain
 import io.rsbox.server.config.XteaConfig
-import io.rsbox.server.util.buffer.readIncrShortSmart
+import io.rsbox.server.util.buffer.readIncrUnsignedShortSmart
 import io.rsbox.server.util.buffer.readUnsignedShortSmart
 import org.openrs2.crypto.SymmetricKey
 import org.tinylog.kotlin.Logger
@@ -98,7 +96,7 @@ class MapArchive(private val entryMap: MutableMap<Int, MapRegionEntry> = mutable
         }
 
         private tailrec fun ByteBuf.loadLocation(entry: MapRegionEntry, locId: Int = -1) {
-            val offset = readIncrShortSmart()
+            val offset = readIncrUnsignedShortSmart()
             if(offset == 0) return
             loadLocationCollision(entry, locId + offset, 0)
             return loadLocation(entry, locId + offset)

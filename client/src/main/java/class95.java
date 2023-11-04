@@ -311,18 +311,18 @@ public class class95 {
 		}
 
 		for (int var3 = 0; var3 < 10; ++var3) {
-			int var4 = var1.method2522();
+			int var4 = var1.readUnsignedSmartByteShort();
 			if (var4 == 0) {
 				break;
 			}
 
 			this.field613[var3] = var4;
 			this.field614[var3] = var1.method2517();
-			this.field629[var3] = var1.method2522();
+			this.field629[var3] = var1.readUnsignedSmartByteShort();
 		}
 
-		this.field616 = var1.method2522();
-		this.field623 = var1.method2522();
+		this.field616 = var1.readUnsignedSmartByteShort();
+		this.field623 = var1.readUnsignedSmartByteShort();
 		this.field620 = var1.readUnsignedShort();
 		this.field619 = var1.readUnsignedShort();
 		this.field618 = new class517();

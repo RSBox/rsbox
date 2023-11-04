@@ -1,9 +1,8 @@
-package io.rsbox.server.engine.sync.update
+package io.rsbox.server.engine.model.entity.update
 
 import io.rsbox.server.engine.model.entity.Player
 import io.rsbox.server.util.buffer.JagByteBuf
 import io.rsbox.server.util.buffer.NEG
-import io.rsbox.server.util.buffer.SUB
 import io.rsbox.server.util.buffer.toJagBuf
 import kotlin.math.max
 
@@ -57,7 +56,7 @@ class PlayerUpdateFlag(mask: Int, order: Int, val encode: JagByteBuf.(Player) ->
         }
 
         val MOVEMENT = PlayerUpdateFlag(mask = 0x2000, order = 14) { player ->
-            writeByte(player.movementType.id)
+            writeByte(if(player.movement.teleported) 127 else if(player.movement.stepDirection?.runDirection != null) 2 else 1)
         }
     }
 }

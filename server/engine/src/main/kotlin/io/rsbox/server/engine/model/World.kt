@@ -27,9 +27,9 @@ class World {
          * Load the game world's map collision.
          */
         var loaded = 0
-        XteaConfig.xteas.forEach { regionId, _ ->
-            val entry = cache.mapArchive[regionId]
-            collision.applyCollision(entry)
+        for ((regionId, _) in XteaConfig.xteas) {
+            val mapEntry = cache.mapArchive[regionId]
+            collision.applyCollision(mapEntry)
             loaded++
         }
         Logger.info("Loaded collision for $loaded regions.")

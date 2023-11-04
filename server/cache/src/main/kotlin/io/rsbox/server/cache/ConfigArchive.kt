@@ -8,7 +8,8 @@ class ConfigArchive(
     val varcs: Map<Int, VarClientConfig>,
     val varps: Map<Int, VarPlayerConfig>,
     val varbits: Map<Int, VarBitConfig>,
-    val objects: Map<Int, ObjectConfig>
+    val objects: Map<Int, ObjectConfig>,
+    val npcs: Map<Int, NpcConfig>
 ) {
 
     companion object {
@@ -20,7 +21,8 @@ class ConfigArchive(
             VarClientConfig.load(archive.readGroup(VarClientConfig.id)),
             VarPlayerConfig.load(archive.readGroup(VarPlayerConfig.id)),
             VarBitConfig.load(archive.readGroup(VarBitConfig.id)),
-            ObjectConfig.load(archive.readGroup(ObjectConfig.id))
+            ObjectConfig.load(archive.readGroup(ObjectConfig.id)),
+            NpcConfig.load(archive.readGroup(NpcConfig.id))
         )
     }
 }

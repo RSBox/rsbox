@@ -1,4 +1,4 @@
-package io.rsbox.server.engine.model.manager
+package io.rsbox.server.engine.model.entity.manager
 
 import io.rsbox.server.cache.GameCache
 import io.rsbox.server.common.inject

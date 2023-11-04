@@ -59,7 +59,7 @@ public class ServerPacket {
 	public static final ServerPacket field3219;
 	public static final ServerPacket field3220;
 	public static final ServerPacket field3221;
-	public static final ServerPacket field3222;
+	public static final ServerPacket MESSAGE_GAME;
 	public static final ServerPacket field3223;
 	public static final ServerPacket field3224;
 	public static final ServerPacket field3225;
@@ -188,7 +188,7 @@ public class ServerPacket {
 		field3219 = new ServerPacket(57, -2);
 		field3220 = new ServerPacket(58, 4);
 		field3221 = new ServerPacket(59, 6);
-		field3222 = new ServerPacket(60, -1);
+		MESSAGE_GAME = new ServerPacket(60, -1);
 		field3223 = new ServerPacket(61, 0);
 		field3224 = new ServerPacket(62, -2);
 		field3225 = new ServerPacket(63, 0);
@@ -261,6 +261,6 @@ public class ServerPacket {
 	}
 
 	public static ServerPacket[] values() {
-		return new ServerPacket[]{field3188, field3163, field3164, field3233, field3166, field3239, field3168, field3237, field3170, field3171, field3172, field3173, field3174, field3205, field3179, field3177, field3265, field3214, field3183, field3176, field3247, field3178, RUN_CLIENTSCRIPT, field3185, field3186, field3231, field3187, field3242, field3190, field3191, field3192, field3193, field3194, field3195, field3196, field3276, field3281, field3250, field3200, field3268, field3202, field3203, field3204, field3288, field3206, field3207, field3208, field3209, field3210, IF_OPENTOP, field3212, VARP_SMALL, field3280, field3215, field3216, field3217, field3167, field3219, field3220, field3221, field3222, field3223, field3224, field3225, field3226, field3227, field3228, field3229, field3252, field3197, field3232, field3181, field3234, REBUILD_REGION_NORMAL, field3236, VARP_LARGE, field3238, field3287, field3259, field3241, field3182, field3243, field3244, field3245, field3246, field3198, field3248, field3249, field3256, field3235, field3274, field3253, field3254, field3255, IF_OPENSUB, field3257, field3258, field3162, field3260, field3261, field3240, field3263, field3271, field3272, field3266, field3267, field3189, field3269, field3270, field3279, field3201, field3251, PLAYER_INFO, field3275, field3199, field3277, field3165, field3283, IF_MOVESUB, field3175, field3286, field3284, field3278, field3285, field3273};
+		return new ServerPacket[]{field3188, field3163, field3164, field3233, field3166, field3239, field3168, field3237, field3170, field3171, field3172, field3173, field3174, field3205, field3179, field3177, field3265, field3214, field3183, field3176, field3247, field3178, RUN_CLIENTSCRIPT, field3185, field3186, field3231, field3187, field3242, field3190, field3191, field3192, field3193, field3194, field3195, field3196, field3276, field3281, field3250, field3200, field3268, field3202, field3203, field3204, field3288, field3206, field3207, field3208, field3209, field3210, IF_OPENTOP, field3212, VARP_SMALL, field3280, field3215, field3216, field3217, field3167, field3219, field3220, field3221, MESSAGE_GAME, field3223, field3224, field3225, field3226, field3227, field3228, field3229, field3252, field3197, field3232, field3181, field3234, REBUILD_REGION_NORMAL, field3236, VARP_LARGE, field3238, field3287, field3259, field3241, field3182, field3243, field3244, field3245, field3246, field3198, field3248, field3249, field3256, field3235, field3274, field3253, field3254, field3255, IF_OPENSUB, field3257, field3258, field3162, field3260, field3261, field3240, field3263, field3271, field3272, field3266, field3267, field3189, field3269, field3270, field3279, field3201, field3251, PLAYER_INFO, field3275, field3199, field3277, field3165, field3283, IF_MOVESUB, field3175, field3286, field3284, field3278, field3285, field3273};
 	}
 }

@@ -1,4 +1,4 @@
-package io.rsbox.server.engine.sync.update
+package io.rsbox.server.engine.model.entity.update
 
 import io.rsbox.server.engine.model.entity.Entity
 import io.rsbox.server.engine.model.entity.Player

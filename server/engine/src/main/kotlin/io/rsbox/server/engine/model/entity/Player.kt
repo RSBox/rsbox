@@ -6,21 +6,22 @@ import io.rsbox.server.engine.event.EventBus.publish
 import io.rsbox.server.engine.event.PlayerLoginEvent
 import io.rsbox.server.engine.event.PlayerLogoutEvent
 import io.rsbox.server.engine.model.Appearance
-import io.rsbox.server.engine.model.Direction
+import io.rsbox.server.engine.model.Privilege
 import io.rsbox.server.engine.model.World
 import io.rsbox.server.engine.model.coord.Tile
-import io.rsbox.server.engine.model.manager.GpiManager
-import io.rsbox.server.engine.model.manager.InterfaceManager
-import io.rsbox.server.engine.model.manager.SceneManager
-import io.rsbox.server.engine.model.manager.VarpManager
+import io.rsbox.server.engine.model.entity.manager.GpiManager
+import io.rsbox.server.engine.model.entity.manager.InterfaceManager
+import io.rsbox.server.engine.model.entity.manager.SceneManager
+import io.rsbox.server.engine.model.entity.manager.VarpManager
 import io.rsbox.server.engine.model.ui.DisplayMode
 import io.rsbox.server.engine.net.Session
 import io.rsbox.server.engine.net.game.Packet
 import io.rsbox.server.engine.net.login.LoginRequest
+import io.rsbox.server.engine.net.packet.server.MessageGame
 import io.rsbox.server.engine.net.packet.server.RunClientScript
-import io.rsbox.server.engine.sync.update.PlayerUpdateFlag
+import io.rsbox.server.engine.model.entity.update.PlayerUpdateFlag
 import org.rsmod.pathfinder.SmartPathFinder
-import org.rsmod.pathfinder.collision.CollisionStrategies
+import org.rsmod.pathfinder.flag.CollisionFlag
 import org.tinylog.kotlin.Logger
 
 class Player internal constructor(val session: Session) : Entity() {
@@ -42,12 +43,11 @@ class Player internal constructor(val session: Session) : Entity() {
 
     override var tile = Tile(ServerConfig.SPAWN_TILE.X, ServerConfig.SPAWN_TILE.Y, ServerConfig.SPAWN_TILE.LEVEL)
     override var prevTile = tile
-    override var followTile = tile.translate(Direction.WEST)
 
     var username: String = ""
     var displayName: String = ""
     var passwordHash: String = ""
-    var privilege = 3
+    var privilege = Privilege.ADMIN
     var isMember = true
     var displayMode = DisplayMode.RESIZABLE
     var appearance = Appearance.DEFAULT
@@ -56,6 +56,7 @@ class Player internal constructor(val session: Session) : Entity() {
     var transmog = -1
 
     override val updateFlags = sortedSetOf<PlayerUpdateFlag>()
+    override fun flagMovement() { updateFlags.add(PlayerUpdateFlag.MOVEMENT) }
 
     override suspend fun cycle() {
 
@@ -83,14 +84,24 @@ class Player internal constructor(val session: Session) : Entity() {
 
     fun isOnline() = world.players.contains(this)
 
-    fun moveTo(tile: Tile) {
-        val route = pathFinder.findPath(this.tile.x, this.tile.y, tile.x, tile.y, tile.level, collision = CollisionStrategies.Normal)
-        movementQueue.addRoute(route)
+    fun walkTo(tile: Tile) {
+        val route = SmartPathFinder(flags = world.collision.flags(), defaultFlag = -1)
+            .findPath(
+                this.tile.x,
+                this.tile.y,
+                tile.x,
+                tile.y,
+                this.tile.level
+            )
+        movement.addRoute(route)
     }
 
     fun teleportTo(tile: Tile) {
-        movementQueue.clear()
-        teleportTile = tile
+        movement.moved = true
+        movement.teleported = true
+        this.tile = tile
+        movement.clear()
+        flagMovement()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -103,6 +114,10 @@ class Player internal constructor(val session: Session) : Entity() {
 
     fun runClientScript(id: Int, vararg args: Any) {
         write(RunClientScript(id, *args))
+    }
+
+    fun sendGameMessage(message: String) {
+        write(MessageGame(0, message))
     }
 
     companion object {

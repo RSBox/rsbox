@@ -11,13 +11,8 @@ class PlayerPreSyncTask : SyncTask {
 
     override suspend fun execute() {
             world.players.forEachEntry { player ->
-                player.updateMovement()
+                player.movement.cycle()
                 player.scene.cycle()
             }
-    }
-
-    private fun Player.updateMovement() {
-        prevTile = tile
-        movementQueue.cycle()
     }
 }

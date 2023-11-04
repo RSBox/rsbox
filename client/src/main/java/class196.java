@@ -41,7 +41,7 @@ public class class196 extends class292 {
 				int[] var7 = new int[var6];
 
 				for (int var8 = 0; var8 < var6; ++var8) {
-					var7[var8] = var1.method2522();
+					var7[var8] = var1.readUnsignedSmartByteShort();
 				}
 
 				this.field1328[var5] = class451.method2113(var1, var7);

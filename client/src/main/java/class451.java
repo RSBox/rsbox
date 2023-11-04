@@ -16,7 +16,7 @@ public class class451 {
 	}
 
 	static Object[] method2113(Buffer var0, int[] var1) {
-		int var3 = var0.method2522();
+		int var3 = var0.readUnsignedSmartByteShort();
 		Object[] var4 = new Object[var1.length * var3];
 
 		for (int var5 = 0; var5 < var3; ++var5) {

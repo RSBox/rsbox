@@ -207,7 +207,7 @@ public final class class129 {
 			while (true) {
 				int var10;
 				while (!var9) {
-					var10 = var5.method2522();
+					var10 = var5.readUnsignedSmartByteShort();
 					if (var10 == 0) {
 						continue label57;
 					}
@@ -231,7 +231,7 @@ public final class class129 {
 					}
 				}
 
-				var10 = var5.method2522();
+				var10 = var5.readUnsignedSmartByteShort();
 				if (var10 == 0) {
 					break;
 				}
@@ -255,7 +255,7 @@ public final class class129 {
 			int var9 = 0;
 
 			while (true) {
-				int var10 = var6.method2522();
+				int var10 = var6.readUnsignedSmartByteShort();
 				if (var10 == 0) {
 					break;
 				}
@@ -300,7 +300,7 @@ public final class class129 {
 			int var13 = 0;
 
 			while (true) {
-				int var14 = var10.method2522();
+				int var14 = var10.readUnsignedSmartByteShort();
 				if (var14 == 0) {
 					break;
 				}

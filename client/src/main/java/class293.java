@@ -35,7 +35,7 @@ public class class293 extends class292 {
 				int[] var8 = new int[var1.readUnsignedByte()];
 
 				for (int var9 = 0; var9 < var8.length; ++var9) {
-					var8[var9] = var1.method2522();
+					var8[var9] = var1.readUnsignedSmartByteShort();
 				}
 
 				this.field2180[var6] = var8;

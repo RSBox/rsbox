@@ -41,14 +41,14 @@ object ServerLauncher {
         loadCache()
 
         /*
-         * Start server engine.
-         */
-        engine.start()
-
-        /*
          * Load all game content scripts.
          */
         scriptManager.load()
+
+        /*
+         * Start server engine.
+         */
+        engine.start()
 
         Logger.info("RSBox server startup completed successfully.")
     }

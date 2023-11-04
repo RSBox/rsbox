@@ -4380,8 +4380,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					return true;
 				}
 
-				if (var1.serverPacket == ServerPacket.field3222) {
-					toComponent = var4.method2522();
+				if (var1.serverPacket == ServerPacket.MESSAGE_GAME) {
+					toComponent = var4.readUnsignedSmartByteShort();
 					var56 = var4.readUnsignedByte() == 1;
 					var47 = "";
 					boolean var44 = false;
@@ -4429,7 +4429,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 
 					for (; var4.offset < var1.field4222; class482.method2210(fromComponent, var8, var32 - 1, var10)) {
-						var8 = var4.method2522();
+						var8 = var4.readUnsignedSmartByteShort();
 						var32 = var4.readUnsignedShort();
 						var10 = 0;
 						if (var32 != 0) {
@@ -6669,7 +6669,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			}
 		}
 
-		class341 var3 = class341.createClientPacket(ClientPacket.field3099, field1891.field4219);
+		class341 var3 = class341.createClientPacket(ClientPacket.CLIENT_CHEAT, field1891.field4219);
 		var3.buffer.writeByte(var0.length() + 1);
 		var3.buffer.writeString(var0);
 		field1891.method2612(var3);
@@ -9890,19 +9890,19 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 							var10 = -1;
 							var11 = -1;
 							var12 = -1;
-							var9 = var1.method2522();
+							var9 = var1.readUnsignedSmartByteShort();
 							if (var9 == 32767) {
-								var9 = var1.method2522();
-								var11 = var1.method2522();
-								var10 = var1.method2522();
-								var12 = var1.method2522();
+								var9 = var1.readUnsignedSmartByteShort();
+								var11 = var1.readUnsignedSmartByteShort();
+								var10 = var1.readUnsignedSmartByteShort();
+								var12 = var1.readUnsignedSmartByteShort();
 							} else if (var9 != 32766) {
-								var11 = var1.method2522();
+								var11 = var1.readUnsignedSmartByteShort();
 							} else {
 								var9 = -1;
 							}
 
-							var13 = var1.method2522();
+							var13 = var1.readUnsignedSmartByteShort();
 							var15.method297(var9, var11, var10, var12, field1846, var13);
 						}
 					}
@@ -9910,10 +9910,10 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					var8 = var1.readUnsignedByteADD();
 					if (var8 > 0) {
 						for (var9 = 0; var9 < var8; ++var9) {
-							var10 = var1.method2522();
-							var11 = var1.method2522();
+							var10 = var1.readUnsignedSmartByteShort();
+							var11 = var1.readUnsignedSmartByteShort();
 							if (var11 != 32767) {
-								var12 = var1.method2522();
+								var12 = var1.readUnsignedSmartByteShort();
 								var13 = var1.readUnsignedByte();
 								int var14 = var11 > 0 ? var1.readUnsignedByteNEG() : var13;
 								var15.method290(var10, field1846, var11, var12, var13, var14);

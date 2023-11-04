@@ -22,7 +22,7 @@ class Engine {
     private val world: World by inject()
     private val syncTasks: SyncTaskList by inject()
 
-    private var running = false
+    var running = false
     private var prevCycleNanos = 0L
 
     fun start() {

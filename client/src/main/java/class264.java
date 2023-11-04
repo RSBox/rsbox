@@ -63,19 +63,19 @@ public class class264 {
 						var12 = -1;
 						var13 = -1;
 						var14 = -1;
-						var11 = var0.method2522();
+						var11 = var0.readUnsignedSmartByteShort();
 						if (var11 == 32767) {
-							var11 = var0.method2522();
-							var13 = var0.method2522();
-							var12 = var0.method2522();
-							var14 = var0.method2522();
+							var11 = var0.readUnsignedSmartByteShort();
+							var13 = var0.readUnsignedSmartByteShort();
+							var12 = var0.readUnsignedSmartByteShort();
+							var14 = var0.readUnsignedSmartByteShort();
 						} else if (var11 != 32766) {
-							var13 = var0.method2522();
+							var13 = var0.readUnsignedSmartByteShort();
 						} else {
 							var11 = -1;
 						}
 
-						var15 = var0.method2522();
+						var15 = var0.readUnsignedSmartByteShort();
 						player.method297(var11, var13, var12, var14, Client.field1846, var15);
 					}
 				}
@@ -83,10 +83,10 @@ public class class264 {
 				var10 = var0.readUnsignedByte();
 				if (var10 > 0) {
 					for (var11 = 0; var11 < var10; ++var11) {
-						var12 = var0.method2522();
-						var13 = var0.method2522();
+						var12 = var0.readUnsignedSmartByteShort();
+						var13 = var0.readUnsignedSmartByteShort();
 						if (var13 != 32767) {
-							var14 = var0.method2522();
+							var14 = var0.readUnsignedSmartByteShort();
 							var15 = var0.readUnsignedByte();
 							var16 = var13 > 0 ? var0.readUnsignedByteNEG() : var15;
 							player.method290(var12, Client.field1846, var13, var14, var15, var16);

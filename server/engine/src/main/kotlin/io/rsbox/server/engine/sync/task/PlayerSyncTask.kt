@@ -2,14 +2,14 @@ package io.rsbox.server.engine.sync.task
 
 import io.netty.buffer.ByteBuf
 import io.rsbox.server.common.inject
+import io.rsbox.server.engine.model.Direction
 import io.rsbox.server.engine.model.World
 import io.rsbox.server.engine.model.coord.Scene
 import io.rsbox.server.engine.model.coord.Tile
 import io.rsbox.server.engine.model.entity.Player
-import io.rsbox.server.engine.model.MovementType
 import io.rsbox.server.engine.net.packet.server.PlayerInfoServerPacket
 import io.rsbox.server.engine.sync.SyncTask
-import io.rsbox.server.engine.sync.update.PlayerUpdateFlag
+import io.rsbox.server.engine.model.entity.update.PlayerUpdateFlag
 import io.rsbox.server.util.buffer.BIT_MODE
 import io.rsbox.server.util.buffer.BYTE_MODE
 import io.rsbox.server.util.buffer.JagByteBuf
@@ -100,8 +100,27 @@ class PlayerSyncTask : SyncTask {
                 maskBuf.writeUpdateFlags(localPlayer)
             }
 
-            if(localPlayer.movementType != MovementType.NONE) {
+            if(localPlayer.movement.moved) {
                 buf.writeMovementTeleport(localPlayer, shouldUpdate)
+            }
+            else if(localPlayer.movement.stepDirection != null) {
+                var dx = Direction.DELTA_X[localPlayer.movement.stepDirection!!.walkDirection!!.playerValue]
+                var dy = Direction.DELTA_Y[localPlayer.movement.stepDirection!!.walkDirection!!.playerValue]
+                var running = localPlayer.movement.stepDirection!!.runDirection != null
+                var direction = 0
+                if(running) {
+                    dx += Direction.DELTA_X[localPlayer.movement.stepDirection!!.runDirection!!.playerValue]
+                    dy += Direction.DELTA_Y[localPlayer.movement.stepDirection!!.runDirection!!.playerValue]
+                    direction = getRunningDirection(dx, dy)
+                    running = direction != -1
+                }
+                if(!running) {
+                    direction = getWalkingDirection(dx, dy)
+                }
+                buf.writeMovementWalk(shouldUpdate, running, direction)
+                if(!shouldUpdate && running) {
+                    maskBuf.writeUpdateFlags(localPlayer)
+                }
             }
             else if(shouldUpdate) {
                 buf.writeShouldUpdate()
@@ -115,7 +134,11 @@ class PlayerSyncTask : SyncTask {
                         false -> (gpi.skipFlags[nextIndex] and 0x1) == 0
                     }
                     if(skipNext) continue
-                    if(nextPlayer == null || nextPlayer.updateFlags.isNotEmpty() || nextPlayer.movementType != MovementType.NONE ||nextPlayer != this && this.shouldRemove(nextPlayer)) {
+                    if(nextPlayer == null ||
+                        nextPlayer.updateFlags.isNotEmpty() ||
+                        nextPlayer.movement.moved ||
+                        nextPlayer.movement.stepDirection != null ||
+                        nextPlayer != this && this.shouldRemove(nextPlayer)) {
                         break
                     }
                     skipCount++
@@ -280,6 +303,13 @@ class PlayerSyncTask : SyncTask {
         }
     }
 
+    private fun JagByteBuf.writeMovementWalk(shouldUpdate: Boolean, running: Boolean, direction: Int) {
+        writeBits(1, 1)
+        writeBoolean(shouldUpdate)
+        writeBits(if(running) 2 else 1, 2)
+        writeBits(direction, if(running) 4 else 3)
+    }
+
     private fun JagByteBuf.writeShouldUpdate() {
         writeBits(1, 1)
         writeBits(1, 1)
@@ -312,10 +342,65 @@ class PlayerSyncTask : SyncTask {
 
     private fun getDirectionType(dx: Int, dy: Int) = MOVEMENT_DIRS[2 - dy][dx + 2]
 
-    private fun getMovementDir(player: Player): Int {
-        val dx = player.tile.x - player.prevTile.x
-        val dy = player.tile.y - player.prevTile.y
-        return getDirectionType(dx, dy)
+    private fun getWalkingDirection(dx: Int, dy: Int): Int {
+        if (dx == -1 && dy == -1) {
+            return 0
+        }
+        if (dx == 0 && dy == -1) {
+            return 1
+        }
+        if (dx == 1 && dy == -1) {
+            return 2
+        }
+        if (dx == -1 && dy == 0) {
+            return 3
+        }
+        if (dx == 1 && dy == 0) {
+            return 4
+        }
+        if (dx == -1 && dy == 1) {
+            return 5
+        }
+        if (dx == 0 && dy == 1) {
+            return 6
+        }
+        return if (dx == 1 && dy == 1) {
+            7
+        } else -1
+    }
+
+    private fun getRunningDirection(dx: Int, dy: Int): Int {
+        if (dx == -2 && dy == -2)
+            return 0
+        if (dx == -1 && dy == -2)
+            return 1
+        if (dx == 0 && dy == -2)
+            return 2
+        if (dx == 1 && dy == -2)
+            return 3
+        if (dx == 2 && dy == -2)
+            return 4
+        if (dx == -2 && dy == -1)
+            return 5
+        if (dx == 2 && dy == -1)
+            return 6
+        if (dx == -2 && dy == 0)
+            return 7
+        if (dx == 2 && dy == 0)
+            return 8
+        if (dx == -2 && dy == 1)
+            return 9
+        if (dx == 2 && dy == 1)
+            return 10
+        if (dx == -2 && dy == 2)
+            return 11
+        if (dx == -1 && dy == 2)
+            return 12
+        if (dx == 0 && dy == 2)
+            return 13
+        if (dx == 1 && dy == 2)
+            return 14
+        return if (dx == 2 && dy == 2) 15 else -1
     }
 
     companion object {

@@ -1,5 +1,7 @@
-package io.rsbox.server.engine.model.manager
+package io.rsbox.server.engine.model.entity.manager
 
+import io.rsbox.server.engine.api.interf
+import io.rsbox.server.engine.api.resizable
 import io.rsbox.server.engine.model.entity.Player
 import io.rsbox.server.engine.model.ui.*
 import io.rsbox.server.engine.net.packet.server.IfOpenSub
@@ -23,6 +25,12 @@ class InterfaceManager(private val player: Player) {
         openTopLevel(toplevel)
         overlays.forEach { (overlay, target) ->
             openOverlay(overlay, target)
+        }
+
+        if(gameframe == GameFrame.Resizable) {
+            player.runClientScript(3998, 1)
+        } else {
+            player.runClientScript(3998, 0)
         }
     }
 
