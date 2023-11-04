@@ -1,4 +1,5 @@
-import io.rsbox.server.config.ServerConfig
+package rsbox.content
+
 import io.rsbox.server.engine.model.entity.Player
 import io.rsbox.server.engine.api.ext.on_login
 import io.rsbox.server.engine.api.has_display_name
@@ -6,7 +7,7 @@ import io.rsbox.server.engine.api.varbit
 
 on_login {
     player.setDisplayName()
-    player.sendGameMessage("Welcome to ${ServerConfig.SERVER_NAME}.")
+    player.sendGameMessage("Welcome to Old School RuneScape.")
 }
 
 fun Player.setDisplayName() {

@@ -1,11 +1,8 @@
 package io.rsbox.server.cache
 
-import io.netty.buffer.ByteBufAllocator
-import io.netty.buffer.Unpooled
 import io.netty.buffer.UnpooledByteBufAllocator
 import io.rsbox.server.cache.model.Archive
 import io.rsbox.server.common.get
-import io.rsbox.server.config.XteaConfig
 import org.openrs2.cache.Cache
 import org.openrs2.cache.Js5MasterIndex
 import org.openrs2.cache.Store

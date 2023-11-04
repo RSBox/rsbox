@@ -52,7 +52,7 @@ class CollisionMap(private val flags: ZoneFlags = ZoneFlags()) {
                         val tile = Tile(baseX + loc.x, baseY + loc.y, loc.level)
                         if(!cache.configArchive.objects.containsKey(loc.id)) return@forEach
                         val gameObject = GameObject(loc.id, tile, loc.shape, loc.rotation)
-                        world.map.getZone(gameObject.tile).addObject(gameObject, isDynamic = false)
+                        world.zones.getZone(gameObject.tile).addObject(gameObject, isDynamic = false)
                     }
                 }
             }

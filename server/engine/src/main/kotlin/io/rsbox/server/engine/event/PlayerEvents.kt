@@ -11,3 +11,5 @@ class PlayerLoginEvent(override val player: Player) : PlayerEvent
 class PlayerLogoutEvent(override val player: Player) : PlayerEvent
 
 class PlayerCommandEvent(override val player: Player, val command: String, vararg val args: String) : PlayerEvent
+
+class PlayerTestEvent(override val player: Player, val value: Int) : PlayerEvent

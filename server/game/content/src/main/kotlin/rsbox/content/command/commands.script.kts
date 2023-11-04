@@ -1,9 +1,17 @@
+package rsbox.content.command
+
 import io.rsbox.server.engine.model.Privilege
 import io.rsbox.server.engine.model.coord.Tile
-import rsbox.content.command.on_command
 
 on_command("test") { player, args ->
-    player.sendGameMessage("Boom this works")
+    player.task {
+        player.sendGameMessage("Start")
+        wait(10)
+        player.sendGameMessage("End")
+        wait<String>()
+        println("Booom")
+    }
+    player.activeCoroutine?.resumeWith("Bopb")
 }
 
 on_command("tele", Privilege.ADMIN) { player, args ->

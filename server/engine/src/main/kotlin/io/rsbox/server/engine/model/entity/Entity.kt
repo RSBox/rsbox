@@ -1,8 +1,9 @@
 package io.rsbox.server.engine.model.entity
 
-import io.rsbox.server.cache.GameCache
 import io.rsbox.server.common.inject
 import io.rsbox.server.engine.Engine
+import io.rsbox.server.engine.coroutine.EngineCoroutine
+import io.rsbox.server.engine.coroutine.EngineCoroutineScope
 import io.rsbox.server.engine.model.Direction
 import io.rsbox.server.engine.model.coord.Tile
 import io.rsbox.server.engine.model.World
@@ -14,7 +15,28 @@ abstract class Entity {
 
     val engine: Engine by inject()
     val world: World by inject()
-    val cache: GameCache by inject()
+
+    private val coroutineScope = EngineCoroutineScope()
+
+    var activeCoroutine: EngineCoroutine? = null
+        private set
+
+    fun task(block: suspend (EngineCoroutine).() -> Unit): EngineCoroutine {
+        return coroutineScope.launch(block = block)
+    }
+
+    fun strictTask(block: suspend EngineCoroutine.() -> Unit): EngineCoroutine {
+        activeCoroutine?.cancel()
+        val coroutine = coroutineScope.launch(block = block)
+        if(coroutine.isSuspended()) {
+            activeCoroutine = coroutine
+        }
+        return coroutine
+    }
+
+    internal fun cleanup() {
+        coroutineScope.cancel()
+    }
 
     abstract val sizeX: Int
     abstract val sizeY: Int
@@ -32,8 +54,8 @@ abstract class Entity {
     var direction: Direction = Direction.SOUTH
     val movement by lazy { Movement(this) }
 
-    abstract suspend fun cycle()
-
-    fun canTravel(tile: Tile, direction: Direction) = world.collision.canTravel(tile, direction)
+    open suspend fun cycle() {
+        coroutineScope.advance()
+    }
 
 }

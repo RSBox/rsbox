@@ -27,8 +27,8 @@ class PlayerPostSyncTask : SyncTask {
             player.updateFlags.clear()
 
             if(hasMoved) {
-                val prevZone = world.map.getZone(oldTile)
-                val curZone = world.map.getZone(player.tile)
+                val prevZone = world.zones.getZone(oldTile)
+                val curZone = world.zones.getZone(player.tile)
                 if(prevZone != curZone) {
                     prevZone.removeEntity(player)
                     curZone.addEntity(player)
@@ -49,8 +49,8 @@ class PlayerPostSyncTask : SyncTask {
         movement.stepDirection = null
 
         if(hasMoved) {
-            val prevZone = world.map.getZone(prevTile)
-            val curZone = world.map.getZone(tile)
+            val prevZone = world.zones.getZone(prevTile)
+            val curZone = world.zones.getZone(tile)
             if(prevZone != curZone) {
                 prevZone.removeEntity(this)
                 curZone.addEntity(this)

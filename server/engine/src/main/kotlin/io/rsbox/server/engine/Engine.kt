@@ -3,42 +3,50 @@ package io.rsbox.server.engine
 import io.rsbox.server.common.inject
 import io.rsbox.server.config.ServerConfig
 import io.rsbox.server.engine.coroutine.EngineCoroutineScope
+import io.rsbox.server.engine.event.EngineCycleEndEvent
+import io.rsbox.server.engine.event.EngineCycleStartEvent
+import io.rsbox.server.engine.event.EngineInitEvent
+import io.rsbox.server.engine.event.EventBus.publish
 import io.rsbox.server.engine.model.World
 import io.rsbox.server.engine.net.NetworkServer
 import io.rsbox.server.engine.net.http.HttpServer
 import io.rsbox.server.engine.sync.SyncTaskList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import org.koin.core.qualifier.named
 import org.tinylog.kotlin.Logger
 import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
 class Engine {
 
-    private val engineCoroutine: EngineCoroutineScope by inject()
     private val networkServer: NetworkServer by inject()
     private val httpServer: HttpServer by inject()
     private val world: World by inject()
     private val syncTasks: SyncTaskList by inject()
+    private val engineCoroutine: CoroutineScope by inject(named("engine"))
 
     var running = false
     private var prevCycleNanos = 0L
 
     fun start() {
         Logger.info("Starting RSBox engine.")
+
         running = true
 
         world.load()
         engineCoroutine.start()
         httpServer.start()
         networkServer.start()
+
+        publish(EngineInitEvent)
     }
 
     fun stop() {
         Logger.info("Stopping RSBox engine.")
+
         running = false
 
+        engineCoroutine.cancel()
         httpServer.stop()
         networkServer.stop()
     }
@@ -62,10 +70,12 @@ class Engine {
     }
 
     private suspend fun cycle() {
-        world.players.forEachEntry { it.session.cycle() }
-        world.players.forEachEntry { it.cycle() }
+        publish(EngineCycleStartEvent)
         world.cycle()
+        world.players.forEachEntry { it.cycle() }
+        world.players.forEachEntry { it.session.cycle() }
         syncTasks.forEach { it.execute() }
         world.players.forEachEntry { it.session.flush() }
+        publish(EngineCycleEndEvent)
     }
 }

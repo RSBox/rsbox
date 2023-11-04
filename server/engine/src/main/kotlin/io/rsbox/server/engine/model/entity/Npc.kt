@@ -5,7 +5,7 @@ import io.rsbox.server.engine.model.entity.update.NpcUpdateFlag
 
 class Npc(val id: Int, val spawnTile: Tile) : Entity() {
 
-    val info = cache.configArchive.npcs[id] ?: error("Unknown Npc with id: $id.")
+    val info = world.cache.configArchive.npcs[id] ?: error("Unknown Npc with id: $id.")
 
     override var tile = spawnTile
     override var prevTile = tile

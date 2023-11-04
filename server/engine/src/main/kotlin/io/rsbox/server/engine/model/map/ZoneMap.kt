@@ -14,6 +14,7 @@ class ZoneMap {
     private val zones = arrayOfNulls<Zone>(2048 * 2048 * 4)
 
     operator fun get(chunk: Chunk) = zones[chunk.packed] ?: createZone(chunk)
+    operator fun get(tile: Tile) = zones[tile.toChunk().packed] ?: createZone(tile.toChunk())
 
     fun getZone(chunk: Chunk) = get(chunk)
     fun getZone(tile: Tile) = get(tile.toChunk())

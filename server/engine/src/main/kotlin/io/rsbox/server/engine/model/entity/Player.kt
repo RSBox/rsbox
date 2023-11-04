@@ -21,7 +21,6 @@ import io.rsbox.server.engine.net.packet.server.MessageGame
 import io.rsbox.server.engine.net.packet.server.RunClientScript
 import io.rsbox.server.engine.model.entity.update.PlayerUpdateFlag
 import org.rsmod.pathfinder.SmartPathFinder
-import org.rsmod.pathfinder.flag.CollisionFlag
 import org.tinylog.kotlin.Logger
 
 class Player internal constructor(val session: Session) : Entity() {
@@ -59,7 +58,7 @@ class Player internal constructor(val session: Session) : Entity() {
     override fun flagMovement() { updateFlags.add(PlayerUpdateFlag.MOVEMENT) }
 
     override suspend fun cycle() {
-
+        super.cycle()
     }
 
     private fun init() {
@@ -118,6 +117,30 @@ class Player internal constructor(val session: Session) : Entity() {
 
     fun sendGameMessage(message: String) {
         write(MessageGame(0, message))
+    }
+
+    override fun hashCode(): Int {
+        var result = session.hashCode()
+        result = 31 * result + gpi.hashCode()
+        result = 31 * result + scene.hashCode()
+        result = 31 * result + ui.hashCode()
+        result = 31 * result + vars.hashCode()
+        result = 31 * result + sizeX
+        result = 31 * result + sizeY
+        result = 31 * result + tile.hashCode()
+        result = 31 * result + prevTile.hashCode()
+        result = 31 * result + username.hashCode()
+        result = 31 * result + displayName.hashCode()
+        result = 31 * result + passwordHash.hashCode()
+        result = 31 * result + privilege.hashCode()
+        result = 31 * result + isMember.hashCode()
+        result = 31 * result + displayMode.hashCode()
+        result = 31 * result + appearance.hashCode()
+        result = 31 * result + skullIcon
+        result = 31 * result + prayerIcon
+        result = 31 * result + transmog
+        result = 31 * result + updateFlags.hashCode()
+        return result
     }
 
     companion object {
