@@ -5,11 +5,11 @@ import io.rsbox.server.engine.Engine
 import io.rsbox.server.engine.coroutine.EngineCoroutine
 import io.rsbox.server.engine.coroutine.EngineCoroutineScope
 import io.rsbox.server.engine.model.Direction
-import io.rsbox.server.engine.model.coord.Tile
 import io.rsbox.server.engine.model.World
+import io.rsbox.server.engine.model.coord.Tile
 import io.rsbox.server.engine.model.entity.movement.Movement
 import io.rsbox.server.engine.model.entity.update.UpdateFlag
-import java.util.SortedSet
+import java.util.*
 
 abstract class Entity {
 
@@ -50,7 +50,7 @@ abstract class Entity {
     abstract val updateFlags: SortedSet<out UpdateFlag>
     abstract fun flagMovement()
 
-    var running = true
+    var running = false
     var direction: Direction = Direction.SOUTH
     val movement by lazy { Movement(this) }
 
@@ -58,4 +58,6 @@ abstract class Entity {
         coroutineScope.advance()
     }
 
+    abstract fun walkTo(tile: Tile)
+    abstract fun teleportTo(tile: Tile)
 }

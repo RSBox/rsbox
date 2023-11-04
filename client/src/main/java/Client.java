@@ -253,7 +253,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	static int[] field1941;
 	static int[] field1950;
 	static int[] externalNpcIndexes;
-	static int[] field1968;
+	static int[] defaultDirectionAngles;
 	static int[] field1970;
 	static int[] field1974;
 	static int[] field1976;
@@ -467,7 +467,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		field2058 = new int[]{44, 45, 46, 47, 48, 49, 50, 51};
 		field2090 = new String[8];
 		field1967 = new boolean[8];
-		field1968 = new int[]{768, 1024, 1280, 512, 1536, 256, 0, 1792};
+		defaultDirectionAngles = new int[]{768, 1024, 1280, 512, 1536, 256, 0, 1792};
 		field1969 = -1;
 		field2000 = new class69[4][104][104];
 		field1971 = new class69();
@@ -6803,7 +6803,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			var0.field368 += (var4 - var0.field368) / var3;
 			var0.field329 += (var5 - var0.field329) / var3;
 			var0.field375 = 0;
-			var0.field351 = var0.field396;
+			var0.face_direction = var0.field396;
 		} else if (var0.field385 >= updateTick) {
 			method1376(var0);
 		} else {
@@ -6831,29 +6831,29 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					var6 = var0.field400[var0.pathLength - 1] * 128 + var0.field332 * 64;
 					if (var3 < var5) {
 						if (var4 < var6) {
-							var0.field351 = 1280;
+							var0.face_direction = 1280;
 						} else if (var4 > var6) {
-							var0.field351 = 1792;
+							var0.face_direction = 1792;
 						} else {
-							var0.field351 = 1536;
+							var0.face_direction = 1536;
 						}
 					} else if (var3 > var5) {
 						if (var4 < var6) {
-							var0.field351 = 768;
+							var0.face_direction = 768;
 						} else if (var4 > var6) {
-							var0.field351 = 256;
+							var0.face_direction = 256;
 						} else {
-							var0.field351 = 512;
+							var0.face_direction = 512;
 						}
 					} else if (var4 < var6) {
-						var0.field351 = 1024;
+						var0.face_direction = 1024;
 					} else if (var4 > var6) {
-						var0.field351 = 0;
+						var0.face_direction = 0;
 					}
 
 					MovementType var7 = var0.field342[var0.pathLength - 1];
 					if (var5 - var3 <= 256 && var5 - var3 >= -256 && var6 - var4 <= 256 && var6 - var4 >= -256) {
-						var8 = var0.field351 - var0.field330 & 2047;
+						var8 = var0.face_direction - var0.orientation & 2047;
 						if (var8 > 1024) {
 							var8 -= 2048;
 						}
@@ -6879,7 +6879,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						}
 
 						if (var11) {
-							if (var0.field330 != var0.field351 && var0.field363 == -1 && var0.field358 != 0) {
+							if (var0.orientation != var0.face_direction && var0.field363 == -1 && var0.field358 != 0) {
 								var10 = 2;
 							}
 
@@ -7017,7 +7017,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				var6 = var0.field329 - ((class65)var13).field329;
 				if (var5 != 0 || var6 != 0) {
 					var8 = (int)(Math.atan2((double)var5, (double)var6) * 325.94932345220167D) & 2047;
-					var0.field351 = var8;
+					var0.face_direction = var8;
 				}
 			} else if (var0.field364) {
 				var0.field363 = -1;
@@ -7042,25 +7042,25 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			}
 
 			if (var3 != -1) {
-				var0.field351 = var3;
+				var0.face_direction = var3;
 				if (var0.field382) {
-					var0.field330 = var0.field351;
+					var0.orientation = var0.face_direction;
 				}
 			}
 
 			var0.method294();
 		}
 
-		var3 = var0.field351 - var0.field330 & 2047;
+		var3 = var0.face_direction - var0.orientation & 2047;
 		if (var3 != 0) {
 			boolean var14 = true;
 			boolean var16 = true;
 			++var0.field355;
 			var6 = var3 > 1024 ? -1 : 1;
-			var0.field330 += var0.field358 * var6;
+			var0.orientation += var0.field358 * var6;
 			boolean var21 = true;
 			if (var3 < var0.field358 || var3 > 2048 - var0.field358) {
-				var0.field330 = var0.field351;
+				var0.orientation = var0.face_direction;
 				var21 = false;
 			}
 
@@ -7074,7 +7074,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				}
 			}
 
-			var0.field330 &= 2047;
+			var0.orientation &= 2047;
 		} else {
 			if (var0.field364) {
 				var0.field363 = -1;
@@ -7271,8 +7271,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 
 		var0.field375 = 0;
-		var0.field351 = var0.field396;
-		var0.field330 = var0.field351;
+		var0.face_direction = var0.field396;
+		var0.orientation = var0.face_direction;
 	}
 
 	static void method1313() {
@@ -7457,7 +7457,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					var0.field3006 = false;
 					var0.field2995 = method1347(var0.field368, var0.field329, class212.field1393);
 					var0.field333 = updateTick;
-					class141.field937.method740(class212.field1393, var0.field368, var0.field329, var0.field2995, 60, var0, var0.field330, var5, var0.field3015, var0.field3003, var0.field3004, var0.field3014);
+					class141.field937.method740(class212.field1393, var0.field368, var0.field329, var0.field2995, 60, var0, var0.orientation, var5, var0.field3015, var0.field3003, var0.field3004, var0.field3014);
 				} else {
 					if ((var0.field368 & 127) == 64 && (var0.field329 & 127) == 64) {
 						if (field1946[var3][var4] == field1947) {
@@ -7469,7 +7469,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 					var0.field2995 = method1347(var0.field368, var0.field329, class212.field1393);
 					var0.field333 = updateTick;
-					class141.field937.method780(class212.field1393, var0.field368, var0.field329, var0.field2995, 60, var0, var0.field330, var5, var0.field349);
+					class141.field937.method780(class212.field1393, var0.field368, var0.field329, var0.field2995, 60, var0, var0.orientation, var5, var0.field349);
 				}
 			}
 		}
@@ -7493,7 +7493,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 					long var6 = class503.method2386(0, 0, 1, !var3.definition.field492, localNpcIndexes[var2]);
 					var3.field333 = updateTick;
-					class141.field937.method780(class212.field1393, var3.field368, var3.field329, method1347(var3.field332 * 64 - 64 + var3.field368, var3.field332 * 64 - 64 + var3.field329, class212.field1393), var3.field332 * 64 - 64 + 60, var3, var3.field330, var6, var3.field349);
+					class141.field937.method780(class212.field1393, var3.field368, var3.field329, method1347(var3.field332 * 64 - 64 + var3.field368, var3.field332 * 64 - 64 + var3.field329, class212.field1393), var3.field332 * 64 - 64 + 60, var3, var3.orientation, var6, var3.field349);
 				}
 			}
 		}
@@ -9572,7 +9572,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			Client.npcCount = 0;
 
 			int tmpData;
-			int var8;
+			int movementType;
 			int loopType;
 			int var10;
 			for (i = 0; i < count; ++i) {
@@ -9583,12 +9583,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					localNpcIndexes[++Client.npcCount - 1] = npcIndex;
 					npc.lastUpdateTick = updateTick;
 				} else {
-					var8 = buf.readBits(2);
-					if (var8 == 0) {
+					movementType = buf.readBits(2);
+					if (movementType == 0) {
 						localNpcIndexes[++Client.npcCount - 1] = npcIndex;
 						npc.lastUpdateTick = updateTick;
 						extendedNpcIndexes[++extendedNpcCount - 1] = npcIndex;
-					} else if (var8 == 1) {
+					} else if (movementType == 1) {
 						localNpcIndexes[++Client.npcCount - 1] = npcIndex;
 						npc.lastUpdateTick = updateTick;
 						loopType = buf.readBits(3);
@@ -9597,7 +9597,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						if (var10 == 1) {
 							extendedNpcIndexes[++extendedNpcCount - 1] = npcIndex;
 						}
-					} else if (var8 == 2) {
+					} else if (movementType == 2) {
 						localNpcIndexes[++Client.npcCount - 1] = npcIndex;
 						npc.lastUpdateTick = updateTick;
 						if (buf.readBits(1) == 1) {
@@ -9614,7 +9614,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						if (loopType == 1) {
 							extendedNpcIndexes[++extendedNpcCount - 1] = npcIndex;
 						}
-					} else if (var8 == 3) {
+					} else if (movementType == 3) {
 						externalNpcIndexes[++externalNpcCount - 1] = npcIndex;
 					}
 				}
@@ -9643,13 +9643,13 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						tmpData = -1;
 					}
 
-					var8 = buf.readUnsignedByte();
+					movementType = buf.readUnsignedByte();
 					if (tmpData == npc.animationId && tmpData != -1) {
 						loopType = class116.getAnimationDefinition(tmpData).loopType;
 						if (loopType == 1) {
 							npc.animationFrame = 0;
 							npc.animationFrameCycle = 0;
-							npc.animationDelay = var8;
+							npc.animationDelay = movementType;
 							npc.curAnimationFrameIndex = 0;
 						}
 
@@ -9660,7 +9660,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						npc.animationId = tmpData;
 						npc.animationFrame = 0;
 						npc.animationFrameCycle = 0;
-						npc.animationDelay = var8;
+						npc.animationDelay = movementType;
 						npc.curAnimationFrameIndex = 0;
 						npc.field403 = npc.pathLength;
 					}
@@ -9844,7 +9844,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				if ((mask & 0x20000) != 0) {
 					tmpData = buf.readUnsignedByteADD();
 
-					for (var8 = 0; var8 < tmpData; ++var8) {
+					for (movementType = 0; movementType < tmpData; ++movementType) {
 						loopType = buf.readUnsignedByteSUB();
 						var10 = buf.readUnsignedShortLEADD();
 						var11 = buf.readUnsignedIntIME();
@@ -9866,14 +9866,14 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				// FACE_TILE : 12
 				if ((mask & 0x10) != 0) {
 					tmpData = buf.readUnsignedShort();
-					var8 = buf.readUnsignedShortLE();
+					movementType = buf.readUnsignedShortLE();
 					npc.field382 = buf.readUnsignedByteADD() == 1;
 					if (field1841 >= 212) {
 						npc.field366 = tmpData;
-						npc.field367 = var8;
+						npc.field367 = movementType;
 					} else {
 						loopType = npc.field368 - 64 * (tmpData - class80.selectedTileX - class80.selectedTileX);
-						var10 = npc.field329 - (var8 - class425.selectedTileXYIdk - class425.selectedTileXYIdk) * 64;
+						var10 = npc.field329 - (movementType - class425.selectedTileXYIdk - class425.selectedTileXYIdk) * 64;
 						if (loopType != 0 || var10 != 0) {
 							var12 = (int)(Math.atan2((double)loopType, (double)var10) * 325.94932345220167D) & 2047;
 							npc.field365 = var12;
@@ -9901,7 +9901,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					tmpData = buf.readUnsignedByte();
 					int var13;
 					if (tmpData > 0) {
-						for (var8 = 0; var8 < tmpData; ++var8) {
+						for (movementType = 0; movementType < tmpData; ++movementType) {
 							var10 = -1;
 							var11 = -1;
 							var12 = -1;
@@ -9922,9 +9922,9 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						}
 					}
 
-					var8 = buf.readUnsignedByteADD();
-					if (var8 > 0) {
-						for (loopType = 0; loopType < var8; ++loopType) {
+					movementType = buf.readUnsignedByteADD();
+					if (movementType > 0) {
+						for (loopType = 0; loopType < movementType; ++loopType) {
 							var10 = buf.readUnsignedSmartByteShort();
 							var11 = buf.readUnsignedSmartByteShort();
 							if (var11 != 32767) {
@@ -9993,10 +9993,10 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	static final void syncExternalNpcs(boolean var0, PacketBuffer buf) {
 		while (true) {
 			boolean var3 = true;
-			int var4 = 65536;
+			int var4 = 0x10000;
 			if (buf.getRemainderBits(serverConnection.packetLength) >= 28) {
 				int npcIndex = buf.readBits(16);
-				if (65535 != npcIndex) {
+				if (0xffff != npcIndex) {
 					boolean added = false;
 					if (npcs[npcIndex] == null) {
 						npcs[npcIndex] = new Npc();
@@ -10013,34 +10013,34 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 					int var8 = buf.readBits(1);
 					npc.definition = class73.getNpcDefinition(buf.readBits(14));
-					int var12 = field1968[buf.readBits(3)];
+					int var12 = defaultDirectionAngles[buf.readBits(3)];
 					if (added) {
-						npc.field351 = npc.field330 = var12;
+						npc.face_direction = npc.orientation = var12;
 					}
 
-					int var9;
+					int dx;
 					if (var0) {
-						var9 = buf.readBits(8);
-						if (var9 > 127) {
-							var9 -= 256;
+						dx = buf.readBits(8);
+						if (dx > 127) {
+							dx -= 256;
 						}
 					} else {
-						var9 = buf.readBits(5);
-						if (var9 > 15) {
-							var9 -= 32;
+						dx = buf.readBits(5);
+						if (dx > 15) {
+							dx -= 32;
 						}
 					}
 
-					int var10;
+					int dy;
 					if (var0) {
-						var10 = buf.readBits(8);
-						if (var10 > 127) {
-							var10 -= 256;
+						dy = buf.readBits(8);
+						if (dy > 127) {
+							dy -= 256;
 						}
 					} else {
-						var10 = buf.readBits(5);
-						if (var10 > 15) {
-							var10 -= 32;
+						dy = buf.readBits(5);
+						if (dy > 15) {
+							dy -= 32;
 						}
 					}
 
@@ -10051,10 +10051,10 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 					loadNpcDefinitionData(npc);
 					if (npc.field358 == 0) {
-						npc.field330 = 0;
+						npc.orientation = 0;
 					}
 
-					npc.method1778(class114.field720.field399[0] + var9, var10 + class114.field720.field400[0], var8 == 1);
+					npc.method1778(class114.field720.field399[0] + dx, dy + class114.field720.field400[0], var8 == 1);
 					continue;
 				}
 			}

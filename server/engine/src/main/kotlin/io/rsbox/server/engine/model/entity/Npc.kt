@@ -2,6 +2,7 @@ package io.rsbox.server.engine.model.entity
 
 import io.rsbox.server.engine.model.coord.Tile
 import io.rsbox.server.engine.model.entity.update.NpcUpdateFlag
+import org.rsmod.pathfinder.DumbPathFinder
 
 class Npc(val id: Int, val spawnTile: Tile) : Entity() {
 
@@ -16,8 +17,31 @@ class Npc(val id: Int, val spawnTile: Tile) : Entity() {
     override val updateFlags = sortedSetOf<NpcUpdateFlag>()
     override fun flagMovement() {}
 
-    override suspend fun cycle() {
+    var active = false
 
+    var transmogId: Int = -1
+
+    override suspend fun cycle() {
+        super.cycle()
     }
 
+    fun isSpawned() = index > 0
+
+    override fun walkTo(tile: Tile) {
+        val route = DumbPathFinder(world.collision.flags(), -1).findPath(
+            this.tile.x,
+            this.tile.y,
+            tile.x,
+            tile.y,
+            this.tile.level
+        )
+        movement.addRoute(route)
+    }
+
+    override fun teleportTo(tile: Tile) {
+        movement.moved = true
+        movement.teleported = true
+        this.tile = tile
+        movement.clear()
+    }
 }

@@ -58,6 +58,8 @@ class Player internal constructor(val session: Session) : Entity() {
     override val updateFlags = sortedSetOf<PlayerUpdateFlag>()
     override fun flagMovement() { updateFlags.add(PlayerUpdateFlag.MOVEMENT) }
 
+    internal val localNpcs = mutableListOf<Npc>()
+
     override suspend fun cycle() {
         super.cycle()
     }
@@ -66,6 +68,7 @@ class Player internal constructor(val session: Session) : Entity() {
         gpi.init()
         scene.init()
         ui.init()
+        running = true
     }
 
     fun login() {
@@ -84,7 +87,7 @@ class Player internal constructor(val session: Session) : Entity() {
 
     fun isOnline() = world.players.contains(this)
 
-    fun walkTo(tile: Tile) {
+    override fun walkTo(tile: Tile) {
         val route = SmartPathFinder(flags = world.collision.flags(), defaultFlag = -1)
             .findPath(
                 this.tile.x,
@@ -96,7 +99,7 @@ class Player internal constructor(val session: Session) : Entity() {
         movement.addRoute(route)
     }
 
-    fun teleportTo(tile: Tile) {
+    override fun teleportTo(tile: Tile) {
         movement.moved = true
         movement.teleported = true
         this.tile = tile

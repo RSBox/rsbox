@@ -315,25 +315,25 @@ public final class Player extends class65 {
 					if (Client.updateTick >= this.field2996 && Client.updateTick < this.field3011) {
 						class490 var6 = this.field2991;
 						var6.method2272(this.field2998 - super.field368, this.field2997 - this.field2995, this.field2990 - super.field329);
-						if (super.field351 == 512) {
+						if (super.face_direction == 512) {
 							var6.method2288();
 							var6.method2288();
 							var6.method2288();
-						} else if (super.field351 == 1024) {
+						} else if (super.face_direction == 1024) {
 							var6.method2288();
 							var6.method2288();
-						} else if (super.field351 == 1536) {
+						} else if (super.face_direction == 1536) {
 							var6.method2288();
 						}
 
 						class490[] var7 = new class490[]{var4, var6};
 						var4 = new class490(var7, 2);
-						if (super.field351 == 512) {
+						if (super.face_direction == 512) {
 							var6.method2288();
-						} else if (super.field351 == 1024) {
+						} else if (super.face_direction == 1024) {
 							var6.method2288();
 							var6.method2288();
-						} else if (super.field351 == 1536) {
+						} else if (super.face_direction == 1536) {
 							var6.method2288();
 							var6.method2288();
 							var6.method2288();

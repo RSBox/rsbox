@@ -17,6 +17,7 @@ value class Scene(val packed: Int) {
     companion object {
         const val SIZE = 104
         const val VIEW_DISTANCE = 15
+        const val LARGE_VIEW_DISTANCE = 127
         const val REBUILD_DISTANCE = 16
     }
 }

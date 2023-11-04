@@ -5,10 +5,10 @@ import io.rsbox.server.common.inject
 import io.rsbox.server.config.XteaConfig
 import io.rsbox.server.engine.Engine
 import io.rsbox.server.engine.coroutine.EngineCoroutineScope
-import io.rsbox.server.engine.model.map.CollisionMap
 import io.rsbox.server.engine.model.entity.EntityList
 import io.rsbox.server.engine.model.entity.Npc
 import io.rsbox.server.engine.model.entity.Player
+import io.rsbox.server.engine.model.map.CollisionMap
 import io.rsbox.server.engine.model.map.ZoneMap
 import org.koin.core.qualifier.named
 import org.tinylog.kotlin.Logger
@@ -58,6 +58,17 @@ class World {
         zones[player.tile].removeEntity(player)
         players.remove(player)
         player.cleanup()
+    }
+
+    fun addNpc(npc: Npc) {
+        zones[npc.tile].addEntity(npc)
+        npcs.add(npc)
+    }
+
+    fun removeNpc(npc: Npc) {
+        zones[npc.tile].removeEntity(npc)
+        npcs.remove(npc)
+        npc.cleanup()
     }
 
     companion object {

@@ -1,17 +1,40 @@
 package rsbox.content.command
 
+import io.rsbox.server.engine.api.Npcs
+import io.rsbox.server.engine.model.Direction
 import io.rsbox.server.engine.model.Privilege
 import io.rsbox.server.engine.model.coord.Tile
+import io.rsbox.server.engine.model.entity.Npc
 
 on_command("test") { player, args ->
+    player.sendGameMessage("Spawning test NPC")
+    val npc = Npc(Npcs.man_3107, player.tile.translate(Direction.SOUTH))
+    player.world.addNpc(npc)
+    player.sendGameMessage("Successfully spawned npc")
     player.task {
-        player.sendGameMessage("Start")
-        wait(10)
-        player.sendGameMessage("End")
-        wait<String>()
-        println("Booom")
+        while(true) {
+            npc.walkTo(player.prevTile)
+            wait(1)
+        }
     }
-    player.activeCoroutine?.resumeWith("Bopb")
+}
+
+on_command("npc", Privilege.ADMIN) { player, args ->
+    if(args.isEmpty()) {
+        player.sendGameMessage("<col=ff0000>Usage: ::npc <id></col>")
+        return@on_command
+    }
+
+    val id = args[0].toInt()
+    val spawnTile = player.tile
+
+    val npc = try { Npc(id, spawnTile) } catch (e: Throwable) {
+        player.sendGameMessage("Npc[id=$id] was not found in game cache.")
+        return@on_command
+    }
+
+    player.world.addNpc(npc)
+    player.sendGameMessage("<col=0000ff>Spawned Npc[id=$id] at Tile[x: ${spawnTile.x}, y: ${spawnTile.y}, level: ${spawnTile.level}].</col>")
 }
 
 on_command("tele", Privilege.ADMIN) { player, args ->

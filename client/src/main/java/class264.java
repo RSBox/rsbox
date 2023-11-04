@@ -200,7 +200,7 @@ public class class264 {
 			if ((var7 & 32) != 0) {
 				player.field365 = var0.readUnsignedShortLEADD();
 				if (player.pathLength == 0) {
-					player.field351 = player.field365;
+					player.face_direction = player.field365;
 					player.method294();
 				}
 			}
@@ -539,7 +539,7 @@ public class class264 {
 					var13.decode(cachedPlayerAppearances[var1]);
 				}
 
-				var13.field351 = field1769[var1];
+				var13.face_direction = field1769[var1];
 				var13.field363 = field1770[var1];
 				var8 = field1768[var1];
 				var9 = var8 >> 28;

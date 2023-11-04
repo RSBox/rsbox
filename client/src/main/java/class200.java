@@ -41,7 +41,7 @@ public class class200 implements class501 {
 				if (var5.field365 != -1) {
 					class264.field1769[var1] = var5.field365;
 				} else {
-					class264.field1769[var1] = var5.field351;
+					class264.field1769[var1] = var5.face_direction;
 				}
 
 				class264.field1770[var1] = var5.field363;

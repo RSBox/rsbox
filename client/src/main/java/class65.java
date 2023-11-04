@@ -16,7 +16,7 @@ public abstract class class65 extends class462 {
 	class444 field362;
 	int field328;
 	int field329;
-	int field330;
+	int orientation;
 	int field331;
 	int field332;
 	int field333;
@@ -32,7 +32,7 @@ public abstract class class65 extends class462 {
 	int field346;
 	int field347;
 	int field348;
-	int field351;
+	int face_direction;
 	int overheadTextTicksRemaining;
 	int field353;
 	int field354;
