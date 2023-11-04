@@ -47,7 +47,7 @@ public final class class404 extends class462 {
 		this.field2785 = false;
 		int var12 = class137.method707(this.field2774).field896;
 		if (var12 != -1) {
-			this.field2773 = class116.method539(var12);
+			this.field2773 = class116.getAnimationDefinition(var12);
 		} else {
 			this.field2773 = null;
 		}

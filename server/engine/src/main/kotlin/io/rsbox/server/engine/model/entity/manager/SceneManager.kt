@@ -4,7 +4,7 @@ import io.rsbox.server.engine.model.coord.Chunk
 import io.rsbox.server.engine.model.coord.Region
 import io.rsbox.server.engine.model.coord.Tile
 import io.rsbox.server.engine.model.entity.Player
-import io.rsbox.server.engine.net.packet.server.RebuildNormalServerPacket
+import io.rsbox.server.engine.net.packet.server.RebuildRegionNormal
 import kotlin.math.abs
 
 class SceneManager(private val player: Player) {
@@ -27,13 +27,13 @@ class SceneManager(private val player: Player) {
 
     fun init() {
         baseTile = player.tile
-        player.session.write(RebuildNormalServerPacket(player, gpi = true))
+        player.session.write(RebuildRegionNormal(player, gpi = true))
     }
 
     fun cycle() {
         if(shouldRebuild()) {
             baseTile = player.tile
-            player.session.write(RebuildNormalServerPacket(player, gpi = false))
+            player.session.write(RebuildRegionNormal(player, gpi = false))
         }
     }
 

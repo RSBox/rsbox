@@ -108,10 +108,10 @@ public class class14 {
 	}
 
 	static final void method64(String var0, int var1) {
-		class341 var3 = class341.createClientPacket(ClientPacket.field3048, Client.field1891.field4219);
+		class341 var3 = class341.createClientPacket(ClientPacket.field3048, Client.serverConnection.field4219);
 		var3.buffer.writeByte(Buffer.method2535(var0) + 1);
 		var3.buffer.writeString(var0);
 		var3.buffer.writeByteNEG(var1);
-		Client.field1891.method2612(var3);
+		Client.serverConnection.method2612(var3);
 	}
 }

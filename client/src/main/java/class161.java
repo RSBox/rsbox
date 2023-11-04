@@ -110,7 +110,7 @@ public class class161 extends class292 {
 	static final void method870(int var0, int var1) {
 		if (Client.field1853 == 2) {
 			Client.method1351((Client.field1896 - class80.selectedTileX << 7) + Client.field1942, (Client.field1857 - class425.selectedTileXYIdk << 7) + Client.field2109, Client.field1858 * 2);
-			if (Client.field1948 > -1 && Client.field1846 % 20 < 10) {
+			if (Client.field1948 > -1 && Client.updateTick % 20 < 10) {
 				class108.field683[0].method159(var0 + Client.field1948 - 12, var1 + Client.field1966 - 28);
 			}
 

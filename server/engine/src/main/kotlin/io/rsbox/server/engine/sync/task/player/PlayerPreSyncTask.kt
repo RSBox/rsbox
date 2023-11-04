@@ -1,4 +1,4 @@
-package io.rsbox.server.engine.sync.task
+package io.rsbox.server.engine.sync.task.player
 
 import io.rsbox.server.common.inject
 import io.rsbox.server.engine.model.World

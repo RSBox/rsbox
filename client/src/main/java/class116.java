@@ -26,7 +26,7 @@ public class class116 extends class292 {
 	public int field742;
 	public int field744;
 	public int field746;
-	public int field747;
+	public int loopType;
 	public int field748;
 	public int[] field722;
 	public int[] field733;
@@ -53,7 +53,7 @@ public class class116 extends class292 {
 		this.field727 = false;
 		this.field735 = -1;
 		this.field746 = -1;
-		this.field747 = 2;
+		this.loopType = 2;
 	}
 
 	void method527(Buffer var1) {
@@ -114,7 +114,7 @@ public class class116 extends class292 {
 		} else if (var2 == 10) {
 			this.field746 = var1.readUnsignedByte();
 		} else if (var2 == 11) {
-			this.field747 = var1.readUnsignedByte();
+			this.loopType = var1.readUnsignedByte();
 		} else if (var2 == 12) {
 			var4 = var1.readUnsignedByte();
 			this.field734 = new int[var4];
@@ -442,7 +442,7 @@ public class class116 extends class292 {
 		field725 = var2;
 	}
 
-	public static class116 method539(int var0) {
+	public static class116 getAnimationDefinition(int var0) {
 		class116 var2 = (class116)field726.method1678((long)var0);
 		if (null != var2) {
 			return var2;

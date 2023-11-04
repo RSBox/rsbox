@@ -1784,25 +1784,25 @@ public class class440 {
 					var11 = class385.method1807(var12);
 				}
 
-				class341 var15 = class341.createClientPacket(ClientPacket.field3101, Client.field1891.field4219);
+				class341 var15 = class341.createClientPacket(ClientPacket.field3101, Client.serverConnection.field4219);
 				var15.buffer.writeInt(var11);
-				Client.field1891.method2612(var15);
+				Client.serverConnection.method2612(var15);
 				return 1;
 			} else {
 				class341 var9;
 				if (var0 == 3105) {
 					var12 = field2965[--class176.field1224];
-					var9 = class341.createClientPacket(ClientPacket.field3102, Client.field1891.field4219);
+					var9 = class341.createClientPacket(ClientPacket.field3102, Client.serverConnection.field4219);
 					var9.buffer.writeByte(var12.length() + 1);
 					var9.buffer.writeString(var12);
-					Client.field1891.method2612(var9);
+					Client.serverConnection.method2612(var9);
 					return 1;
 				} else if (var0 == 3106) {
 					var12 = field2965[--class176.field1224];
-					var9 = class341.createClientPacket(ClientPacket.field3061, Client.field1891.field4219);
+					var9 = class341.createClientPacket(ClientPacket.field3061, Client.serverConnection.field4219);
 					var9.buffer.writeByte(var12.length() + 1);
 					var9.buffer.writeString(var12);
-					Client.field1891.method2612(var9);
+					Client.serverConnection.method2612(var9);
 					return 1;
 				} else {
 					int var4;
@@ -1843,9 +1843,9 @@ public class class440 {
 						return 1;
 					} else if (var0 == 3115) {
 						var4 = field2955[--field2956];
-						var9 = class341.createClientPacket(ClientPacket.field3097, Client.field1891.field4219);
+						var9 = class341.createClientPacket(ClientPacket.field3097, Client.serverConnection.field4219);
 						var9.buffer.writeShort(var4);
-						Client.field1891.method2612(var9);
+						Client.serverConnection.method2612(var9);
 						return 1;
 					} else if (var0 == 3116) {
 						var4 = field2955[--field2956];
@@ -1857,12 +1857,12 @@ public class class440 {
 						} else if (var6.length() > 500) {
 							return 1;
 						} else {
-							class341 var7 = class341.createClientPacket(ClientPacket.field3104, Client.field1891.field4219);
+							class341 var7 = class341.createClientPacket(ClientPacket.field3104, Client.serverConnection.field4219);
 							var7.buffer.writeShort(1 + Buffer.method2535(var5) + Buffer.method2535(var6));
 							var7.buffer.writeString(var5);
 							var7.buffer.writeString(var6);
 							var7.buffer.writeByteNEG(var4);
-							Client.field1891.method2612(var7);
+							Client.serverConnection.method2612(var7);
 							return 1;
 						}
 					} else if (var0 == 3117) {
@@ -2454,7 +2454,7 @@ public class class440 {
 
 	static int method2067(int var0, class83 var1, boolean var2) {
 		if (var0 == 3300) {
-			field2955[++field2956 - 1] = Client.field1846;
+			field2955[++field2956 - 1] = Client.updateTick;
 			return 1;
 		} else {
 			int var4;
@@ -3741,11 +3741,11 @@ public class class440 {
 			}
 
 			Client.field2120 = field2955[field2956 + 2];
-			class341 var14 = class341.createClientPacket(ClientPacket.field3117, Client.field1891.field4219);
+			class341 var14 = class341.createClientPacket(ClientPacket.field3117, Client.serverConnection.field4219);
 			var14.buffer.writeByte(Client.field2040);
 			var14.buffer.writeByte(class41.field203.field1322);
 			var14.buffer.writeByte(Client.field2120);
-			Client.field1891.method2612(var14);
+			Client.serverConnection.method2612(var14);
 			return 1;
 		} else {
 			String var4;
@@ -3757,12 +3757,12 @@ public class class440 {
 				field2956 -= 2;
 				var9 = field2955[field2956];
 				var11 = field2955[1 + field2956];
-				var7 = class341.createClientPacket(ClientPacket.field3069, Client.field1891.field4219);
+				var7 = class341.createClientPacket(ClientPacket.field3069, Client.serverConnection.field4219);
 				var7.buffer.writeByte(Buffer.method2535(var4) + 2);
 				var7.buffer.writeString(var4);
 				var7.buffer.writeByte(var9 - 1);
 				var7.buffer.writeByte(var11);
-				Client.field1891.method2612(var7);
+				Client.serverConnection.method2612(var7);
 				return 1;
 			} else {
 				class56 var6;
@@ -3825,19 +3825,19 @@ public class class440 {
 							var4 = field2965[--class176.field1224];
 							var9 = field2955[--field2956];
 							var12 = class450.method2109(var9, var4, class13.field75, -1);
-							Client.field1891.method2612(var12);
+							Client.serverConnection.method2612(var12);
 							return 1;
 						} else if (var0 == 5009) {
 							class176.field1224 -= 2;
 							var4 = field2965[class176.field1224];
 							String var10 = field2965[1 + class176.field1224];
-							var12 = class341.createClientPacket(ClientPacket.field3065, Client.field1891.field4219);
+							var12 = class341.createClientPacket(ClientPacket.field3065, Client.serverConnection.field4219);
 							var12.buffer.writeShort(0);
 							int var13 = var12.buffer.offset;
 							var12.buffer.writeString(var4);
 							class380.method1791(var12.buffer, var10);
 							var12.buffer.writeLengthShort(var12.buffer.offset - var13);
-							Client.field1891.method2612(var12);
+							Client.serverConnection.method2612(var12);
 							return 1;
 						} else if (var0 == 5010) {
 							var4 = field2965[--class176.field1224];
@@ -3845,7 +3845,7 @@ public class class440 {
 							var9 = field2955[field2956];
 							var11 = field2955[field2956 + 1];
 							var7 = class450.method2109(var9, var4, class13.field75, var11);
-							Client.field1891.method2612(var7);
+							Client.serverConnection.method2612(var7);
 							return 1;
 						} else if (var0 != 5015) {
 							if (var0 == 5016) {
@@ -4218,9 +4218,9 @@ public class class440 {
 							var8 = field2955[field2956 + 1];
 							var6 = class47.method197(var8);
 							if (var6.method192()) {
-								field2965[++class176.field1224 - 1] = class73.method366(var4).method364(var8, var6.field232);
+								field2965[++class176.field1224 - 1] = class73.getNpcDefinition(var4).method364(var8, var6.field232);
 							} else {
-								field2955[++field2956 - 1] = class73.method366(var4).method357(var8, var6.field227);
+								field2955[++field2956 - 1] = class73.getNpcDefinition(var4).method357(var8, var6.field227);
 							}
 
 							return 1;
@@ -4674,20 +4674,20 @@ public class class440 {
 	static int method2073(int var0, class83 var1, boolean var2) {
 		if (var0 == 6754) {
 			int var6 = field2955[--field2956];
-			class73 var7 = class73.method366(var6);
+			class73 var7 = class73.getNpcDefinition(var6);
 			field2965[++class176.field1224 - 1] = var7 != null ? var7.field516 : "";
 			return 1;
 		} else {
 			class73 var4;
 			if (var0 == 6764) {
 				field2956 -= 2;
-				var4 = class73.method366(field2955[field2956]);
+				var4 = class73.getNpcDefinition(field2955[field2956]);
 				int var5 = field2955[1 + field2956];
 				field2955[++field2956 - 1] = var4.method360(var5);
 				field2955[++field2956 - 1] = var4.method361(var5);
 				return 1;
 			} else if (var0 == 6765) {
-				var4 = class73.method366(field2955[--field2956]);
+				var4 = class73.getNpcDefinition(field2955[--field2956]);
 				field2955[++field2956 - 1] = null != var4 ? var4.field507 : 0;
 				return 1;
 			} else {

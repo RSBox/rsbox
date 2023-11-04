@@ -743,7 +743,7 @@ public class class496 extends class359 {
 		}
 	}
 
-	public class490 method2329(class72 var1, class116 var2, int var3, boolean var4, class171 var5, class73 var6, class120 var7) {
+	public class490 method2329(class72 var1, class116 var2, int var3, boolean var4, class171 var5, class73 var6, NpcTextureOverride var7) {
 		field3518 = false;
 		int var9;
 		int var10;
@@ -787,7 +787,7 @@ public class class496 extends class359 {
 					var14 = class239.method1092(var1.field466, var10, 0);
 					break;
 				case 2:
-					var14 = class73.method366(var10).method354((class120)null);
+					var14 = class73.getNpcDefinition(var10).method354((NpcTextureOverride)null);
 					break;
 				case 3:
 					var14 = var5 != null ? var5.method905() : null;
@@ -801,7 +801,7 @@ public class class496 extends class359 {
 				default:
 					break;
 				case 6:
-					var14 = class73.method366(var10).method354(var7);
+					var14 = class73.getNpcDefinition(var10).method354(var7);
 				}
 
 				if (var14 == null) {

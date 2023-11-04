@@ -19,7 +19,7 @@ public class class56 extends class292 {
 	void method227(int var1, String var2, String var3, String var4) {
 		int var6 = ++class346.field2426 - 1;
 		this.field260 = var6;
-		this.field254 = Client.field1846;
+		this.field254 = Client.updateTick;
 		this.field255 = var1;
 		this.field256 = var2;
 		this.method231();

@@ -11,7 +11,7 @@ public class class540 {
 	Buffer field4218;
 	class86 field4216;
 	int field4217;
-	int field4222;
+	int packetLength;
 	int field4224;
 	int field4225;
 	public class534 field4219;
@@ -22,7 +22,7 @@ public class class540 {
 		this.field4218 = new Buffer(5000);
 		this.field4220 = new PacketBuffer(40000);
 		this.serverPacket = null;
-		this.field4222 = 0;
+		this.packetLength = 0;
 		this.field4227 = true;
 		this.field4224 = 0;
 		this.field4225 = 0;

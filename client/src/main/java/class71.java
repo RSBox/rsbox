@@ -197,7 +197,7 @@ public class class71 {
 		}
 
 		this.field458 += var1;
-		var8 = (var1 + (Client.field1846 & 1)) / 2;
+		var8 = (var1 + (Client.updateTick & 1)) / 2;
 		if (var8 > 0) {
 			boolean var18 = true;
 			boolean var19 = true;

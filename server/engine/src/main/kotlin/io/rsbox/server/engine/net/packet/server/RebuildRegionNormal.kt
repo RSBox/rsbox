@@ -13,12 +13,12 @@ import io.rsbox.server.util.buffer.BYTE_MODE
 import io.rsbox.server.util.buffer.JagByteBuf
 
 @ServerPacket(opcode = 73, type = PacketType.VARIABLE_SHORT)
-data class RebuildNormalServerPacket(
+data class RebuildRegionNormal(
     val player: Player,
     val gpi: Boolean = false
 ) : Packet {
-    companion object : Codec<RebuildNormalServerPacket> {
-        override fun encode(session: Session, packet: RebuildNormalServerPacket, out: JagByteBuf) {
+    companion object : Codec<RebuildRegionNormal> {
+        override fun encode(session: Session, packet: RebuildRegionNormal, out: JagByteBuf) {
             if(packet.gpi) {
                 out.switchWriteAccess(BIT_MODE)
                 out.writeBits(packet.player.tile.to30BitInteger(), 30)

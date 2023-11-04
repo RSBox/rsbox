@@ -20,7 +20,7 @@ public class class315 implements class1 {
 					var4 = var4 + class274.method1266(16777215) + " " + '/' + " " + (Client.field1979 - 2) + class513.field4043;
 				}
 
-				class209.field1388.method1047(var4, var0 + 4, var1 + 15, 16777215, 0, Client.field1846 / 1000);
+				class209.field1388.method1047(var4, var0 + 4, var1 + 15, 16777215, 0, Client.updateTick / 1000);
 			}
 		}
 	}

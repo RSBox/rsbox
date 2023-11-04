@@ -79,10 +79,10 @@ public class class78 {
 				} else if (this.method375(var3)) {
 					method388(class513.field3935 + var1 + class513.field3936);
 				} else {
-					class341 var4 = class341.createClientPacket(ClientPacket.field3126, Client.field1891.field4219);
+					class341 var4 = class341.createClientPacket(ClientPacket.field3126, Client.serverConnection.field4219);
 					var4.buffer.writeByte(Buffer.method2535(var1));
 					var4.buffer.writeString(var1);
-					Client.field1891.method2612(var4);
+					Client.serverConnection.method2612(var4);
 				}
 			}
 		}
@@ -121,10 +121,10 @@ public class class78 {
 			if (var3.method2401()) {
 				if (this.field546.method2235(var3)) {
 					Client.field2035 = Client.field1977;
-					class341 var4 = class341.createClientPacket(ClientPacket.field3059, Client.field1891.field4219);
+					class341 var4 = class341.createClientPacket(ClientPacket.field3059, Client.serverConnection.field4219);
 					var4.buffer.writeByte(Buffer.method2535(var1));
 					var4.buffer.writeString(var1);
-					Client.field1891.method2612(var4);
+					Client.serverConnection.method2612(var4);
 				}
 
 				Client.method1387();
@@ -139,10 +139,10 @@ public class class78 {
 				if (this.field544.method2235(var4)) {
 					Client.field2035 = Client.field1977;
 					if (var2) {
-						class341 var5 = class341.createClientPacket(ClientPacket.field3113, Client.field1891.field4219);
+						class341 var5 = class341.createClientPacket(ClientPacket.field3113, Client.serverConnection.field4219);
 						var5.buffer.writeByte(Buffer.method2535(var1));
 						var5.buffer.writeString(var1);
-						Client.field1891.method2612(var5);
+						Client.serverConnection.method2612(var5);
 					}
 				}
 
@@ -169,9 +169,9 @@ public class class78 {
 	}
 
 	static final void method385(String var0) {
-		class341 var2 = class341.createClientPacket(ClientPacket.field3142, Client.field1891.field4219);
+		class341 var2 = class341.createClientPacket(ClientPacket.field3142, Client.serverConnection.field4219);
 		var2.buffer.writeByte(Buffer.method2535(var0));
 		var2.buffer.writeString(var0);
-		Client.field1891.method2612(var2);
+		Client.serverConnection.method2612(var2);
 	}
 }

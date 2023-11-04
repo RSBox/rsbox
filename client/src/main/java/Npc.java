@@ -1,28 +1,28 @@
-public final class class378 extends class65 {
+public final class Npc extends class65 {
 	static int field2602;
 	static int field2604;
-	class120 field2601;
-	class120 field2603;
+	NpcTextureOverride field2601;
+	NpcTextureOverride field2603;
 	class306 field2600;
-	class73 field2605;
+	class73 definition;
 	int field2598;
-	String field2599;
+	String name;
 
 	static {
 		field2602 = 1;
 		field2604 = 1;
 	}
 
-	class378() {
-		this.field2599 = "";
+	Npc() {
+		this.name = "";
 		this.field2598 = 31;
 	}
 
-	void method1762(String var1) {
-		this.field2599 = null == var1 ? "" : var1;
+	void changeName(String var1) {
+		this.name = null == var1 ? "" : var1;
 	}
 
-	void method1763(int var1) {
+	void filterOption(int var1) {
 		this.field2598 = var1;
 	}
 
@@ -35,14 +35,14 @@ public final class class378 extends class65 {
 	}
 
 	final String method1777() {
-		if (!this.field2599.isEmpty()) {
-			return this.field2599;
+		if (!this.name.isEmpty()) {
+			return this.name;
 		} else {
-			class73 var2 = this.field2605;
+			class73 var2 = this.definition;
 			if (null != var2.field477) {
 				var2 = var2.method363();
 				if (var2 == null) {
-					var2 = this.field2605;
+					var2 = this.definition;
 				}
 			}
 
@@ -50,7 +50,7 @@ public final class class378 extends class65 {
 		}
 	}
 
-	final void method1765(int var1, MovementType var2, byte var3) {
+	final void move(int var1, MovementType var2, byte var3) {
 		int var4 = super.field399[0];
 		int var5 = super.field400[0];
 		if (var1 == 0) {
@@ -89,15 +89,15 @@ public final class class378 extends class65 {
 			--var5;
 		}
 
-		if (super.field373 != -1 && class116.method539(super.field373).field746 == 1) {
-			super.field373 = -1;
+		if (super.animationId != -1 && class116.getAnimationDefinition(super.animationId).field746 == 1) {
+			super.animationId = -1;
 		}
 
-		if (super.field360 < 9) {
-			++super.field360;
+		if (super.pathLength < 9) {
+			++super.pathLength;
 		}
 
-		for (int var6 = super.field360; var6 > 0; --var6) {
+		for (int var6 = super.pathLength; var6 > 0; --var6) {
 			super.field399[var6] = super.field399[var6 - 1];
 			super.field400[var6] = super.field400[var6 - 1];
 			super.field342[var6] = super.field342[var6 - 1];
@@ -109,19 +109,19 @@ public final class class378 extends class65 {
 	}
 
 	final void method1778(int var1, int var2, boolean var3) {
-		if (super.field373 != -1 && class116.method539(super.field373).field746 == 1) {
-			super.field373 = -1;
+		if (super.animationId != -1 && class116.getAnimationDefinition(super.animationId).field746 == 1) {
+			super.animationId = -1;
 		}
 
 		if (!var3) {
 			int var5 = var1 - super.field399[0];
 			int var6 = var2 - super.field400[0];
 			if (var5 >= -8 && var5 <= 8 && var6 >= -8 && var6 <= 8) {
-				if (super.field360 < 9) {
-					++super.field360;
+				if (super.pathLength < 9) {
+					++super.pathLength;
 				}
 
-				for (int var7 = super.field360; var7 > 0; --var7) {
+				for (int var7 = super.pathLength; var7 > 0; --var7) {
 					super.field399[var7] = super.field399[var7 - 1];
 					super.field400[var7] = super.field400[var7 - 1];
 					super.field342[var7] = super.field342[var7 - 1];
@@ -134,7 +134,7 @@ public final class class378 extends class65 {
 			}
 		}
 
-		super.field360 = 0;
+		super.pathLength = 0;
 		super.field403 = 0;
 		super.field375 = 0;
 		super.field399[0] = var1;
@@ -145,16 +145,16 @@ public final class class378 extends class65 {
 
 	@Override
 	protected final class490 method2152() {
-		if (null == this.field2605) {
+		if (null == this.definition) {
 			return null;
 		} else {
-			class116 var2 = super.field373 != -1 && super.field376 == 0 ? class116.method539(super.field373) : null;
-			class116 var3 = super.field369 != -1 && (super.field369 != super.field383 || null == var2) ? class116.method539(super.field369) : null;
+			class116 var2 = super.animationId != -1 && super.animationDelay == 0 ? class116.getAnimationDefinition(super.animationId) : null;
+			class116 var3 = super.field369 != -1 && (super.field369 != super.field383 || null == var2) ? class116.getAnimationDefinition(super.field369) : null;
 			class490 var4 = null;
 			if (null != this.field2601 && this.field2601.field790) {
-				var4 = class114.field720.field2989.method906(var2, super.field334, var3, super.field370);
+				var4 = class114.field720.field2989.method906(var2, super.animationFrame, var3, super.field370);
 			} else {
-				var4 = this.field2605.method353(var2, super.field334, var3, super.field370, this.field2601);
+				var4 = this.definition.method353(var2, super.animationFrame, var3, super.field370, this.field2601);
 			}
 
 			if (null == var4) {
@@ -164,11 +164,11 @@ public final class class378 extends class65 {
 				super.field353 = var4.field3161;
 				int var5 = var4.field3448;
 				var4 = this.method296(var4);
-				if (this.field2605.field484 == 1) {
+				if (this.definition.field484 == 1) {
 					var4.field3454 = true;
 				}
 
-				if (super.field394 != 0 && Client.field1846 >= super.field389 && Client.field1846 < super.field390) {
+				if (super.field394 != 0 && Client.updateTick >= super.field389 && Client.updateTick < super.field390) {
 					var4.field3490 = super.field391;
 					var4.field3467 = super.field392;
 					var4.field3492 = super.field393;
@@ -185,20 +185,20 @@ public final class class378 extends class65 {
 
 	@Override
 	final boolean method289() {
-		return null != this.field2605;
+		return null != this.definition;
 	}
 
 	int[] method1767() {
-		return null != this.field2600 ? this.field2600.method1559() : this.field2605.method359();
+		return null != this.field2600 ? this.field2600.method1559() : this.definition.method359();
 	}
 
 	short[] method1770() {
-		return null != this.field2600 ? this.field2600.method1560() : this.field2605.method362();
+		return null != this.field2600 ? this.field2600.method1560() : this.definition.method362();
 	}
 
 	void method1776(int var1, int var2, short var3) {
 		if (null == this.field2600) {
-			this.field2600 = new class306(this.field2605);
+			this.field2600 = new class306(this.definition);
 		}
 
 		this.field2600.method1561(var1, var2, var3);
@@ -206,7 +206,7 @@ public final class class378 extends class65 {
 
 	void method1775(int[] var1, short[] var2) {
 		if (this.field2600 == null) {
-			this.field2600 = new class306(this.field2605);
+			this.field2600 = new class306(this.definition);
 		}
 
 		this.field2600.method1562(var1, var2);
@@ -216,19 +216,19 @@ public final class class378 extends class65 {
 		this.field2600 = null;
 	}
 
-	void method1769(class120 var1) {
+	void overrideTexture(NpcTextureOverride var1) {
 		this.field2603 = var1;
 	}
 
-	class120 method1774() {
+	NpcTextureOverride method1774() {
 		return this.field2603;
 	}
 
-	void method1771(class120 var1) {
+	void method1771(NpcTextureOverride var1) {
 		this.field2601 = var1;
 	}
 
-	void method1772() {
+	void clearOverrides() {
 		this.field2603 = null;
 	}
 

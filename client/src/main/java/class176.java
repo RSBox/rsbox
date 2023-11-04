@@ -22,11 +22,11 @@ public class class176 extends class227 {
 	}
 
 	static final void decodeGPI(PacketBuffer var0) {
-		var0.method1497();
+		var0.switchBitMode();
 		int var2 = Client.field1958;
 		Player var3 = class114.field720 = Client.field2037[var2] = new Player();
 		var3.field3001 = var2;
-		int var4 = var0.method1501(30);
+		int var4 = var0.readBits(30);
 		byte var5 = (byte)(var4 >> 28);
 		int var6 = var4 >> 14 & 16383;
 		int var7 = var4 & 16383;
@@ -46,7 +46,7 @@ public class class176 extends class227 {
 
 		for (int var8 = 1; var8 < 2048; ++var8) {
 			if (var2 != var8) {
-				int var9 = var0.method1501(18);
+				int var9 = var0.readBits(18);
 				int var10 = var9 >> 16;
 				int var11 = var9 >> 8 & 597;
 				int var12 = var9 & 597;

@@ -6,7 +6,7 @@ public class class450 {
 	}
 
 	public static class341 method2109(int var0, String var1, class66 var2, int var3) {
-		class341 var5 = class341.createClientPacket(ClientPacket.field3136, Client.field1891.field4219);
+		class341 var5 = class341.createClientPacket(ClientPacket.field3136, Client.serverConnection.field4219);
 		var5.buffer.writeByte(0);
 		int var6 = var5.buffer.offset;
 		var5.buffer.writeByte(var0);

@@ -20,7 +20,7 @@ public abstract class class65 extends class462 {
 	int field331;
 	int field332;
 	int field333;
-	int field334;
+	int animationFrame;
 	int field335;
 	int field336;
 	int field338;
@@ -33,13 +33,13 @@ public abstract class class65 extends class462 {
 	int field347;
 	int field348;
 	int field351;
-	int field352;
+	int overheadTextTicksRemaining;
 	int field353;
 	int field354;
 	int field355;
 	int field358;
 	int field359;
-	int field360;
+	int pathLength;
 	int field361;
 	int field363;
 	int field365;
@@ -50,25 +50,25 @@ public abstract class class65 extends class462 {
 	int field370;
 	int field371;
 	int field372;
-	int field373;
+	int animationId;
 	int field375;
-	int field376;
-	int field377;
+	int animationDelay;
+	int curAnimationFrameIndex;
 	int field379;
 	int field380;
 	int field381;
 	int field383;
 	int field384;
 	int field385;
-	int field387;
+	int lastUpdateTick;
 	int field389;
 	int field390;
-	int field395;
+	int animationFrameCycle;
 	int field396;
 	int field397;
 	int field401;
 	int field403;
-	int field404;
+	int combatLevel;
 	int[] field337;
 	int[] field357;
 	int[] field374;
@@ -77,7 +77,7 @@ public abstract class class65 extends class462 {
 	int[] field399;
 	int[] field400;
 	int[] field402;
-	String field356;
+	String overheadText;
 
 	class65() {
 		this.field349 = false;
@@ -97,9 +97,9 @@ public abstract class class65 extends class462 {
 		this.field346 = -1;
 		this.field361 = -1;
 		this.field348 = -1;
-		this.field356 = null;
+		this.overheadText = null;
 		this.field388 = false;
-		this.field352 = 100;
+		this.overheadTextTicksRemaining = 100;
 		this.field397 = 0;
 		this.field354 = 0;
 		this.field337 = null;
@@ -119,30 +119,30 @@ public abstract class class65 extends class462 {
 		this.field370 = 0;
 		this.field371 = 0;
 		this.field372 = 0;
-		this.field373 = -1;
-		this.field334 = 0;
-		this.field395 = 0;
-		this.field376 = 0;
-		this.field377 = 0;
+		this.animationId = -1;
+		this.animationFrame = 0;
+		this.animationFrameCycle = 0;
+		this.animationDelay = 0;
+		this.curAnimationFrameIndex = 0;
 		this.field378 = new class301(4);
 		this.field379 = 0;
-		this.field387 = 0;
+		this.lastUpdateTick = 0;
 		this.field353 = 200;
 		this.field389 = -1;
 		this.field390 = -1;
 		this.field355 = 0;
 		this.field358 = 32;
-		this.field360 = 0;
+		this.pathLength = 0;
 		this.field399 = new int[10];
 		this.field400 = new int[10];
 		this.field342 = new MovementType[10];
 		this.field375 = 0;
 		this.field403 = 0;
-		this.field404 = -1;
+		this.combatLevel = -1;
 	}
 
 	final void method288() {
-		this.field360 = 0;
+		this.pathLength = 0;
 		this.field403 = 0;
 	}
 
@@ -279,7 +279,7 @@ public abstract class class65 extends class462 {
 	}
 
 	void method292(int var1, int var2, int var3, int var4) {
-		int var6 = Client.field1846 + var4;
+		int var6 = Client.updateTick + var4;
 		class546 var7 = (class546)this.field378.method1533((long)var1);
 		if (null != var7) {
 			var7.method1719();

@@ -175,7 +175,7 @@ public class class502 {
 
 		for (class473 var5 = (class473)Client.field1973.method327(); null != var5; var5 = (class473)Client.field1973.method331()) {
 			if (class212.field1393 == var5.field3323 && !var5.field3324) {
-				if (Client.field1846 >= var5.field3314) {
+				if (Client.updateTick >= var5.field3314) {
 					var5.method2189(Client.field2022);
 					if (var5.field3324) {
 						var5.method1719();
@@ -257,16 +257,16 @@ public class class502 {
 			class76.field537 = var6;
 		}
 
-		if (Client.field1923 == 1 && Client.field2087 >= 2 && Client.field1846 % 50 == 0 && (class114.field720.field368 >> 7 != class89.field585 >> 7 || class114.field720.field329 >> 7 != class124.field814 >> 7)) {
+		if (Client.field1923 == 1 && Client.field2087 >= 2 && Client.updateTick % 50 == 0 && (class114.field720.field368 >> 7 != class89.field585 >> 7 || class114.field720.field329 >> 7 != class124.field814 >> 7)) {
 			var18 = class114.field720.field3009;
 			var19 = (class89.field585 >> 7) + class80.selectedTileX;
 			var20 = (class124.field814 >> 7) + class425.selectedTileXYIdk;
-			class341 var21 = class341.createClientPacket(ClientPacket.field3067, Client.field1891.field4219);
+			class341 var21 = class341.createClientPacket(ClientPacket.field3067, Client.serverConnection.field4219);
 			var21.buffer.writeShortADD(var19);
 			var21.buffer.writeShortLE(var20);
 			var21.buffer.writeInt(Client.field1861);
 			var21.buffer.writeByteADD(var18);
-			Client.field1891.method2612(var21);
+			Client.serverConnection.method2612(var21);
 		}
 
 		if (!Client.field2080) {
@@ -349,7 +349,7 @@ public class class502 {
 		int[] var25 = class264.field1765;
 
 		int var26;
-		for (var26 = 0; var26 < var24 + Client.field1980; ++var26) {
+		for (var26 = 0; var26 < var24 + Client.npcCount; ++var26) {
 			Object var27;
 			if (var26 < var24) {
 				var27 = Client.field2037[var25[var26]];
@@ -364,7 +364,7 @@ public class class502 {
 					continue;
 				}
 			} else {
-				var27 = Client.field2017[Client.field1893[var26 - var24]];
+				var27 = Client.npcs[Client.localNpcIndexes[var26 - var24]];
 			}
 
 			Client.method1394((class65)var27, var26, var0, var1, var2, var3);

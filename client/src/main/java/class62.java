@@ -236,9 +236,9 @@ public final class class62 {
 				class397.field2691.method1679();
 				class341 var20;
 				if (class190.field1287.method2581()) {
-					var20 = class341.createClientPacket(ClientPacket.field3125, Client.field1891.field4219);
+					var20 = class341.createClientPacket(ClientPacket.field3125, Client.serverConnection.field4219);
 					var20.buffer.writeInt(1057001181);
-					Client.field1891.method2612(var20);
+					Client.serverConnection.method2612(var20);
 				}
 
 				if (!Client.isInstance) {
@@ -260,8 +260,8 @@ public final class class62 {
 				class432.method1954(30);
 				class253.method1209();
 				class129.method602();
-				var20 = class341.createClientPacket(ClientPacket.field3087, Client.field1891.field4219);
-				Client.field1891.method2612(var20);
+				var20 = class341.createClientPacket(ClientPacket.field3087, Client.serverConnection.field4219);
+				Client.serverConnection.method2612(var20);
 				class535.method2591();
 			}
 		}

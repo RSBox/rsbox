@@ -24,8 +24,8 @@ public class class93 implements ThreadFactory {
 		return var2;
 	}
 
-	static final void method422(class378 var0, int var1, int var2, int var3) {
-		class73 var5 = var0.field2605;
+	static final void method422(Npc var0, int var1, int var2, int var3) {
+		class73 var5 = var0.definition;
 		if (Client.field1979 < 400) {
 			if (null != var5.field477) {
 				var5 = var5.method363();
@@ -36,8 +36,8 @@ public class class93 implements ThreadFactory {
 					if (!var5.field514 || Client.field2011 == var1) {
 						String var6 = var0.method1777();
 						int var7;
-						if (var5.field507 != 0 && var0.field404 != 0) {
-							var7 = var0.field404 != -1 ? var0.field404 : var5.field507;
+						if (var5.field507 != 0 && var0.combatLevel != 0) {
+							var7 = var0.combatLevel != -1 ? var0.combatLevel : var5.field507;
 							var6 = var6 + Client.method1437(var7, class114.field720.field2993) + " " + class274.field1821 + class513.field3919 + var7 + class274.field1822;
 						}
 

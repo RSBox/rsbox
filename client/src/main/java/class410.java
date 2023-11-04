@@ -1331,7 +1331,7 @@ public class class410 {
 					for (var7 = var7; var0.method1033(var7) > 200; var7 = var7.substring(1)) {
 					}
 
-					var0.method1037(class229.method1036(var7) + (field2834 == 0 & Client.field1846 % 40 < 20 ? class274.method1266(16776960) + class274.field1820 : ""), class469.field3303 - 70, 253, 16777215, 0);
+					var0.method1037(class229.method1036(var7) + (field2834 == 0 & Client.updateTick % 40 < 20 ? class274.method1266(16776960) + class274.field1820 : ""), class469.field3303 - 70, 253, 16777215, 0);
 					var16 += 15;
 					var9 = field2827;
 					var8 = class385.method1809('*', var9.length());
@@ -1339,7 +1339,7 @@ public class class410 {
 					for (var10 = var8; var0.method1033(var10) > 200; var10 = var10.substring(1)) {
 					}
 
-					var0.method1037(class513.field3776 + var10 + (field2834 == 1 & Client.field1846 % 40 < 20 ? class274.method1266(16776960) + class274.field1820 : ""), class469.field3303 - 108, 268, 16777215, 0);
+					var0.method1037(class513.field3776 + var10 + (field2834 == 1 & Client.updateTick % 40 < 20 ? class274.method1266(16776960) + class274.field1820 : ""), class469.field3303 - 108, 268, 16777215, 0);
 					var16 += 15;
 					var15 = 277;
 					int var11 = class469.field3303 + -117;
@@ -1402,7 +1402,7 @@ public class class410 {
 						var18 = class513.field3987;
 						var8 = class333.field2361;
 						var7 = class385.method1809('*', var8.length());
-						var0.method1037(var18 + var7 + (Client.field1846 % 40 < 20 ? class274.method1266(16776960) + class274.field1820 : ""), 180 + field2816 - 108, 281, 16777215, 0);
+						var0.method1037(var18 + var7 + (Client.updateTick % 40 < 20 ? class274.method1266(16776960) + class274.field1820 : ""), 180 + field2816 - 108, 281, 16777215, 0);
 						var16 -= 8;
 						var0.method1037(class513.field3923, 180 + field2816 - 9, 273, 16776960, 0);
 						var16 += 15;
@@ -1452,7 +1452,7 @@ public class class410 {
 							for (var7 = var7; var0.method1033(var7) > 174; var7 = var7.substring(1)) {
 							}
 
-							var0.method1037(class229.method1036(var7) + (Client.field1846 % 40 < 20 ? class274.method1266(16776960) + class274.field1820 : ""), 180 + field2816 - 34, 280, 16777215, 0);
+							var0.method1037(class229.method1036(var7) + (Client.updateTick % 40 < 20 ? class274.method1266(16776960) + class274.field1820 : ""), 180 + field2816 - 34, 280, 16777215, 0);
 							var16 += 15;
 							var20 = field2816 + 180 - 80;
 							var22 = true;
@@ -1489,7 +1489,7 @@ public class class410 {
 								int var19;
 								for (var19 = 0; var19 < 8; ++var19) {
 									class241.field1619.method1070(var17, 241, 30, 40);
-									var26 = var19 == field2828 & Client.field1846 % 40 < 20;
+									var26 = var19 == field2828 & Client.updateTick % 40 < 20;
 									var0.method1037((field2829[var19] == null ? "" : field2829[var19]) + (var26 ? class274.method1266(16776960) + class274.field1820 : ""), var17 + 10, 268, 16777215, 0);
 									if (var19 != 1 && var19 != 3) {
 										var17 += 35;
@@ -1684,8 +1684,8 @@ public class class410 {
 				int[] var30 = new int[4];
 				class433.method1960(var30);
 				class433.method1958(field2810, 0, field2810 + 765, class92.field595);
-				class168.field1183.method344(field2810 - 22, Client.field1846);
-				class168.field1183.method344(field2810 + 765 + 22 - 128, Client.field1846);
+				class168.field1183.method344(field2810 - 22, Client.updateTick);
+				class168.field1183.method344(field2810 + 765 + 22 - 128, Client.updateTick);
 				class433.method1961(var30);
 			}
 

@@ -230,12 +230,12 @@ public class class248 {
 					int var14 = this.field1705.field2561;
 					var11 = this.field1705.field2559;
 					var12 = this.field1705.field2560;
-					class341 var13 = class341.createClientPacket(ClientPacket.field3067, Client.field1891.field4219);
+					class341 var13 = class341.createClientPacket(ClientPacket.field3067, Client.serverConnection.field4219);
 					var13.buffer.writeShortADD(var14);
 					var13.buffer.writeShortLE(var11);
 					var13.buffer.writeInt(0);
 					var13.buffer.writeByteADD(var12);
-					Client.field1891.method2612(var13);
+					Client.serverConnection.method2612(var13);
 				} else {
 					boolean var10 = true;
 					if (this.field1694) {
@@ -247,9 +247,9 @@ public class class248 {
 					}
 
 					if (var10) {
-						class341 var15 = class341.createClientPacket(ClientPacket.field3089, Client.field1891.field4219);
+						class341 var15 = class341.createClientPacket(ClientPacket.field3089, Client.serverConnection.field4219);
 						var15.buffer.writeInt(this.field1705.method1737());
-						Client.field1891.method2612(var15);
+						Client.serverConnection.method2612(var15);
 						this.field1672 = 0L;
 					}
 				}

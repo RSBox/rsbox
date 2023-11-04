@@ -24,12 +24,12 @@ public class class200 implements class501 {
 	}
 
 	static void method967(PacketBuffer var0, int var1) {
-		boolean var3 = var0.method1501(1) == 1;
+		boolean var3 = var0.readBits(1) == 1;
 		if (var3) {
 			class264.field1773[++class264.field1771 - 1] = var1;
 		}
 
-		int var4 = var0.method1501(2);
+		int var4 = var0.readBits(2);
 		Player var5 = Client.field2037[var1];
 		if (var4 == 0) {
 			if (var3) {
@@ -46,7 +46,7 @@ public class class200 implements class501 {
 
 				class264.field1770[var1] = var5.field363;
 				Client.field2037[var1] = null;
-				if (var0.method1501(1) != 0) {
+				if (var0.readBits(1) != 0) {
 					class264.method1238(var0, var1);
 				}
 
@@ -56,7 +56,7 @@ public class class200 implements class501 {
 			int var7;
 			int var8;
 			if (var4 == 1) {
-				var6 = var0.method1501(3);
+				var6 = var0.readBits(3);
 				var7 = var5.field399[0];
 				var8 = var5.field400[0];
 				if (var6 == 0) {
@@ -94,7 +94,7 @@ public class class200 implements class501 {
 				}
 
 			} else if (var4 == 2) {
-				var6 = var0.method1501(4);
+				var6 = var0.readBits(4);
 				var7 = var5.field399[0];
 				var8 = var5.field400[0];
 				if (var6 == 0) {
@@ -158,13 +158,13 @@ public class class200 implements class501 {
 				}
 
 			} else {
-				var6 = var0.method1501(1);
+				var6 = var0.readBits(1);
 				int var9;
 				int var10;
 				int var11;
 				int var12;
 				if (var6 == 0) {
-					var7 = var0.method1501(12);
+					var7 = var0.readBits(12);
 					var8 = var7 >> 10;
 					var9 = var7 >> 5 & 31;
 					if (var9 > 15) {
@@ -198,7 +198,7 @@ public class class200 implements class501 {
 					}
 
 				} else {
-					var7 = var0.method1501(30);
+					var7 = var0.readBits(30);
 					var8 = var7 >> 28;
 					var9 = var7 >> 14 & 16383;
 					var10 = var7 & 16383;

@@ -17,10 +17,10 @@ public class class525 extends class462 {
 		this.field4113 = var5;
 		this.field4116 = var6;
 		if (var7 != -1) {
-			this.field4117 = class116.method539(var7);
+			this.field4117 = class116.getAnimationDefinition(var7);
 			this.field4118 = 0;
-			this.field4119 = Client.field1846 - 1;
-			if (this.field4117.field747 == 0 && var9 != null && var9 instanceof class525) {
+			this.field4119 = Client.updateTick - 1;
+			if (this.field4117.loopType == 0 && var9 != null && var9 instanceof class525) {
 				class525 var10 = (class525)var9;
 				if (this.field4117 == var10.field4117) {
 					this.field4118 = var10.field4118;
@@ -45,7 +45,7 @@ public class class525 extends class462 {
 	protected final class490 method2152() {
 		int var3;
 		if (null != this.field4117) {
-			int var2 = Client.field1846 - this.field4119;
+			int var2 = Client.updateTick - this.field4119;
 			if (var2 > 100 && this.field4117.field737 > 0) {
 				var2 = 100;
 			}
@@ -79,7 +79,7 @@ public class class525 extends class462 {
 				}
 			}
 
-			this.field4119 = Client.field1846 - var2;
+			this.field4119 = Client.updateTick - var2;
 		}
 
 		class397 var13 = class109.method504(this.field4115);

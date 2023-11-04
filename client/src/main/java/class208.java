@@ -42,7 +42,7 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3137, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3137, Client.serverConnection.field4219);
 			var10.buffer.writeShortLEADD(class65.field405);
 			var10.buffer.writeShortLE(var3);
 			var10.buffer.writeIntME(class406.field2788);
@@ -50,7 +50,7 @@ public class class208 {
 			var10.buffer.writeShort(class457.field3043);
 			var10.buffer.writeByteSUB(Client.field2067.method1798(82) ? 1 : 0);
 			var10.buffer.writeShortLE(class425.selectedTileXYIdk + var1);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 1008 || var2 == 1009 || var2 == 1010 || var2 == 1011 || var2 == 1012) {
@@ -60,9 +60,9 @@ public class class208 {
 		class496 var11;
 		int var12;
 		if (var2 == 28) {
-			var10 = class341.createClientPacket(ClientPacket.field3080, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3080, Client.serverConnection.field4219);
 			var10.buffer.writeInt(var1);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 			var11 = interfaceConfigs.method345(var1);
 			if (var11 != null && null != var11.field3576 && var11.field3576[0][0] == 5) {
 				var12 = var11.field3576[0][1];
@@ -78,12 +78,12 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3116, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3116, Client.serverConnection.field4219);
 			var10.buffer.writeShortLEADD(var3);
 			var10.buffer.writeByteNEG(Client.field2067.method1798(82) ? 1 : 0);
 			var10.buffer.writeShortLEADD(class80.selectedTileX + var0);
 			var10.buffer.writeShortLE(var1 + class425.selectedTileXYIdk);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 1) {
@@ -93,7 +93,7 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3066, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3066, Client.serverConnection.field4219);
 			var10.buffer.writeIntIME(class406.field2788);
 			var10.buffer.writeShortLE(var0 + class80.selectedTileX);
 			var10.buffer.writeShort(class65.field405);
@@ -101,7 +101,7 @@ public class class208 {
 			var10.buffer.writeShort(var3);
 			var10.buffer.writeByteNEG(Client.field2067.method1798(82) ? 1 : 0);
 			var10.buffer.writeShortADD(var1 + class425.selectedTileXYIdk);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 20) {
@@ -111,18 +111,18 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3134, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3134, Client.serverConnection.field4219);
 			var10.buffer.writeShortLE(class425.selectedTileXYIdk + var1);
 			var10.buffer.writeShortADD(var3);
 			var10.buffer.writeShortADD(var0 + class80.selectedTileX);
 			var10.buffer.writeByteADD(Client.field2067.method1798(82) ? 1 : 0);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		class341 var13;
-		class378 var14;
+		Npc var14;
 		if (var2 == 7) {
-			var14 = Client.field2017[var3];
+			var14 = Client.npcs[var3];
 			if (var14 != null) {
 				Client.field1849 = var7;
 				Client.field1951 = var8;
@@ -130,13 +130,13 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3073, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3073, Client.serverConnection.field4219);
 				var13.buffer.writeShortLEADD(class65.field405);
 				var13.buffer.writeByteSUB(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeInt(class406.field2788);
 				var13.buffer.writeShortLE(var3);
 				var13.buffer.writeShortADD(class457.field3043);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -147,12 +147,12 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3124, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3124, Client.serverConnection.field4219);
 			var10.buffer.writeShortLE(var1 + class425.selectedTileXYIdk);
 			var10.buffer.writeShortADD(var3);
 			var10.buffer.writeShortADD(var0 + class80.selectedTileX);
 			var10.buffer.writeByteSUB(Client.field2067.method1798(82) ? 1 : 0);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		Player var15;
@@ -165,13 +165,13 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3058, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3058, Client.serverConnection.field4219);
 				var13.buffer.writeIntME(class406.field2788);
 				var13.buffer.writeShortLEADD(class65.field405);
 				var13.buffer.writeByte(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShortLEADD(var3);
 				var13.buffer.writeShortADD(class457.field3043);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -192,10 +192,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3130, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3130, Client.serverConnection.field4219);
 				var13.buffer.writeByteNEG(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShortLE(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -208,10 +208,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3122, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3122, Client.serverConnection.field4219);
 				var13.buffer.writeByte(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShort(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -224,7 +224,7 @@ public class class208 {
 		}
 
 		if (var2 == 13) {
-			var14 = Client.field2017[var3];
+			var14 = Client.npcs[var3];
 			if (var14 != null) {
 				Client.field1849 = var7;
 				Client.field1951 = var8;
@@ -232,10 +232,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3107, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3107, Client.serverConnection.field4219);
 				var13.buffer.writeByte(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShortLE(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -245,17 +245,17 @@ public class class208 {
 			Client.field1951 = var8;
 			Client.field1953 = 2;
 			Client.field2073 = 0;
-			var14 = Client.field2017[var3];
+			var14 = Client.npcs[var3];
 			if (var14 != null) {
-				class73 var18 = var14.field2605;
+				class73 var18 = var14.definition;
 				if (null != var18.field477) {
 					var18 = var18.method363();
 				}
 
 				if (null != var18) {
-					var16 = class341.createClientPacket(ClientPacket.field3112, Client.field1891.field4219);
+					var16 = class341.createClientPacket(ClientPacket.field3112, Client.serverConnection.field4219);
 					var16.buffer.writeShortADD(var18.field517);
-					Client.field1891.method2612(var16);
+					Client.serverConnection.method2612(var16);
 				}
 			}
 		}
@@ -267,12 +267,12 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3079, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3079, Client.serverConnection.field4219);
 			var10.buffer.writeShortLEADD(var3);
 			var10.buffer.writeShort(var0 + class80.selectedTileX);
 			var10.buffer.writeShort(var1 + class425.selectedTileXYIdk);
 			var10.buffer.writeByteSUB(Client.field2067.method1798(82) ? 1 : 0);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 44) {
@@ -284,15 +284,15 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3055, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3055, Client.serverConnection.field4219);
 				var13.buffer.writeByteADD(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShortADD(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
 		if (var2 == 11) {
-			var14 = Client.field2017[var3];
+			var14 = Client.npcs[var3];
 			if (null != var14) {
 				Client.field1849 = var7;
 				Client.field1951 = var8;
@@ -300,10 +300,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3090, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3090, Client.serverConnection.field4219);
 				var13.buffer.writeByteADD(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShortADD(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -314,12 +314,12 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3118, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3118, Client.serverConnection.field4219);
 			var10.buffer.writeShortADD(class425.selectedTileXYIdk + var1);
 			var10.buffer.writeShort(var3);
 			var10.buffer.writeShortLE(class80.selectedTileX + var0);
 			var10.buffer.writeByteNEG(Client.field2067.method1798(82) ? 1 : 0);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 15) {
@@ -331,13 +331,13 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3086, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3086, Client.serverConnection.field4219);
 				var13.buffer.writeShort(Client.field1999);
 				var13.buffer.writeShortLEADD(Client.field1898);
 				var13.buffer.writeIntLE(class258.field1755);
 				var13.buffer.writeShortLE(var3);
 				var13.buffer.writeByteADD(Client.field2067.method1798(82) ? 1 : 0);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -350,10 +350,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3084, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3084, Client.serverConnection.field4219);
 				var13.buffer.writeByte(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShortLE(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -364,12 +364,12 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3060, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3060, Client.serverConnection.field4219);
 			var10.buffer.writeByteSUB(Client.field2067.method1798(82) ? 1 : 0);
 			var10.buffer.writeShort(var1 + class425.selectedTileXYIdk);
 			var10.buffer.writeShortLE(var0 + class80.selectedTileX);
 			var10.buffer.writeShortADD(var3);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 24) {
@@ -381,9 +381,9 @@ public class class208 {
 				}
 
 				if (var19) {
-					var16 = class341.createClientPacket(ClientPacket.field3080, Client.field1891.field4219);
+					var16 = class341.createClientPacket(ClientPacket.field3080, Client.serverConnection.field4219);
 					var16.buffer.writeInt(var1);
-					Client.field1891.method2612(var16);
+					Client.serverConnection.method2612(var16);
 				}
 			}
 		}
@@ -395,7 +395,7 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3135, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3135, Client.serverConnection.field4219);
 			var10.buffer.writeByteNEG(Client.field2067.method1798(82) ? 1 : 0);
 			var10.buffer.writeShortADD(Client.field1898);
 			var10.buffer.writeShort(var0 + class80.selectedTileX);
@@ -403,7 +403,7 @@ public class class208 {
 			var10.buffer.writeShortLE(var3);
 			var10.buffer.writeShortLE(var1 + class425.selectedTileXYIdk);
 			var10.buffer.writeShortLEADD(Client.field1999);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 30 && null == Client.field1936) {
@@ -413,7 +413,7 @@ public class class208 {
 		}
 
 		if (var2 == 12) {
-			var14 = Client.field2017[var3];
+			var14 = Client.npcs[var3];
 			if (var14 != null) {
 				Client.field1849 = var7;
 				Client.field1951 = var8;
@@ -421,15 +421,15 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3114, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3114, Client.serverConnection.field4219);
 				var13.buffer.writeByteNEG(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShort(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
 		if (var2 == 9) {
-			var14 = Client.field2017[var3];
+			var14 = Client.npcs[var3];
 			if (var14 != null) {
 				Client.field1849 = var7;
 				Client.field1951 = var8;
@@ -437,10 +437,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3115, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3115, Client.serverConnection.field4219);
 				var13.buffer.writeShortLEADD(var3);
 				var13.buffer.writeByte(Client.field2067.method1798(82) ? 1 : 0);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -453,10 +453,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3094, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3094, Client.serverConnection.field4219);
 				var13.buffer.writeByteNEG(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShortLE(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -467,12 +467,12 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3096, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3096, Client.serverConnection.field4219);
 			var10.buffer.writeShortADD(var0 + class80.selectedTileX);
 			var10.buffer.writeShort(var1 + class425.selectedTileXYIdk);
 			var10.buffer.writeByteSUB(Client.field2067.method1798(82) ? 1 : 0);
 			var10.buffer.writeShortLEADD(var3);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 1002) {
@@ -480,9 +480,9 @@ public class class208 {
 			Client.field1951 = var8;
 			Client.field1953 = 2;
 			Client.field2073 = 0;
-			var10 = class341.createClientPacket(ClientPacket.field3077, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3077, Client.serverConnection.field4219);
 			var10.buffer.writeShortLEADD(var3);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 17) {
@@ -492,7 +492,7 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3140, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3140, Client.serverConnection.field4219);
 			var10.buffer.writeShortLEADD(var3);
 			var10.buffer.writeByteADD(Client.field2067.method1798(82) ? 1 : 0);
 			var10.buffer.writeInt(class258.field1755);
@@ -500,7 +500,7 @@ public class class208 {
 			var10.buffer.writeShortADD(var1 + class425.selectedTileXYIdk);
 			var10.buffer.writeShortADD(class80.selectedTileX + var0);
 			var10.buffer.writeShortLE(Client.field1898);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 46) {
@@ -512,10 +512,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3072, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3072, Client.serverConnection.field4219);
 				var13.buffer.writeShortLEADD(var3);
 				var13.buffer.writeByte(Client.field2067.method1798(82) ? 1 : 0);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -526,12 +526,12 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3064, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3064, Client.serverConnection.field4219);
 			var10.buffer.writeShortLEADD(class80.selectedTileX + var0);
 			var10.buffer.writeShortADD(var1 + class425.selectedTileXYIdk);
 			var10.buffer.writeShortADD(var3);
 			var10.buffer.writeByte(Client.field2067.method1798(82) ? 1 : 0);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 45) {
@@ -543,15 +543,15 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3098, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3098, Client.serverConnection.field4219);
 				var13.buffer.writeByteSUB(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShort(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
 		if (var2 == 10) {
-			var14 = Client.field2017[var3];
+			var14 = Client.npcs[var3];
 			if (null != var14) {
 				Client.field1849 = var7;
 				Client.field1951 = var8;
@@ -559,10 +559,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3057, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3057, Client.serverConnection.field4219);
 				var13.buffer.writeByteADD(Client.field2067.method1798(82) ? 1 : 0);
 				var13.buffer.writeShortLEADD(var3);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -571,11 +571,11 @@ public class class208 {
 			Client.field1951 = var8;
 			Client.field1953 = 2;
 			Client.field2073 = 0;
-			var10 = class341.createClientPacket(ClientPacket.field3076, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3076, Client.serverConnection.field4219);
 			var10.buffer.writeShort(class425.selectedTileXYIdk + var1);
 			var10.buffer.writeShort(class80.selectedTileX + var0);
 			var10.buffer.writeShortLEADD(var3);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 58) {
@@ -590,14 +590,14 @@ public class class208 {
 					class440.method2027(var20);
 				}
 
-				var13 = class341.createClientPacket(ClientPacket.field3082, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3082, Client.serverConnection.field4219);
 				var13.buffer.writeShortADD(Client.field1898);
 				var13.buffer.writeInt(var1);
 				var13.buffer.writeShortLEADD(var4);
 				var13.buffer.writeIntIME(class258.field1755);
 				var13.buffer.writeShortADD(Client.field1999);
 				var13.buffer.writeShortADD(var0);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -608,12 +608,12 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3075, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3075, Client.serverConnection.field4219);
 			var10.buffer.writeShortLEADD(class425.selectedTileXYIdk + var1);
 			var10.buffer.writeByteSUB(Client.field2067.method1798(82) ? 1 : 0);
 			var10.buffer.writeShortLEADD(class80.selectedTileX + var0);
 			var10.buffer.writeShort(var3);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 1001) {
@@ -623,18 +623,18 @@ public class class208 {
 			Client.field2073 = 0;
 			Client.field1840 = var0;
 			Client.field2081 = var1;
-			var10 = class341.createClientPacket(ClientPacket.field3070, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3070, Client.serverConnection.field4219);
 			var10.buffer.writeShort(var3);
 			var10.buffer.writeShortLEADD(var1 + class425.selectedTileXYIdk);
 			var10.buffer.writeShortLEADD(var0 + class80.selectedTileX);
 			var10.buffer.writeByteNEG(Client.field2067.method1798(82) ? 1 : 0);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 		}
 
 		if (var2 == 29) {
-			var10 = class341.createClientPacket(ClientPacket.field3080, Client.field1891.field4219);
+			var10 = class341.createClientPacket(ClientPacket.field3080, Client.serverConnection.field4219);
 			var10.buffer.writeInt(var1);
-			Client.field1891.method2612(var10);
+			Client.serverConnection.method2612(var10);
 			var11 = interfaceConfigs.method345(var1);
 			if (var11 != null && null != var11.field3576 && var11.field3576[0][0] == 5) {
 				var12 = var11.field3576[0][1];
@@ -654,10 +654,10 @@ public class class208 {
 				Client.field2073 = 0;
 				Client.field1840 = var0;
 				Client.field2081 = var1;
-				var13 = class341.createClientPacket(ClientPacket.field3111, Client.field1891.field4219);
+				var13 = class341.createClientPacket(ClientPacket.field3111, Client.serverConnection.field4219);
 				var13.buffer.writeShortADD(var3);
 				var13.buffer.writeByteNEG(Client.field2067.method1798(82) ? 1 : 0);
-				Client.field1891.method2612(var13);
+				Client.serverConnection.method2612(var13);
 			}
 		}
 
@@ -685,7 +685,7 @@ public class class208 {
 
 		} else {
 			if (var2 == 8) {
-				var14 = Client.field2017[var3];
+				var14 = Client.npcs[var3];
 				if (null != var14) {
 					Client.field1849 = var7;
 					Client.field1951 = var8;
@@ -693,13 +693,13 @@ public class class208 {
 					Client.field2073 = 0;
 					Client.field1840 = var0;
 					Client.field2081 = var1;
-					var13 = class341.createClientPacket(ClientPacket.field3141, Client.field1891.field4219);
+					var13 = class341.createClientPacket(ClientPacket.field3141, Client.serverConnection.field4219);
 					var13.buffer.writeIntIME(class258.field1755);
 					var13.buffer.writeShortLEADD(Client.field1999);
 					var13.buffer.writeByteADD(Client.field2067.method1798(82) ? 1 : 0);
 					var13.buffer.writeShortLE(Client.field1898);
 					var13.buffer.writeShortADD(var3);
-					Client.field1891.method2612(var13);
+					Client.serverConnection.method2612(var13);
 				}
 			}
 

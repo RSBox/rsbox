@@ -30,7 +30,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	public static int field1861;
 	public static int field2087;
 	public static int field2126;
-	public static final class540 field1891;
+	public static final class540 serverConnection;
 	static boolean field1845;
 	static boolean field1850;
 	static boolean field1851;
@@ -87,7 +87,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	static class372 field1899;
 	static class375 interfaceComponents;
 	static class375 field2048;
-	static class378[] field2017;
+	static Npc[] npcs;
 	static class381 field2067;
 	static class398[] field2074;
 	static class42[] field2079;
@@ -122,7 +122,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	static int field1842;
 	static int field1843;
 	static int field1844;
-	static int field1846;
+	static int updateTick;
 	static int field1849;
 	static int field1853;
 	static int field1854;
@@ -139,7 +139,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	static int field1870;
 	static int field1874;
 	static int field1892;
-	static int field1894;
+	static int extendedNpcCount;
 	static int field1896;
 	static int field1897;
 	static int field1898;
@@ -181,13 +181,13 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	static int field1958;
 	static int field1959;
 	static int field1962;
-	static int field1963;
+	static int externalNpcCount;
 	static int field1965;
 	static int field1966;
 	static int field1969;
 	static int field1977;
 	static int field1979;
-	static int field1980;
+	static int npcCount;
 	static int field1991;
 	static int field1992;
 	static int field1995;
@@ -241,10 +241,10 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	static int field2134;
 	static int field2135;
 	static int[] field1834;
-	static int[] field1847;
+	static int[] extendedNpcIndexes;
 	static int[] field1877;
 	static int[] field1887;
-	static int[] field1893;
+	static int[] localNpcIndexes;
 	static int[] field1913;
 	static int[] field1937;
 	static int[] field1938;
@@ -252,7 +252,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	static int[] field1940;
 	static int[] field1941;
 	static int[] field1950;
-	static int[] field1964;
+	static int[] externalNpcIndexes;
 	static int[] field1968;
 	static int[] field1970;
 	static int[] field1974;
@@ -345,7 +345,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		field1843 = 0;
 		field1928 = false;
 		field1845 = true;
-		field1846 = 0;
+		updateTick = 0;
 		field1882 = -1L;
 		field1965 = -1;
 		field1910 = -1;
@@ -390,12 +390,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		field1885 = false;
 		field1886 = new class354();
 		field2132 = null;
-		field2017 = new class378[65536];
-		field1980 = 0;
-		field1893 = new int[65536];
-		field1894 = 0;
-		field1847 = new int[250];
-		field1891 = new class540();
+		npcs = new Npc[65536];
+		npcCount = 0;
+		localNpcIndexes = new int[65536];
+		extendedNpcCount = 0;
+		extendedNpcIndexes = new int[250];
+		serverConnection = new class540();
 		field1897 = 0;
 		field2036 = false;
 		field1899 = new class372();
@@ -462,8 +462,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		field1852 = -1L;
 		field1961 = true;
 		field2134 = 0;
-		field1963 = 0;
-		field1964 = new int[1000];
+		externalNpcCount = 0;
+		externalNpcIndexes = new int[1000];
 		field2058 = new int[]{44, 45, 46, 47, 48, 49, 50, 51};
 		field2090 = new String[8];
 		field1967 = new boolean[8];
@@ -919,7 +919,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 	@Override
 	protected final void method2586() {
-		++field1846;
+		++updateTick;
 		this.method1279();
 		class106.method501();
 		boolean var2 = class151.method809();
@@ -1055,7 +1055,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 
 		class127.field831 = null;
-		field1891.method2610();
+		serverConnection.method2610();
 		class316.method1575();
 		class84.field567 = null;
 		if (class197.field1332 != null) {
@@ -1190,8 +1190,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	final void method1281() {
-		class86 var2 = field1891.method2611();
-		PacketBuffer var3 = field1891.field4220;
+		class86 var2 = serverConnection.method2611();
+		PacketBuffer var3 = serverConnection.field4220;
 
 		try {
 			if (loginState == 0) {
@@ -1399,7 +1399,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 				if (class316.field2321.field2932 == 1) {
 					var2 = class86.method409((Socket)class316.field2321.field2933, 40000, 5000);
-					field1891.method2609(var2);
+					serverConnection.method2609(var2);
 					class316.field2321 = null;
 					method1448(2);
 				}
@@ -1407,11 +1407,11 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 			class341 var25;
 			if (loginState == 2) {
-				field1891.method2613();
+				serverConnection.method2613();
 				var25 = class341.method1655();
 				var25.buffer.writeByte(class256.field1743.field1746);
-				field1891.method2612(var25);
-				field1891.method2608();
+				serverConnection.method2612(var25);
+				serverConnection.method2608();
 				var3.offset = 0;
 				method1448(3);
 			}
@@ -1460,8 +1460,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 			int var7;
 			if (loginState == 5) {
-				field1891.field4220.offset = 0;
-				field1891.method2613();
+				serverConnection.field4220.offset = 0;
+				serverConnection.method2613();
 				PacketBuffer var34 = new PacketBuffer(500);
 				int[] var28 = new int[]{class368.field2545.nextInt(), class368.field2545.nextInt(), class368.field2545.nextInt(), class368.field2545.nextInt()};
 				var34.offset = 0;
@@ -1571,9 +1571,9 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				var30.buffer.writeIntIME(class358.field2470.field14);
 				var30.buffer.encryptXtea(var28, var9, var30.buffer.offset);
 				var30.buffer.writeLengthShort(var30.buffer.offset - var7);
-				field1891.method2612(var30);
-				field1891.method2608();
-				field1891.field4219 = new class534(var28);
+				serverConnection.method2612(var30);
+				serverConnection.method2608();
+				serverConnection.field4219 = new class534(var28);
 				int[] var12 = new int[4];
 
 				for (int var13 = 0; var13 < 4; ++var13) {
@@ -1598,7 +1598,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				} else if (var27 == 2) {
 					method1448(14);
 				} else if (var27 == 15 && field1843 == 40) {
-					field1891.field4222 = -1;
+					serverConnection.packetLength = -1;
 					method1448(19);
 				} else if (var27 == 64) {
 					method1448(10);
@@ -1655,13 +1655,13 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					return;
 				}
 
-				field1891.method2613();
+				serverConnection.method2613();
 				var25 = class341.method1655();
 				var25.buffer.writeByte(class256.field1744.field1746);
 				var25.buffer.writeShort(this.field2076.offset);
 				var25.buffer.writeBuffer(this.field2076);
-				field1891.method2612(var25);
-				field1891.method2608();
+				serverConnection.method2612(var25);
+				serverConnection.method2608();
 				this.field2076 = null;
 				method1448(6);
 			}
@@ -1741,11 +1741,11 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						throw new IOException(var7 + " " + var3.offset);
 					}
 
-					field1891.serverPacket = var35[var7];
-					field1891.field4222 = field1891.serverPacket.length;
+					serverConnection.serverPacket = var35[var7];
+					serverConnection.packetLength = serverConnection.serverPacket.length;
 					var2.method407(var3.data, 0, 2);
 					var3.offset = 0;
-					field1891.field4222 = var3.readUnsignedShort();
+					serverConnection.packetLength = var3.readUnsignedShort();
 
 					try {
 						Client var40 = class190.field1287;
@@ -1757,15 +1757,15 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				}
 
 				if (loginState == 16) {
-					if (var2.method408() >= field1891.field4222) {
+					if (var2.method408() >= serverConnection.packetLength) {
 						var3.offset = 0;
-						var2.method407(var3.data, 0, field1891.field4222);
+						var2.method407(var3.data, 0, serverConnection.packetLength);
 						field1899.method1743();
 						initGpi();
 						class176.decodeGPI(var3);
 						class344.field2404 = -1;
 						rebuildRegionNormal(false, var3);
-						field1891.serverPacket = null;
+						serverConnection.serverPacket = null;
 					}
 
 				} else {
@@ -1792,20 +1792,20 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 
 					if (loginState == 19) {
-						if (field1891.field4222 == -1) {
+						if (serverConnection.packetLength == -1) {
 							if (var2.method408() < 2) {
 								return;
 							}
 
 							var2.method407(var3.data, 0, 2);
 							var3.offset = 0;
-							field1891.field4222 = var3.readUnsignedShort();
+							serverConnection.packetLength = var3.readUnsignedShort();
 						}
 
-						if (var2.method408() >= field1891.field4222) {
-							var2.method407(var3.data, 0, field1891.field4222);
+						if (var2.method408() >= serverConnection.packetLength) {
+							var2.method407(var3.data, 0, serverConnection.packetLength);
 							var3.offset = 0;
-							var27 = field1891.field4222;
+							var27 = serverConnection.packetLength;
 							field1899.method1746();
 							method1318();
 							class176.decodeGPI(var3);
@@ -1866,7 +1866,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			}
 
 			int var2;
-			for (var2 = 0; var2 < 100 && this.method1287(field1891); ++var2) {
+			for (var2 = 0; var2 < 100 && this.method1287(serverConnection); ++var2) {
 			}
 
 			if (field1843 == 30) {
@@ -1885,12 +1885,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						class341 var26;
 						int var27;
 						if (field1899.field2572) {
-							var26 = class341.createClientPacket(ClientPacket.field3123, field1891.field4219);
+							var26 = class341.createClientPacket(ClientPacket.field3123, serverConnection.field4219);
 							var26.buffer.writeByte(0);
 							var27 = var26.buffer.offset;
 							field1899.method1740(var26.buffer);
 							var26.buffer.writeLengthBytes(var26.buffer.offset - var27);
-							field1891.method2612(var26);
+							serverConnection.method2612(var26);
 							field1899.method1744();
 						}
 
@@ -1931,7 +1931,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 									if (var10 != field1965 || var9 != field1910) {
 										if (var25 == null) {
-											var25 = class341.createClientPacket(ClientPacket.field3100, field1891.field4219);
+											var25 = class341.createClientPacket(ClientPacket.field3100, serverConnection.field4219);
 											var25.buffer.writeByte(0);
 											var4 = var25.buffer.offset;
 											PacketBuffer var10000 = var25.buffer;
@@ -1990,7 +1990,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 									var25.buffer.writeByte(var6 / var7);
 									var25.buffer.writeByte(var6 % var7);
 									var25.buffer.offset = var8;
-									field1891.method2612(var25);
+									serverConnection.method2612(var25);
 								}
 
 								if (var5 >= class127.field831.field2358) {
@@ -2028,21 +2028,21 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 							}
 
 							var6 = (int)var28;
-							var37 = class341.createClientPacket(ClientPacket.field3127, field1891.field4219);
+							var37 = class341.createClientPacket(ClientPacket.field3127, serverConnection.field4219);
 							var37.buffer.writeShort((var6 << 1) + (class316.field2316 == 2 ? 1 : 0));
 							var37.buffer.writeShort(var5);
 							var37.buffer.writeShort(var4);
-							field1891.method2612(var37);
+							serverConnection.method2612(var37);
 						}
 
 						if (field2042 != 0) {
-							var26 = class341.createClientPacket(ClientPacket.field3062, field1891.field4219);
+							var26 = class341.createClientPacket(ClientPacket.field3062, serverConnection.field4219);
 							var26.buffer.writeShort(field2042);
-							field1891.method2612(var26);
+							serverConnection.method2612(var26);
 						}
 
 						if (field2067.field2627 > 0) {
-							var26 = class341.createClientPacket(ClientPacket.field3106, field1891.field4219);
+							var26 = class341.createClientPacket(ClientPacket.field3106, serverConnection.field4219);
 							var26.buffer.writeShort(0);
 							var27 = var26.buffer.offset;
 							long var29 = class38.method108();
@@ -2059,7 +2059,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 							}
 
 							var26.buffer.writeLengthShort(var26.buffer.offset - var27);
-							field1891.method2612(var26);
+							serverConnection.method2612(var26);
 						}
 
 						if (field1932 > 0) {
@@ -2073,24 +2073,24 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						if (field1863 && field1932 <= 0) {
 							field1932 = 20;
 							field1863 = false;
-							var26 = class341.createClientPacket(ClientPacket.field3068, field1891.field4219);
+							var26 = class341.createClientPacket(ClientPacket.field3068, serverConnection.field4219);
 							var26.buffer.writeShortLE(field1962);
 							var26.buffer.writeShortADD(field1917);
-							field1891.method2612(var26);
+							serverConnection.method2612(var26);
 						}
 
 						if (class249.field1717 && !field1851) {
 							field1851 = true;
-							var26 = class341.createClientPacket(ClientPacket.field3083, field1891.field4219);
+							var26 = class341.createClientPacket(ClientPacket.field3083, serverConnection.field4219);
 							var26.buffer.writeByte(1);
-							field1891.method2612(var26);
+							serverConnection.method2612(var26);
 						}
 
 						if (!class249.field1717 && field1851) {
 							field1851 = false;
-							var26 = class341.createClientPacket(ClientPacket.field3083, field1891.field4219);
+							var26 = class341.createClientPacket(ClientPacket.field3083, serverConnection.field4219);
 							var26.buffer.writeByte(0);
-							field1891.method2612(var26);
+							serverConnection.method2612(var26);
 						}
 
 						if (null != class520.field4103) {
@@ -2118,19 +2118,19 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 						method1349();
 						class489.method2254();
-						++field1891.field4224;
-						if (field1891.field4224 > 750) {
+						++serverConnection.field4224;
+						if (serverConnection.field4224 > 750) {
 							method1352();
 							return;
 						}
 
 						method1355();
 
-						for (var2 = 0; var2 < field1980; ++var2) {
-							var27 = field1893[var2];
-							class378 var31 = field2017[var27];
+						for (var2 = 0; var2 < npcCount; ++var2) {
+							var27 = localNpcIndexes[var2];
+							Npc var31 = npcs[var27];
 							if (var31 != null) {
-								method1307(var31, var31.field2605.field484);
+								method1307(var31, var31.definition.field484);
 							}
 						}
 
@@ -2138,21 +2138,21 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 						for (var27 = 0; var27 < class264.field1764; ++var27) {
 							Player var32 = field2037[var35[var27]];
-							if (null != var32 && var32.field352 > 0) {
-								--var32.field352;
-								if (var32.field352 == 0) {
-									var32.field356 = null;
+							if (null != var32 && var32.overheadTextTicksRemaining > 0) {
+								--var32.overheadTextTicksRemaining;
+								if (var32.overheadTextTicksRemaining == 0) {
+									var32.overheadText = null;
 								}
 							}
 						}
 
-						for (var27 = 0; var27 < field1980; ++var27) {
-							var4 = field1893[var27];
-							class378 var33 = field2017[var4];
-							if (var33 != null && var33.field352 > 0) {
-								--var33.field352;
-								if (var33.field352 == 0) {
-									var33.field356 = null;
+						for (var27 = 0; var27 < npcCount; ++var27) {
+							var4 = localNpcIndexes[var27];
+							Npc var33 = npcs[var4];
+							if (var33 != null && var33.overheadTextTicksRemaining > 0) {
+								--var33.overheadTextTicksRemaining;
+								if (var33.overheadTextTicksRemaining == 0) {
+									var33.overheadText = null;
 								}
 							}
 						}
@@ -2198,12 +2198,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 							if (class114.field720.field3009 != var5) {
 								var6 = class80.selectedTileX + class114.field720.field399[0];
 								var7 = class425.selectedTileXYIdk + class114.field720.field400[0];
-								var43 = class341.createClientPacket(ClientPacket.field3067, field1891.field4219);
+								var43 = class341.createClientPacket(ClientPacket.field3067, serverConnection.field4219);
 								var43.buffer.writeShortADD(var6);
 								var43.buffer.writeShortLE(var7);
 								var43.buffer.writeInt(0);
 								var43.buffer.writeByteADD(var5);
-								field1891.method2612(var43);
+								serverConnection.method2612(var43);
 							}
 
 							field2042 = 0;
@@ -2251,12 +2251,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 																					if (class142.method761()) {
 																						var5 = class142.field969;
 																						var6 = class142.field983;
-																						var37 = class341.createClientPacket(ClientPacket.MOVE_GAMECLICK, field1891.field4219);
+																						var37 = class341.createClientPacket(ClientPacket.MOVE_GAMECLICK, serverConnection.field4219);
 																						var37.buffer.writeByte(5);
 																						var37.buffer.writeShortLEADD(class425.selectedTileXYIdk + var6);
 																						var37.buffer.writeByte(field2067.method1798(82) ? (field2067.method1798(81) ? 2 : 1) : 0);
 																						var37.buffer.writeShortLEADD(var5 + class80.selectedTileX);
-																						field1891.method2612(var37);
+																						serverConnection.method2612(var37);
 																						class142.method775();
 																						field1849 = class316.field2318;
 																						field1951 = class316.field2320;
@@ -2514,8 +2514,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 																					if (var5 > 15000 && var7 > 15000) {
 																						field1897 = 250;
 																						class316.method1574(14500);
-																						var43 = class341.createClientPacket(ClientPacket.field3138, field1891.field4219);
-																						field1891.method2612(var43);
+																						var43 = class341.createClientPacket(ClientPacket.field3138, serverConnection.field4219);
+																						serverConnection.method2612(var43);
 																					}
 
 																					class35.field176.method372();
@@ -2577,14 +2577,14 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 																						}
 																					}
 
-																					++field1891.field4225;
-																					if (field1891.field4225 > 50) {
-																						var43 = class341.createClientPacket(ClientPacket.field3092, field1891.field4219);
-																						field1891.method2612(var43);
+																					++serverConnection.field4225;
+																					if (serverConnection.field4225 > 50) {
+																						var43 = class341.createClientPacket(ClientPacket.field3092, serverConnection.field4219);
+																						serverConnection.method2612(var43);
 																					}
 
 																					try {
-																						field1891.method2608();
+																						serverConnection.method2608();
 																					} catch (IOException var21) {
 																						method1352();
 																					}
@@ -2613,14 +2613,14 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 																				if (var48) {
 																					int[] var44 = var45.field2747.method2320();
 																					if (var44 != null) {
-																						class341 var49 = class341.createClientPacket(ClientPacket.field3050, field1891.field4219);
+																						class341 var49 = class341.createClientPacket(ClientPacket.field3050, serverConnection.field4219);
 																						var49.buffer.writeShortLE(var45.field2747.field3603);
 																						var49.buffer.writeInt(var45.field2747.method2337());
 																						var49.buffer.writeIntLE(var45.field2747.interfaceId);
 																						var49.buffer.writeIntIME(var44[1]);
 																						var49.buffer.writeIntME(var44[0]);
 																						var49.buffer.writeIntME(var44[2]);
-																						field1891.method2612(var49);
+																						serverConnection.method2612(var49);
 																					}
 																				}
 																			}
@@ -2679,12 +2679,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						}
 					}
 
-					var25 = class341.createClientPacket(ClientPacket.field3051, field1891.field4219);
+					var25 = class341.createClientPacket(ClientPacket.field3051, serverConnection.field4219);
 					var25.buffer.writeByte(0);
 					var4 = var25.buffer.offset;
 					class9.method44(var25.buffer);
 					var25.buffer.writeLengthBytes(var25.buffer.offset - var4);
-					field1891.method2612(var25);
+					serverConnection.method2612(var25);
 				}
 			}
 		}
@@ -2692,11 +2692,11 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 	@Override
 	public void method1925(int var1, int var2) {
-		if (field1891 != null && field1891.field4219 != null) {
+		if (serverConnection != null && serverConnection.field4219 != null) {
 			if (var1 > -1 && class109.field693.method446() > 0 && !field2083) {
-				class341 var4 = class341.createClientPacket(ClientPacket.field3063, field1891.field4219);
+				class341 var4 = class341.createClientPacket(ClientPacket.field3063, serverConnection.field4219);
 				var4.buffer.writeInt(var1);
-				field1891.method2612(var4);
+				serverConnection.method2612(var4);
 			}
 
 		}
@@ -2749,7 +2749,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			field2051[var2] = false;
 		}
 
-		field2050 = field1846;
+		field2050 = updateTick;
 		field1935 = -1;
 		field1992 = -1;
 		if (rootInterface != -1) {
@@ -2907,7 +2907,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	boolean method1298(class540 var1, int var2) {
-		if (var1.field4222 == 0) {
+		if (var1.packetLength == 0) {
 			class257.field1749 = null;
 		} else {
 			if (class257.field1749 == null) {
@@ -2971,34 +2971,34 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 
 					var1.serverPacket = var5[fromComponent];
-					var1.field4222 = var1.serverPacket.length;
+					var1.packetLength = var1.serverPacket.length;
 				}
 
-				if (var1.field4222 == -1) {
+				if (var1.packetLength == -1) {
 					if (!var3.method404(1)) {
 						return false;
 					}
 
 					var1.method2611().method407(var4.data, 0, 1);
-					var1.field4222 = var4.data[0] & 255;
+					var1.packetLength = var4.data[0] & 255;
 				}
 
-				if (var1.field4222 == -2) {
+				if (var1.packetLength == -2) {
 					if (!var3.method404(2)) {
 						return false;
 					}
 
 					var1.method2611().method407(var4.data, 0, 2);
 					var4.offset = 0;
-					var1.field4222 = var4.readUnsignedShort();
+					var1.packetLength = var4.readUnsignedShort();
 				}
 
-				if (!var3.method404(var1.field4222)) {
+				if (!var3.method404(var1.packetLength)) {
 					return false;
 				}
 
 				var4.offset = 0;
-				var3.method407(var4.data, 0, var1.field4222);
+				var3.method407(var4.data, 0, var1.packetLength);
 				var1.field4224 = 0;
 				field1899.method1741();
 				var1.field4228 = var1.field4215;
@@ -3045,7 +3045,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				if (var1.serverPacket == ServerPacket.field3256) {
 					method1371();
 					var26 = var4.readByte();
-					if (var1.field4222 == 1) {
+					if (var1.packetLength == 1) {
 						if (var26 >= 0) {
 							field1919[var26] = null;
 						} else {
@@ -3072,8 +3072,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					return true;
 				}
 
-				if (var1.serverPacket == ServerPacket.field3276) {
-					method1432(true, var4);
+				if (var1.serverPacket == ServerPacket.NPC_INFO_LARGE) {
+					updateNpcs(true, var4);
 					var1.serverPacket = null;
 					return true;
 				}
@@ -3140,25 +3140,25 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						fromComponent = -1;
 					}
 
-					class378 var83 = field2017[toComponent];
+					Npc var83 = npcs[toComponent];
 					if (var83 != null) {
-						if (var83.field373 == fromComponent && fromComponent != -1) {
-							var32 = class116.method539(fromComponent).field747;
+						if (var83.animationId == fromComponent && fromComponent != -1) {
+							var32 = class116.getAnimationDefinition(fromComponent).loopType;
 							if (var32 == 1) {
-								var83.field334 = 0;
-								var83.field395 = 0;
-								var83.field376 = var7;
-								var83.field377 = 0;
+								var83.animationFrame = 0;
+								var83.animationFrameCycle = 0;
+								var83.animationDelay = var7;
+								var83.curAnimationFrameIndex = 0;
 							} else if (var32 == 2) {
-								var83.field377 = 0;
+								var83.curAnimationFrameIndex = 0;
 							}
-						} else if (fromComponent == -1 || var83.field373 == -1 || class116.method539(fromComponent).field741 >= class116.method539(var83.field373).field741) {
-							var83.field373 = fromComponent;
-							var83.field334 = 0;
-							var83.field395 = 0;
-							var83.field376 = var7;
-							var83.field377 = 0;
-							var83.field403 = var83.field360;
+						} else if (fromComponent == -1 || var83.animationId == -1 || class116.getAnimationDefinition(fromComponent).field741 >= class116.getAnimationDefinition(var83.animationId).field741) {
+							var83.animationId = fromComponent;
+							var83.animationFrame = 0;
+							var83.animationFrameCycle = 0;
+							var83.animationDelay = var7;
+							var83.curAnimationFrameIndex = 0;
+							var83.field403 = var83.pathLength;
 						}
 					}
 
@@ -3197,7 +3197,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 				String var47;
 				if (var1.serverPacket == ServerPacket.field3224) {
-					byte[] var92 = new byte[var1.field4222];
+					byte[] var92 = new byte[var1.packetLength];
 					var4.method1496(var92, 0, var92.length);
 					Buffer var90 = new Buffer(var92);
 					var47 = var90.readStringOrNull();
@@ -3305,12 +3305,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					toComponent = var4.readInt();
 					fromComponent = var4.readInt();
 					var7 = class535.method2592();
-					class341 var81 = class341.createClientPacket(ClientPacket.field3056, field1891.field4219);
+					class341 var81 = class341.createClientPacket(ClientPacket.field3056, serverConnection.field4219);
 					var81.buffer.writeIntME(toComponent);
 					var81.buffer.writeIntIME(fromComponent);
 					var81.buffer.writeByte(var7);
 					var81.buffer.writeByteNEG(class535.field4167);
-					field1891.method2612(var81);
+					serverConnection.method2612(var81);
 					var1.serverPacket = null;
 					return true;
 				}
@@ -3484,8 +3484,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						var32 = var32 * 128 + 64;
 						var10 = var10 * 128 + 64;
 						var11 = 64 + var11 * 128;
-						var20 = new class404(var49, class212.field1393, var8, var32, method1347(var8, var32, class212.field1393) - var58, var16 + field1846, field1846 + var17, var18, var19, var42, var65);
-						var20.method1864(var10, var11, method1347(var10, var11, class212.field1393) - var65, field1846 + var16);
+						var20 = new class404(var49, class212.field1393, var8, var32, method1347(var8, var32, class212.field1393) - var58, var16 + updateTick, updateTick + var17, var18, var19, var42, var65);
+						var20.method1864(var10, var11, method1347(var10, var11, class212.field1393) - var65, updateTick + var16);
 						field1972.method323(var20);
 					}
 
@@ -3500,7 +3500,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				}
 
 				if (ServerPacket.field3250 == var1.serverPacket) {
-					class35.field176.field544.method368(var4, var1.field4222);
+					class35.field176.field544.method368(var4, var1.packetLength);
 					method1460();
 					field2035 = field1977;
 					var1.serverPacket = null;
@@ -3611,7 +3611,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				if (ServerPacket.field3280 == var1.serverPacket) {
 					field1831 = field1977;
 					var26 = var4.readByte();
-					if (var1.field4222 == 1) {
+					if (var1.packetLength == 1) {
 						if (var26 >= 0) {
 							field2074[var26] = null;
 						} else {
@@ -3704,8 +3704,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					return true;
 				}
 
-				if (var1.serverPacket == ServerPacket.field3206) {
-					method1432(false, var4);
+				if (var1.serverPacket == ServerPacket.NPC_INFO_SMALL) {
+					updateNpcs(false, var4);
 					var1.serverPacket = null;
 					return true;
 				}
@@ -3722,7 +3722,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					if (var8 >= 0 && var32 >= 0 && var8 < 104 && var32 < 104) {
 						var8 = var8 * 128 + 64;
 						var32 = 64 + var32 * 128;
-						class473 var64 = new class473(var10, class212.field1393, var8, var32, method1347(var8, var32, class212.field1393) - var11, var42, field1846);
+						class473 var64 = new class473(var10, class212.field1393, var8, var32, method1347(var8, var32, class212.field1393) - var11, var42, updateTick);
 						field1973.method323(var64);
 					}
 
@@ -3988,7 +3988,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 				long var53;
 				if (var1.serverPacket == ServerPacket.field3288) {
-					toComponent = var4.offset + var1.field4222;
+					toComponent = var4.offset + var1.packetLength;
 					fromComponent = var4.readUnsignedShort();
 					if (fromComponent == 65535) {
 						fromComponent = -1;
@@ -4049,7 +4049,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				}
 
 				if (ServerPacket.PLAYER_INFO == var1.serverPacket) {
-					class264.readPlayerUpdates(var4, var1.field4222);
+					class264.readPlayerUpdates(var4, var1.packetLength);
 					method1338();
 					var1.serverPacket = null;
 					return true;
@@ -4290,13 +4290,13 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					return false;
 				}
 
-				class378 var43;
+				Npc var43;
 				if (var1.serverPacket == ServerPacket.field3174) {
 					toComponent = var4.readUnsignedShortADD();
 					short var60 = (short)var4.method2501();
 					var7 = var4.readUnsignedIntLE();
 					var8 = var4.readUnsignedByteNEG();
-					var43 = field2017[toComponent];
+					var43 = npcs[toComponent];
 					if (var43 != null) {
 						var43.method1776(var8, var7, var60);
 					}
@@ -4327,7 +4327,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					var7 = var4.readUnsignedShortLE();
 					var8 = var4.readUnsignedByte();
 					toComponent = var4.readUnsignedShort();
-					var43 = field2017[toComponent];
+					var43 = npcs[toComponent];
 					if (null != var43) {
 						var43.method292(var8, var7, fromComponent >> 16, fromComponent & 65535);
 					}
@@ -4339,13 +4339,13 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				if (ServerPacket.field3198 == var1.serverPacket) {
 					for (toComponent = 0; toComponent < field2037.length; ++toComponent) {
 						if (field2037[toComponent] != null) {
-							field2037[toComponent].field373 = -1;
+							field2037[toComponent].animationId = -1;
 						}
 					}
 
-					for (toComponent = 0; toComponent < field2017.length; ++toComponent) {
-						if (field2017[toComponent] != null) {
-							field2017[toComponent].field373 = -1;
+					for (toComponent = 0; toComponent < npcs.length; ++toComponent) {
+						if (npcs[toComponent] != null) {
+							npcs[toComponent].animationId = -1;
 						}
 					}
 
@@ -4405,7 +4405,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					class458.field3045 = var4.readUnsignedByte();
 					class391.field2669 = var4.readUnsignedByteSUB();
 
-					while (var4.offset < var1.field4222) {
+					while (var4.offset < var1.packetLength) {
 						toComponent = var4.readUnsignedByte();
 						class310 var54 = class310.method1568()[toComponent];
 						method1346(var54);
@@ -4428,7 +4428,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						var31 = null;
 					}
 
-					for (; var4.offset < var1.field4222; class482.method2210(fromComponent, var8, var32 - 1, var10)) {
+					for (; var4.offset < var1.packetLength; class482.method2210(fromComponent, var8, var32 - 1, var10)) {
 						var8 = var4.readUnsignedSmartByteShort();
 						var32 = var4.readUnsignedShort();
 						var10 = 0;
@@ -4514,7 +4514,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				}
 
 				if (ServerPacket.field3242 == var1.serverPacket) {
-					class9.method45(var4, var1.field4222);
+					class9.method45(var4, var1.packetLength);
 					var1.serverPacket = null;
 					return true;
 				}
@@ -4660,7 +4660,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				}
 
 				if (var1.serverPacket == ServerPacket.field3207) {
-					class35.field176.method383(var4, var1.field4222);
+					class35.field176.method383(var4, var1.packetLength);
 					field2035 = field1977;
 					var1.serverPacket = null;
 					return true;
@@ -4754,8 +4754,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						var32 = 64 + var32 * 128;
 						var10 = 64 + var10 * 128;
 						var11 = 64 + var11 * 128;
-						var20 = new class404(var49, class212.field1393, var8, var32, method1347(var8, var32, class212.field1393) - var58, var16 + field1846, field1846 + var17, var18, var19, var42, var65);
-						var20.method1864(var10, var11, method1347(var10, var11, class212.field1393) - var65, field1846 + var16);
+						var20 = new class404(var49, class212.field1393, var8, var32, method1347(var8, var32, class212.field1393) - var58, var16 + updateTick, updateTick + var17, var18, var19, var42, var65);
+						var20.method1864(var10, var11, method1347(var10, var11, class212.field1393) - var65, updateTick + var16);
 						field1972.method323(var20);
 					}
 
@@ -5033,14 +5033,14 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					return true;
 				}
 
-				class2.method1("" + (var1.serverPacket != null ? var1.serverPacket.opcode : -1) + class274.field1825 + (null != var1.field4215 ? 1495788863 * var1.field4215.opcode * -800816449 : -1) + class274.field1825 + (var1.field4228 != null ? var1.field4228.opcode : -1) + class274.field1825 + var1.field4222, (Throwable)null);
+				class2.method1("" + (var1.serverPacket != null ? var1.serverPacket.opcode : -1) + class274.field1825 + (null != var1.field4215 ? 1495788863 * var1.field4215.opcode * -800816449 : -1) + class274.field1825 + (var1.field4228 != null ? var1.field4228.opcode : -1) + class274.field1825 + var1.packetLength, (Throwable)null);
 				method1395();
 			} catch (IOException var21) {
 				method1352();
 			} catch (Exception var22) {
-				var6 = "" + (null != var1.serverPacket ? var1.serverPacket.opcode : -1) + class274.field1825 + (null != var1.field4215 ? 1495788863 * var1.field4215.opcode * -800816449 : -1) + class274.field1825 + (var1.field4228 != null ? var1.field4228.opcode : -1) + class274.field1825 + var1.field4222 + class274.field1825 + (class80.selectedTileX + class114.field720.field399[0]) + class274.field1825 + (class425.selectedTileXYIdk + class114.field720.field400[0]) + class274.field1825;
+				var6 = "" + (null != var1.serverPacket ? var1.serverPacket.opcode : -1) + class274.field1825 + (null != var1.field4215 ? 1495788863 * var1.field4215.opcode * -800816449 : -1) + class274.field1825 + (var1.field4228 != null ? var1.field4228.opcode : -1) + class274.field1825 + var1.packetLength + class274.field1825 + (class80.selectedTileX + class114.field720.field399[0]) + class274.field1825 + (class425.selectedTileXYIdk + class114.field720.field400[0]) + class274.field1825;
 
-				for (var7 = 0; var7 < var1.field4222 && var7 < 50; ++var7) {
+				for (var7 = 0; var7 < var1.packetLength && var7 < 50; ++var7) {
 					var6 = var6 + var4.data[var7] + class274.field1825;
 				}
 
@@ -5239,14 +5239,14 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 
 					if (field2018 != null && method1401(field2014) != null) {
-						class341 var10 = class341.createClientPacket(ClientPacket.field3132, field1891.field4219);
+						class341 var10 = class341.createClientPacket(ClientPacket.field3132, serverConnection.field4219);
 						var10.buffer.writeIntLE(field2014.interfaceId);
 						var10.buffer.writeShort(field2018.field3603);
 						var10.buffer.writeShort(field2014.field3603);
 						var10.buffer.writeInt(field2018.interfaceId);
 						var10.buffer.writeShortADD(field2014.field3602);
 						var10.buffer.writeShort(field2018.field3602);
-						field1891.method2612(var10);
+						serverConnection.method2612(var10);
 					}
 				} else if (this.method1294()) {
 					this.method1286(field1867 + field2016, field2024 + field1837);
@@ -5276,18 +5276,18 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 	void method1295(int var1) {
 		if (field1841 >= 216) {
-			class341 var3 = class341.createClientPacket(ClientPacket.field3049, field1891.field4219);
+			class341 var3 = class341.createClientPacket(ClientPacket.field3049, serverConnection.field4219);
 			var3.buffer.writeByte(var1);
-			field1891.method2612(var3);
+			serverConnection.method2612(var3);
 		}
 
 	}
 
 	void method1290(int var1) {
 		if (field1841 >= 216) {
-			class341 var3 = class341.createClientPacket(ClientPacket.field3088, field1891.field4219);
+			class341 var3 = class341.createClientPacket(ClientPacket.field3088, serverConnection.field4219);
 			var3.buffer.writeByte(var1);
-			field1891.method2612(var3);
+			serverConnection.method2612(var3);
 		}
 
 	}
@@ -5332,7 +5332,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 
 		class127.field831 = null;
-		field1891.method2610();
+		serverConnection.method2610();
 		if (class535.field4187 != null) {
 			try {
 				class535.field4187.method1953();
@@ -6050,14 +6050,14 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		field1851 = true;
 		field2072 = -1L;
 		class9.field40 = new class444();
-		field1891.method2613();
-		field1891.field4220.offset = 0;
-		field1891.serverPacket = null;
-		field1891.field4226 = null;
-		field1891.field4215 = null;
-		field1891.field4228 = null;
-		field1891.field4222 = 0;
-		field1891.field4224 = 0;
+		serverConnection.method2613();
+		serverConnection.field4220.offset = 0;
+		serverConnection.serverPacket = null;
+		serverConnection.field4226 = null;
+		serverConnection.field4215 = null;
+		serverConnection.field4228 = null;
+		serverConnection.packetLength = 0;
+		serverConnection.field4224 = 0;
 		field1952 = 0;
 		field1897 = 0;
 		field1853 = 0;
@@ -6079,7 +6079,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		field2081 = 0;
 		field2007 = class491.field3495;
 		field2115 = class491.field3495;
-		field1980 = 0;
+		npcCount = 0;
 		class264.method1235();
 
 		int var1;
@@ -6088,7 +6088,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 
 		for (var1 = 0; var1 < 65536; ++var1) {
-			field2017[var1] = null;
+			npcs[var1] = null;
 		}
 
 		field1969 = -1;
@@ -6160,14 +6160,14 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	static void method1318() {
-		field1891.method2613();
-		field1891.field4220.offset = 0;
-		field1891.serverPacket = null;
-		field1891.field4226 = null;
-		field1891.field4215 = null;
-		field1891.field4228 = null;
-		field1891.field4222 = 0;
-		field1891.field4224 = 0;
+		serverConnection.method2613();
+		serverConnection.field4220.offset = 0;
+		serverConnection.serverPacket = null;
+		serverConnection.field4226 = null;
+		serverConnection.field4215 = null;
+		serverConnection.field4228 = null;
+		serverConnection.packetLength = 0;
+		serverConnection.field4224 = 0;
 		field1952 = 0;
 		method1333();
 		field2082 = 0;
@@ -6180,8 +6180,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 		class114.field720 = null;
 
-		for (var1 = 0; var1 < field2017.length; ++var1) {
-			class378 var2 = field2017[var1];
+		for (var1 = 0; var1 < npcs.length; ++var1) {
+			Npc var2 = npcs[var1];
 			if (var2 != null) {
 				var2.field363 = -1;
 				var2.field364 = false;
@@ -6338,7 +6338,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	static final void method1395() {
-		field1891.method2610();
+		serverConnection.method2610();
 		method1400();
 		class141.field937.method729();
 
@@ -6451,8 +6451,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		} else {
 			field1899.method1745();
 			class432.method1954(40);
-			class228.field1475 = field1891.method2611();
-			field1891.method2607();
+			class228.field1475 = serverConnection.method2611();
+			serverConnection.method2607();
 		}
 	}
 
@@ -6587,7 +6587,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					int var11 = var9 * var6 - var5 * var8 >> 11;
 					int var12 = class114.field720.field368 + var10 >> 7;
 					int var13 = class114.field720.field329 - var11 >> 7;
-					class341 var14 = class341.createClientPacket(ClientPacket.field3109, field1891.field4219);
+					class341 var14 = class341.createClientPacket(ClientPacket.field3109, serverConnection.field4219);
 					var14.buffer.writeByte(18);
 					var14.buffer.writeShortLEADD(class425.selectedTileXYIdk + var13);
 					var14.buffer.writeByte(field2067.method1798(82) ? (field2067.method1798(81) ? 2 : 1) : 0);
@@ -6602,7 +6602,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					var14.buffer.writeShort(class114.field720.field368);
 					var14.buffer.writeShort(class114.field720.field329);
 					var14.buffer.writeByte(63);
-					field1891.method2612(var14);
+					serverConnection.method2612(var14);
 					field1840 = var12;
 					field2081 = var13;
 				}
@@ -6669,10 +6669,10 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			}
 		}
 
-		class341 var3 = class341.createClientPacket(ClientPacket.CLIENT_CHEAT, field1891.field4219);
+		class341 var3 = class341.createClientPacket(ClientPacket.CLIENT_CHEAT, serverConnection.field4219);
 		var3.buffer.writeByte(var0.length() + 1);
 		var3.buffer.writeString(var0);
-		field1891.method2612(var3);
+		serverConnection.method2612(var3);
 	}
 
 	static final int method1358(int var0) {
@@ -6796,24 +6796,24 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		int var6;
 		int var8;
 		class116 var12;
-		if (var0.field384 >= field1846) {
-			var3 = Math.max(1, var0.field384 - field1846);
+		if (var0.field384 >= updateTick) {
+			var3 = Math.max(1, var0.field384 - updateTick);
 			var4 = var0.field332 * 64 + var0.field380 * 128;
 			var5 = var0.field332 * 64 + var0.field328 * 128;
 			var0.field368 += (var4 - var0.field368) / var3;
 			var0.field329 += (var5 - var0.field329) / var3;
 			var0.field375 = 0;
 			var0.field351 = var0.field396;
-		} else if (var0.field385 >= field1846) {
+		} else if (var0.field385 >= updateTick) {
 			method1376(var0);
 		} else {
 			var0.field369 = var0.field383;
-			if (var0.field360 == 0) {
+			if (var0.pathLength == 0) {
 				var0.field375 = 0;
 			} else {
 				label553: {
-					if (var0.field373 != -1 && var0.field376 == 0) {
-						var12 = class116.method539(var0.field373);
+					if (var0.animationId != -1 && var0.animationDelay == 0) {
+						var12 = class116.getAnimationDefinition(var0.animationId);
 						if (var0.field403 > 0 && var12.field735 == 0) {
 							++var0.field375;
 							break label553;
@@ -6827,8 +6827,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 					var3 = var0.field368;
 					var4 = var0.field329;
-					var5 = var0.field332 * 64 + 128 * var0.field399[var0.field360 - 1];
-					var6 = var0.field400[var0.field360 - 1] * 128 + var0.field332 * 64;
+					var5 = var0.field332 * 64 + 128 * var0.field399[var0.pathLength - 1];
+					var6 = var0.field400[var0.pathLength - 1] * 128 + var0.field332 * 64;
 					if (var3 < var5) {
 						if (var4 < var6) {
 							var0.field351 = 1280;
@@ -6851,7 +6851,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						var0.field351 = 0;
 					}
 
-					MovementType var7 = var0.field342[var0.field360 - 1];
+					MovementType var7 = var0.field342[var0.pathLength - 1];
 					if (var5 - var3 <= 256 && var5 - var3 >= -256 && var6 - var4 <= 256 && var6 - var4 >= -256) {
 						var8 = var0.field351 - var0.field330 & 2047;
 						if (var8 > 1024) {
@@ -6874,8 +6874,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						var0.field369 = var9;
 						int var10 = 4;
 						boolean var11 = true;
-						if (var0 instanceof class378) {
-							var11 = ((class378)var0).field2605.field518;
+						if (var0 instanceof Npc) {
+							var11 = ((Npc)var0).definition.field518;
 						}
 
 						if (var11) {
@@ -6883,34 +6883,34 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 								var10 = 2;
 							}
 
-							if (var0.field360 > 2) {
+							if (var0.pathLength > 2) {
 								var10 = 6;
 							}
 
-							if (var0.field360 > 3) {
+							if (var0.pathLength > 3) {
 								var10 = 8;
 							}
 
-							if (var0.field375 > 0 && var0.field360 > 1) {
+							if (var0.field375 > 0 && var0.pathLength > 1) {
 								var10 = 8;
 								--var0.field375;
 							}
 						} else {
-							if (var0.field360 > 1) {
+							if (var0.pathLength > 1) {
 								var10 = 6;
 							}
 
-							if (var0.field360 > 2) {
+							if (var0.pathLength > 2) {
 								var10 = 8;
 							}
 
-							if (var0.field375 > 0 && var0.field360 > 1) {
+							if (var0.field375 > 0 && var0.pathLength > 1) {
 								var10 = 8;
 								--var0.field375;
 							}
 						}
 
-						if (var7 == MovementType.run) {
+						if (var7 == MovementType.RUN) {
 							var10 <<= 1;
 						} else if (var7 == MovementType.CRAWL) {
 							var10 >>= 1;
@@ -6965,7 +6965,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						}
 
 						if (var5 == var0.field368 && var6 == var0.field329) {
-							--var0.field360;
+							--var0.pathLength;
 							if (var0.field403 > 0) {
 								--var0.field403;
 							}
@@ -6973,7 +6973,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					} else {
 						var0.field368 = var5;
 						var0.field329 = var6;
-						--var0.field360;
+						--var0.pathLength;
 						if (var0.field403 > 0) {
 							--var0.field403;
 						}
@@ -6983,7 +6983,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 
 		if (var0.field368 < 128 || var0.field329 < 128 || var0.field368 >= 13184 || var0.field329 >= 13184) {
-			var0.field373 = -1;
+			var0.animationId = -1;
 			var0.field384 = 0;
 			var0.field385 = 0;
 			var0.method295();
@@ -6993,7 +6993,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 
 		if (var0 == class114.field720 && (var0.field368 < 1536 || var0.field329 < 1536 || var0.field368 >= 11776 || var0.field329 >= 11776)) {
-			var0.field373 = -1;
+			var0.animationId = -1;
 			var0.field384 = 0;
 			var0.field385 = 0;
 			var0.method295();
@@ -7007,7 +7007,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			var4 = 65536;
 			Object var13;
 			if (var0.field363 < 65536) {
-				var13 = field2017[var0.field363];
+				var13 = npcs[var0.field363];
 			} else {
 				var13 = field2037[var0.field363 - 65536];
 			}
@@ -7026,7 +7026,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 
 		int var18;
-		if (var0.field360 == 0 || var0.field375 > 0) {
+		if (var0.pathLength == 0 || var0.field375 > 0) {
 			var3 = -1;
 			if (var0.field366 != -1 && var0.field367 != -1) {
 				var4 = 64 + (var0.field366 * 128 - class80.selectedTileX * 128);
@@ -7086,7 +7086,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 		var0.field349 = false;
 		if (var0.field369 != -1) {
-			var12 = class116.method539(var0.field369);
+			var12 = class116.getAnimationDefinition(var0.field369);
 			if (null != var12) {
 				if (!var12.method533() && var12.field733 != null) {
 					++var0.field371;
@@ -7150,14 +7150,14 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		class287 var19 = new class287(var0.method291());
 
 		for (class546 var15 = (class546)var19.method1513(); null != var15; var15 = (class546)var19.next()) {
-			if (var15.field4255 != -1 && field1846 >= var15.field4256) {
+			if (var15.field4255 != -1 && updateTick >= var15.field4256) {
 				var5 = class137.method707(var15.field4255).field896;
 				if (var5 == -1) {
 					var15.method1719();
 					--var0.field379;
 				} else {
 					var15.field4254 = Math.max(var15.field4254, 0);
-					class116 var20 = class116.method539(var5);
+					class116 var20 = class116.getAnimationDefinition(var5);
 					if (var20.field733 != null && !var20.method533()) {
 						++var15.field4253;
 						if (var15.field4254 < var20.field733.length && var15.field4253 > var20.field722[var15.field4254]) {
@@ -7188,72 +7188,72 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 
 		class116 var17;
-		if (var0.field373 != -1 && var0.field376 <= 1) {
-			var17 = class116.method539(var0.field373);
-			if (var17.field735 == 1 && var0.field403 > 0 && var0.field384 <= field1846 && var0.field385 < field1846) {
-				var0.field376 = 1;
+		if (var0.animationId != -1 && var0.animationDelay <= 1) {
+			var17 = class116.getAnimationDefinition(var0.animationId);
+			if (var17.field735 == 1 && var0.field403 > 0 && var0.field384 <= updateTick && var0.field385 < updateTick) {
+				var0.animationDelay = 1;
 				return;
 			}
 		}
 
-		if (var0.field373 != -1 && var0.field376 == 0) {
-			var17 = class116.method539(var0.field373);
+		if (var0.animationId != -1 && var0.animationDelay == 0) {
+			var17 = class116.getAnimationDefinition(var0.animationId);
 			if (null == var17) {
-				var0.field373 = -1;
+				var0.animationId = -1;
 			} else if (!var17.method533() && var17.field733 != null) {
-				++var0.field395;
-				if (var0.field334 < var17.field733.length && var0.field395 > var17.field722[var0.field334]) {
-					var0.field395 = 1;
-					++var0.field334;
-					method1464(var17, var0.field334, var0.field368, var0.field329);
+				++var0.animationFrameCycle;
+				if (var0.animationFrame < var17.field733.length && var0.animationFrameCycle > var17.field722[var0.animationFrame]) {
+					var0.animationFrameCycle = 1;
+					++var0.animationFrame;
+					method1464(var17, var0.animationFrame, var0.field368, var0.field329);
 				}
 
-				if (var0.field334 >= var17.field733.length) {
-					var0.field334 -= var17.field737;
-					++var0.field377;
-					if (var0.field377 >= var17.field748) {
-						var0.field373 = -1;
-					} else if (var0.field334 >= 0 && var0.field334 < var17.field733.length) {
-						method1464(var17, var0.field334, var0.field368, var0.field329);
+				if (var0.animationFrame >= var17.field733.length) {
+					var0.animationFrame -= var17.field737;
+					++var0.curAnimationFrameIndex;
+					if (var0.curAnimationFrameIndex >= var17.field748) {
+						var0.animationId = -1;
+					} else if (var0.animationFrame >= 0 && var0.animationFrame < var17.field733.length) {
+						method1464(var17, var0.animationFrame, var0.field368, var0.field329);
 					} else {
-						var0.field373 = -1;
+						var0.animationId = -1;
 					}
 				}
 
 				var0.field349 = var17.field745;
 			} else if (var17.method533()) {
-				++var0.field334;
+				++var0.animationFrame;
 				var5 = var17.method535();
-				if (var0.field334 < var5) {
-					method1442(var17, var0.field334, var0.field368, var0.field329);
+				if (var0.animationFrame < var5) {
+					method1442(var17, var0.animationFrame, var0.field368, var0.field329);
 				} else {
-					var0.field334 -= var17.field737;
-					++var0.field377;
-					if (var0.field377 >= var17.field748) {
-						var0.field373 = -1;
-					} else if (var0.field334 >= 0 && var0.field334 < var5) {
-						method1442(var17, var0.field334, var0.field368, var0.field329);
+					var0.animationFrame -= var17.field737;
+					++var0.curAnimationFrameIndex;
+					if (var0.curAnimationFrameIndex >= var17.field748) {
+						var0.animationId = -1;
+					} else if (var0.animationFrame >= 0 && var0.animationFrame < var5) {
+						method1442(var17, var0.animationFrame, var0.field368, var0.field329);
 					} else {
-						var0.field373 = -1;
+						var0.animationId = -1;
 					}
 				}
 			} else {
-				var0.field373 = -1;
+				var0.animationId = -1;
 			}
 		}
 
-		if (var0.field376 > 0) {
-			--var0.field376;
+		if (var0.animationDelay > 0) {
+			--var0.animationDelay;
 		}
 
 	}
 
 	static final void method1376(class65 var0) {
-		boolean var2 = var0.field385 == field1846 || var0.field373 == -1 || var0.field376 != 0;
+		boolean var2 = var0.field385 == updateTick || var0.animationId == -1 || var0.animationDelay != 0;
 		if (!var2) {
-			class116 var3 = class116.method539(var0.field373);
+			class116 var3 = class116.getAnimationDefinition(var0.animationId);
 			if (var3 != null && !var3.method533()) {
-				var2 = var0.field395 + 1 > var3.field722[var0.field334];
+				var2 = var0.animationFrameCycle + 1 > var3.field722[var0.animationFrame];
 			} else {
 				var2 = true;
 			}
@@ -7261,7 +7261,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 		if (var2) {
 			int var9 = var0.field385 - var0.field384;
-			int var4 = field1846 - var0.field384;
+			int var4 = updateTick - var0.field384;
 			int var5 = var0.field380 * 128 + var0.field332 * 64;
 			int var6 = var0.field332 * 64 + var0.field328 * 128;
 			int var7 = var0.field381 * 128 + var0.field332 * 64;
@@ -7308,11 +7308,11 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	static void method1467() {
-		class341 var1 = class341.createClientPacket(ClientPacket.field3093, field1891.field4219);
+		class341 var1 = class341.createClientPacket(ClientPacket.field3093, serverConnection.field4219);
 		var1.buffer.writeByte(method1368());
 		var1.buffer.writeShort(class164.field1170);
 		var1.buffer.writeShort(class92.field595);
-		field1891.method2612(var1);
+		serverConnection.method2612(var1);
 	}
 
 	static final void method1452(String var0, boolean var1) {
@@ -7453,10 +7453,10 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			int var4 = var0.field329 >> 7;
 			if (var3 >= 0 && var3 < 104 && var4 >= 0 && var4 < 104) {
 				long var5 = class503.method2386(0, 0, 0, false, var0.field3001);
-				if (var0.field2991 != null && field1846 >= var0.field2996 && field1846 < var0.field3011) {
+				if (var0.field2991 != null && updateTick >= var0.field2996 && updateTick < var0.field3011) {
 					var0.field3006 = false;
 					var0.field2995 = method1347(var0.field368, var0.field329, class212.field1393);
-					var0.field333 = field1846;
+					var0.field333 = updateTick;
 					class141.field937.method740(class212.field1393, var0.field368, var0.field329, var0.field2995, 60, var0, var0.field330, var5, var0.field3015, var0.field3003, var0.field3004, var0.field3014);
 				} else {
 					if ((var0.field368 & 127) == 64 && (var0.field329 & 127) == 64) {
@@ -7468,7 +7468,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 
 					var0.field2995 = method1347(var0.field368, var0.field329, class212.field1393);
-					var0.field333 = field1846;
+					var0.field333 = updateTick;
 					class141.field937.method780(class212.field1393, var0.field368, var0.field329, var0.field2995, 60, var0, var0.field330, var5, var0.field349);
 				}
 			}
@@ -7477,9 +7477,9 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	static final void method1344(boolean var0) {
-		for (int var2 = 0; var2 < field1980; ++var2) {
-			class378 var3 = field2017[field1893[var2]];
-			if (null != var3 && var3.method289() && var0 == var3.field2605.field510 && var3.field2605.method356()) {
+		for (int var2 = 0; var2 < npcCount; ++var2) {
+			Npc var3 = npcs[localNpcIndexes[var2]];
+			if (null != var3 && var3.method289() && var0 == var3.definition.field510 && var3.definition.method356()) {
 				int var4 = var3.field368 >> 7;
 				int var5 = var3.field329 >> 7;
 				if (var4 >= 0 && var4 < 104 && var5 >= 0 && var5 < 104) {
@@ -7491,8 +7491,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						field1946[var4][var5] = field1947;
 					}
 
-					long var6 = class503.method2386(0, 0, 1, !var3.field2605.field492, field1893[var2]);
-					var3.field333 = field1846;
+					long var6 = class503.method2386(0, 0, 1, !var3.definition.field492, localNpcIndexes[var2]);
+					var3.field333 = updateTick;
 					class141.field937.method780(class212.field1393, var3.field368, var3.field329, method1347(var3.field332 * 64 - 64 + var3.field368, var3.field332 * 64 - 64 + var3.field329, class212.field1393), var3.field332 * 64 - 64 + 60, var3, var3.field330, var6, var3.field349);
 				}
 			}
@@ -7502,18 +7502,18 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 	static final void method1462() {
 		for (class404 var1 = (class404)field1972.method327(); var1 != null; var1 = (class404)field1972.method331()) {
-			if (var1.field2760 == class212.field1393 && field1846 <= var1.field2769) {
-				if (field1846 >= var1.field2763) {
-					class378 var2;
+			if (var1.field2760 == class212.field1393 && updateTick <= var1.field2769) {
+				if (updateTick >= var1.field2763) {
+					Npc var2;
 					int var3;
 					Player var4;
 					if (!var1.field2785 && var1.field2767 != 0) {
 						if (var1.field2767 > 0) {
-							var2 = field2017[var1.field2767 - 1];
+							var2 = npcs[var1.field2767 - 1];
 							if (null != var2 && var2.field368 >= 0 && var2.field368 < 13312 && var2.field329 >= 0 && var2.field329 < 13312) {
 								var1.field2761 = var2.field368;
 								var1.field2762 = var2.field329;
-								var1.method1864(var1.field2765, var1.field2766, var1.field2780, field1846);
+								var1.method1864(var1.field2765, var1.field2766, var1.field2780, updateTick);
 							}
 						} else {
 							var3 = -var1.field2767 - 1;
@@ -7526,15 +7526,15 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 							if (var4 != null && var4.field368 >= 0 && var4.field368 < 13312 && var4.field329 >= 0 && var4.field329 < 13312) {
 								var1.field2761 = var4.field368;
 								var1.field2762 = var4.field329;
-								var1.method1864(var1.field2765, var1.field2766, var1.field2780, field1846);
+								var1.method1864(var1.field2765, var1.field2766, var1.field2780, updateTick);
 							}
 						}
 					}
 
 					if (var1.field2759 > 0) {
-						var2 = field2017[var1.field2759 - 1];
+						var2 = npcs[var1.field2759 - 1];
 						if (null != var2 && var2.field368 >= 0 && var2.field368 < 13312 && var2.field329 >= 0 && var2.field329 < 13312) {
-							var1.method1864(var2.field368, var2.field329, method1347(var2.field368, var2.field329, var1.field2760) - var1.field2783, field1846);
+							var1.method1864(var2.field368, var2.field329, method1347(var2.field368, var2.field329, var1.field2760) - var1.field2783, updateTick);
 						}
 					}
 
@@ -7547,7 +7547,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						}
 
 						if (var4 != null && var4.field368 >= 0 && var4.field368 < 13312 && var4.field329 >= 0 && var4.field329 < 13312) {
-							var1.method1864(var4.field368, var4.field329, method1347(var4.field368, var4.field329, var1.field2760) - var1.field2783, field1846);
+							var1.method1864(var4.field368, var4.field329, method1347(var4.field368, var4.field329, var1.field2760) - var1.field2783, updateTick);
 						}
 					}
 
@@ -7718,8 +7718,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 	static final void method1394(class65 var0, int var1, int var2, int var3, int var4, int var5) {
 		if (null != var0 && var0.method289()) {
-			if (var0 instanceof class378) {
-				class73 var7 = ((class378)var0).field2605;
+			if (var0 instanceof Npc) {
+				class73 var7 = ((Npc)var0).definition;
 				if (var7.field477 != null) {
 					var7 = var7.method363();
 				}
@@ -7733,18 +7733,18 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			int[] var8 = class264.field1765;
 			boolean var9 = var1 < var76;
 			int var10 = -2;
-			if (var0.field356 != null && (!var9 || !var0.field388 && (field2040 == 4 || !var0.field350 && (field2040 == 0 || field2040 == 3 || field2040 == 1 && ((Player)var0).method2115())))) {
+			if (var0.overheadText != null && (!var9 || !var0.field388 && (field2040 == 4 || !var0.field350 && (field2040 == 0 || field2040 == 3 || field2040 == 1 && ((Player)var0).method2115())))) {
 				method1440(var0, var0.field353);
 				if (field1948 > -1 && field1930 < field2119) {
-					field1940[field1930] = class209.field1388.method1033(var0.field356) / 2;
+					field1940[field1930] = class209.field1388.method1033(var0.overheadText) / 2;
 					field1939[field1930] = class209.field1388.field1483;
 					field1937[field1930] = field1948;
 					field1938[field1930] = field1966 - -2;
 					field1941[field1930] = var0.field397;
 					field2136[field1930] = var0.field354;
-					field2045[field1930] = var0.field352;
+					field2045[field1930] = var0.overheadTextTicksRemaining;
 					field1943[field1930] = var0.field337;
-					field1945[field1930] = var0.field356;
+					field1945[field1930] = var0.overheadText;
 					++field1930;
 					var10 += 12;
 				}
@@ -7758,7 +7758,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				method1440(var0, 15 + var0.field353);
 
 				for (class15 var11 = (class15)var0.field362.method2088(); null != var11; var11 = (class15)var0.field362.method2097()) {
-					class12 var12 = var11.method67(field1846);
+					class12 var12 = var11.method67(updateTick);
 					if (var12 == null) {
 						if (var11.method66()) {
 							var11.method1719();
@@ -7780,7 +7780,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 						int var18 = 255;
 						boolean var19 = true;
-						var20 = field1846 - var12.field66;
+						var20 = updateTick - var12.field66;
 						int var21 = var12.field65 * var16 / var13.field1162;
 						int var22;
 						int var94;
@@ -7843,7 +7843,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				var10 += 7;
 			}
 
-			if (var9 && var0.field333 == field1846) {
+			if (var9 && var0.field333 == updateTick) {
 				Player var78 = (Player)var0;
 				boolean var77;
 				if (field2134 == 0) {
@@ -7899,7 +7899,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 				}
 			} else {
-				class378 var82 = (class378)var0;
+				Npc var82 = (Npc)var0;
 				int[] var79 = var82.method1767();
 				short[] var84 = var82.method1770();
 				if (null != var84 && var79 != null) {
@@ -7959,7 +7959,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 				}
 
-				if (field1853 == 1 && field1893[var1 - var76] == field1854 && field1846 % 20 < 10) {
+				if (field1853 == 1 && localNpcIndexes[var1 - var76] == field1854 && updateTick % 20 < 10) {
 					method1440(var0, var0.field353 + 15);
 					if (field1948 > -1) {
 						class108.field683[0].method159(field1948 + var2 - 12, field1966 + var3 - 28);
@@ -7973,7 +7973,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				class156 var90 = null;
 				int var91 = 0;
 				if (var86 >= 0) {
-					if (var81 <= field1846) {
+					if (var81 <= updateTick) {
 						continue;
 					}
 
@@ -7999,7 +7999,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 				}
 
-				if (var81 - var91 <= field1846) {
+				if (var81 - var91 <= updateTick) {
 					if (var90 == null) {
 						var0.field398[var85] = -1;
 					} else {
@@ -8243,7 +8243,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 								}
 							}
 
-							var63 = var0.field398[var85] - field1846;
+							var63 = var0.field398[var85] - updateTick;
 							int var64 = var90.field1072 - var90.field1072 * var63 / var90.field1067;
 							int var65 = var63 * var90.field1064 / var90.field1067 + -var90.field1064;
 							int var66 = var2 + field1948 - (var52 >> 1) + var64;
@@ -8485,16 +8485,16 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			boolean var16 = buf.readUnsignedByteNEG() == 1;
 			regionCount = buf.readUnsignedShortLE();
 			regionX = buf.readUnsignedShort();
-			buf.method1497();
+			buf.switchBitMode();
 
 			int var9;
 			int var10;
 			for (regionY = 0; regionY < 4; ++regionY) {
 				for (regionId = 0; regionId < 13; ++regionId) {
 					for (var9 = 0; var9 < 13; ++var9) {
-						var10 = buf.method1501(1);
+						var10 = buf.readBits(1);
 						if (var10 == 1) {
-							field1908[regionY][regionId][var9] = buf.method1501(26);
+							field1908[regionY][regionId][var9] = buf.readBits(26);
 						} else {
 							field1908[regionY][regionId][var9] = -1;
 						}
@@ -8572,7 +8572,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			int var10;
 			int[] var10000;
 			for (var8 = 0; var8 < 65536; ++var8) {
-				class378 var9 = field2017[var8];
+				Npc var9 = npcs[var8];
 				if (var9 != null) {
 					for (var10 = 0; var10 < 10; ++var10) {
 						var10000 = var9.field399;
@@ -8667,15 +8667,15 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 	static final void method1386(boolean var0) {
 		class253.method1209();
-		++field1891.field4225;
-		if (field1891.field4225 >= 50 || var0) {
-			field1891.field4225 = 0;
-			if (!field2036 && field1891.method2611() != null) {
-				class341 var2 = class341.createClientPacket(ClientPacket.field3092, field1891.field4219);
-				field1891.method2612(var2);
+		++serverConnection.field4225;
+		if (serverConnection.field4225 >= 50 || var0) {
+			serverConnection.field4225 = 0;
+			if (!field2036 && serverConnection.method2611() != null) {
+				class341 var2 = class341.createClientPacket(ClientPacket.field3092, serverConnection.field4219);
+				serverConnection.method2612(var2);
 
 				try {
-					field1891.method2608();
+					serverConnection.method2608();
 				} catch (IOException var4) {
 					field2036 = true;
 				}
@@ -8894,7 +8894,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	static final void method1346(class310 var0) {
-		PacketBuffer var2 = field1891.field4220;
+		PacketBuffer var2 = serverConnection.field4220;
 		int var3;
 		int var4;
 		int var5;
@@ -8946,8 +8946,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					var10 = var10 * 128 + 64;
 					var7 = 64 + var7 * 128;
 					var5 = 64 + var5 * 128;
-					var48 = new class404(var12, class212.field1393, var9, var10, method1347(var9, var10, class212.field1393) - var47, var6 + field1846, var45 + field1846, var4, var14, var13, var11, var3);
-					var48.method1864(var7, var5, method1347(var7, var5, class212.field1393) - var3, var6 + field1846);
+					var48 = new class404(var12, class212.field1393, var9, var10, method1347(var9, var10, class212.field1393) - var47, var6 + updateTick, var45 + updateTick, var4, var14, var13, var11, var3);
+					var48.method1864(var7, var5, method1347(var7, var5, class212.field1393) - var3, var6 + updateTick);
 					field1972.method323(var48);
 				}
 
@@ -8996,8 +8996,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						var13 = var13 * 128 + 64;
 						var14 = 64 + var14 * 128;
 						var45 = var45 * 128 + 64;
-						var48 = new class404(var9, class212.field1393, var12, var13, method1347(var12, var13, class212.field1393) - var6, var7 + field1846, var4 + field1846, var47, var10, var5, var8, var3);
-						var48.method1864(var14, var45, method1347(var14, var45, class212.field1393) - var3, field1846 + var7);
+						var48 = new class404(var9, class212.field1393, var12, var13, method1347(var12, var13, class212.field1393) - var6, var7 + updateTick, var4 + updateTick, var47, var10, var5, var8, var3);
+						var48.method1864(var14, var45, method1347(var14, var45, class212.field1393) - var3, updateTick + var7);
 						field1972.method323(var48);
 					}
 
@@ -9022,8 +9022,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						var7 = var7 * 128 + 64;
 						var13 = 64 + var13 * 128;
 						var45 = 64 + var45 * 128;
-						class404 var46 = new class404(var4, class212.field1393, var6, var7, method1347(var6, var7, class212.field1393) - var8, field1846 + var12, field1846 + var9, var3, var14, var10, var11);
-						var46.method1864(var13, var45, method1347(var13, var45, class212.field1393) - var11, var12 + field1846);
+						class404 var46 = new class404(var4, class212.field1393, var6, var7, method1347(var6, var7, class212.field1393) - var8, updateTick + var12, updateTick + var9, var3, var14, var10, var11);
+						var46.method1864(var13, var45, method1347(var13, var45, class212.field1393) - var11, var12 + updateTick);
 						field1972.method323(var46);
 					}
 
@@ -9165,8 +9165,8 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 							class490 var30 = var19.method1842(var12, var13, var26, var28, var27, var29);
 							if (var30 != null) {
 								class425.method1926(class212.field1393, var5, var6, var14, -1, 0, 0, 31, var3 + 1, var10 + 1);
-								var18.field2996 = field1846 + var3;
-								var18.field3011 = field1846 + var10;
+								var18.field2996 = updateTick + var3;
+								var18.field3011 = updateTick + var10;
 								var18.field2991 = var30;
 								var18.field2998 = var20 * 64 + var5 * 128;
 								var18.field2990 = var21 * 64 + var6 * 128;
@@ -9248,7 +9248,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 								if (var6 >= 0 && var7 >= 0 && var6 < 104 && var7 < 104) {
 									var6 = var6 * 128 + 64;
 									var7 = var7 * 128 + 64;
-									class473 var36 = new class473(var4, class212.field1393, var6, var7, method1347(var6, var7, class212.field1393) - var8, var3, field1846);
+									class473 var36 = new class473(var4, class212.field1393, var6, var7, method1347(var6, var7, class212.field1393) - var8, var3, updateTick);
 									field1973.method323(var36);
 								}
 
@@ -9554,142 +9554,146 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 	}
 
-	static final void method1432(boolean var0, PacketBuffer var1) {
-		field1963 = 0;
-		field1894 = 0;
-		var1.method1497();
-		int var3 = var1.method1501(8);
-		int var4;
-		if (var3 < field1980) {
-			for (var4 = var3; var4 < field1980; ++var4) {
-				field1964[++field1963 - 1] = field1893[var4];
+	static final void updateNpcs(boolean isLargeViewport, PacketBuffer buf) {
+		externalNpcCount = 0;
+		extendedNpcCount = 0;
+		buf.switchBitMode();
+		int count = buf.readBits(8);
+		int i;
+		if (count < Client.npcCount) {
+			for (i = count; i < Client.npcCount; ++i) {
+				externalNpcIndexes[++externalNpcCount - 1] = localNpcIndexes[i];
 			}
 		}
 
-		if (var3 > field1980) {
+		if (count > Client.npcCount) {
 			throw new RuntimeException("");
 		} else {
-			field1980 = 0;
+			Client.npcCount = 0;
 
-			int var7;
+			int tmpData;
 			int var8;
-			int var9;
+			int loopType;
 			int var10;
-			for (var4 = 0; var4 < var3; ++var4) {
-				int var5 = field1893[var4];
-				class378 var6 = field2017[var5];
-				var7 = var1.method1501(1);
-				if (var7 == 0) {
-					field1893[++field1980 - 1] = var5;
-					var6.field387 = field1846;
+			for (i = 0; i < count; ++i) {
+				int npcIndex = localNpcIndexes[i];
+				Npc npc = npcs[npcIndex];
+				tmpData = buf.readBits(1);
+				if (tmpData == 0) {
+					localNpcIndexes[++Client.npcCount - 1] = npcIndex;
+					npc.lastUpdateTick = updateTick;
 				} else {
-					var8 = var1.method1501(2);
+					var8 = buf.readBits(2);
 					if (var8 == 0) {
-						field1893[++field1980 - 1] = var5;
-						var6.field387 = field1846;
-						field1847[++field1894 - 1] = var5;
+						localNpcIndexes[++Client.npcCount - 1] = npcIndex;
+						npc.lastUpdateTick = updateTick;
+						extendedNpcIndexes[++extendedNpcCount - 1] = npcIndex;
 					} else if (var8 == 1) {
-						field1893[++field1980 - 1] = var5;
-						var6.field387 = field1846;
-						var9 = var1.method1501(3);
-						var6.method1765(var9, MovementType.WALK, (byte)-1);
-						var10 = var1.method1501(1);
+						localNpcIndexes[++Client.npcCount - 1] = npcIndex;
+						npc.lastUpdateTick = updateTick;
+						loopType = buf.readBits(3);
+						npc.move(loopType, MovementType.WALK, (byte)-1);
+						var10 = buf.readBits(1);
 						if (var10 == 1) {
-							field1847[++field1894 - 1] = var5;
+							extendedNpcIndexes[++extendedNpcCount - 1] = npcIndex;
 						}
 					} else if (var8 == 2) {
-						field1893[++field1980 - 1] = var5;
-						var6.field387 = field1846;
-						if (var1.method1501(1) == 1) {
-							var9 = var1.method1501(3);
-							var6.method1765(var9, MovementType.run, (byte)-1);
-							var10 = var1.method1501(3);
-							var6.method1765(var10, MovementType.run, (byte)-1);
+						localNpcIndexes[++Client.npcCount - 1] = npcIndex;
+						npc.lastUpdateTick = updateTick;
+						if (buf.readBits(1) == 1) {
+							loopType = buf.readBits(3);
+							npc.move(loopType, MovementType.RUN, (byte)-1);
+							var10 = buf.readBits(3);
+							npc.move(var10, MovementType.RUN, (byte)-1);
 						} else {
-							var9 = var1.method1501(3);
-							var6.method1765(var9, MovementType.CRAWL, (byte)-1);
+							loopType = buf.readBits(3);
+							npc.move(loopType, MovementType.CRAWL, (byte)-1);
 						}
 
-						var9 = var1.method1501(1);
-						if (var9 == 1) {
-							field1847[++field1894 - 1] = var5;
+						loopType = buf.readBits(1);
+						if (loopType == 1) {
+							extendedNpcIndexes[++extendedNpcCount - 1] = npcIndex;
 						}
 					} else if (var8 == 3) {
-						field1964[++field1963 - 1] = var5;
+						externalNpcIndexes[++externalNpcCount - 1] = npcIndex;
 					}
 				}
 			}
 
-			method1311(var0, var1);
+			syncExternalNpcs(isLargeViewport, buf);
 
-			for (var3 = 0; var3 < field1894; ++var3) {
-				var4 = field1847[var3];
-				class378 var15 = field2017[var4];
-				int var16 = var1.readUnsignedByte();
-				if ((var16 & 64) != 0) {
-					var7 = var1.readUnsignedByte();
-					var16 += var7 << 8;
+			for (count = 0; count < extendedNpcCount; ++count) {
+				i = extendedNpcIndexes[count];
+				Npc npc = npcs[i];
+				int mask = buf.readUnsignedByte();
+				if ((mask & 0x40) != 0) {
+					tmpData = buf.readUnsignedByte();
+					mask += tmpData << 8;
 				}
 
-				if ((var16 & 2048) != 0) {
-					var7 = var1.readUnsignedByte();
-					var16 += var7 << 16;
+				if ((mask & 0x800) != 0) {
+					tmpData = buf.readUnsignedByte();
+					mask += tmpData << 16;
 				}
 
-				if ((var16 & 128) != 0) {
-					var7 = var1.readUnsignedShortADD();
-					if (var7 == 65535) {
-						var7 = -1;
+				// ANIMATION : 1
+				if ((mask & 0x80) != 0) {
+					tmpData = buf.readUnsignedShortADD();
+					if (tmpData == 65535) {
+						tmpData = -1;
 					}
 
-					var8 = var1.readUnsignedByte();
-					if (var7 == var15.field373 && var7 != -1) {
-						var9 = class116.method539(var7).field747;
-						if (var9 == 1) {
-							var15.field334 = 0;
-							var15.field395 = 0;
-							var15.field376 = var8;
-							var15.field377 = 0;
+					var8 = buf.readUnsignedByte();
+					if (tmpData == npc.animationId && tmpData != -1) {
+						loopType = class116.getAnimationDefinition(tmpData).loopType;
+						if (loopType == 1) {
+							npc.animationFrame = 0;
+							npc.animationFrameCycle = 0;
+							npc.animationDelay = var8;
+							npc.curAnimationFrameIndex = 0;
 						}
 
-						if (var9 == 2) {
-							var15.field377 = 0;
+						if (loopType == 2) {
+							npc.curAnimationFrameIndex = 0;
 						}
-					} else if (var7 == -1 || var15.field373 == -1 || class116.method539(var7).field741 >= class116.method539(var15.field373).field741) {
-						var15.field373 = var7;
-						var15.field334 = 0;
-						var15.field395 = 0;
-						var15.field376 = var8;
-						var15.field377 = 0;
-						var15.field403 = var15.field360;
+					} else if (tmpData == -1 || npc.animationId == -1 || class116.getAnimationDefinition(tmpData).field741 >= class116.getAnimationDefinition(npc.animationId).field741) {
+						npc.animationId = tmpData;
+						npc.animationFrame = 0;
+						npc.animationFrameCycle = 0;
+						npc.animationDelay = var8;
+						npc.curAnimationFrameIndex = 0;
+						npc.field403 = npc.pathLength;
 					}
 				}
 
-				if ((var16 & 2) != 0) {
-					var15.field2605 = class73.method366(var1.readUnsignedShortLE());
-					method1414(var15);
-					var15.method1768();
+				// TRANSMOG : 2
+				if ((mask & 0x2) != 0) {
+					npc.definition = class73.getNpcDefinition(buf.readUnsignedShortLE());
+					loadNpcDefinitionData(npc);
+					npc.method1768();
 				}
 
-				if ((var16 & 32768) != 0) {
-					var15.field380 = var1.readByteADD();
-					var15.field328 = var1.readByte();
-					var15.field381 = var1.readByte();
-					var15.field347 = var1.readByteSUB();
-					var15.field384 = var1.readUnsignedShortLE() + field1846;
-					var15.field385 = var1.readUnsignedShort() + field1846;
-					var15.field396 = var1.readUnsignedShortADD();
-					var15.field360 = 1;
-					var15.field403 = 0;
-					var15.field380 += var15.field399[0];
-					var15.field328 += var15.field400[0];
-					var15.field381 += var15.field399[0];
-					var15.field347 += var15.field400[0];
+				// FORCE_MOVEMENT : 3
+				if ((mask & 0x8000) != 0) {
+					npc.field380 = buf.readByteADD();
+					npc.field328 = buf.readByte();
+					npc.field381 = buf.readByte();
+					npc.field347 = buf.readByteSUB();
+					npc.field384 = buf.readUnsignedShortLE() + updateTick;
+					npc.field385 = buf.readUnsignedShort() + updateTick;
+					npc.field396 = buf.readUnsignedShortADD();
+					npc.pathLength = 1;
+					npc.field403 = 0;
+					npc.field380 += npc.field399[0];
+					npc.field328 += npc.field400[0];
+					npc.field381 += npc.field399[0];
+					npc.field347 += npc.field400[0];
 				}
 
-				if ((var16 & 8) != 0) {
-					var1.readUnsignedShort();
-					var1.readInt();
+				// THE FUCK? NOTHING : 4
+				if ((mask & 8) != 0) {
+					buf.readUnsignedShort();
+					buf.readInt();
 				}
 
 				int var11;
@@ -9699,273 +9703,286 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				short[] var19;
 				long var20;
 				boolean var21;
-				if ((var16 & 16384) != 0) {
-					var7 = var1.readUnsignedByte();
-					if ((var7 & 1) == 1) {
-						var15.method1772();
+				// HEAD_CUSTOMIZATION : 5
+				if ((mask & 0x4000) != 0) {
+					tmpData = buf.readUnsignedByte();
+					if ((tmpData & 1) == 1) {
+						npc.clearOverrides();
 					} else {
 						var17 = null;
-						if ((var7 & 2) == 2) {
-							var9 = var1.readUnsignedByteADD();
-							var17 = new int[var9];
+						if ((tmpData & 2) == 2) {
+							loopType = buf.readUnsignedByteADD();
+							var17 = new int[loopType];
 
-							for (var10 = 0; var10 < var9; ++var10) {
-								var11 = var1.readUnsignedShortADD();
+							for (var10 = 0; var10 < loopType; ++var10) {
+								var11 = buf.readUnsignedShortADD();
 								var11 = var11 == 65535 ? -1 : var11;
 								var17[var10] = var11;
 							}
 						}
 
 						var18 = null;
-						if ((var7 & 4) == 4) {
+						if ((tmpData & 4) == 4) {
 							var10 = 0;
-							if (null != var15.field2605.field502) {
-								var10 = var15.field2605.field502.length;
+							if (null != npc.definition.recolorTo) {
+								var10 = npc.definition.recolorTo.length;
 							}
 
 							var18 = new short[var10];
 
 							for (var11 = 0; var11 < var10; ++var11) {
-								var18[var11] = (short)var1.readUnsignedShortADD();
+								var18[var11] = (short)buf.readUnsignedShortADD();
 							}
 						}
 
 						var19 = null;
-						if ((var7 & 8) == 8) {
+						if ((tmpData & 8) == 8) {
 							var11 = 0;
-							if (var15.field2605.field511 != null) {
-								var11 = var15.field2605.field511.length;
+							if (npc.definition.retextureTo != null) {
+								var11 = npc.definition.retextureTo.length;
 							}
 
 							var19 = new short[var11];
 
 							for (var12 = 0; var12 < var11; ++var12) {
-								var19[var12] = (short)var1.readUnsignedShort();
+								var19[var12] = (short)buf.readUnsignedShort();
 							}
 						}
 
 						var21 = false;
-						if ((var7 & 16) != 0) {
-							var21 = var1.readUnsignedByteNEG() == 1;
+						if ((tmpData & 16) != 0) {
+							var21 = buf.readUnsignedByteNEG() == 1;
 						}
 
-						var20 = (long)(++class378.field2604 - 1);
-						var15.method1769(new class120(var20, var17, var18, var19, var21));
+						var20 = (long)(++Npc.field2604 - 1);
+						npc.overrideTexture(new NpcTextureOverride(var20, var17, var18, var19, var21));
 					}
 				}
 
-				if ((var16 & 512) != 0) {
-					var15.method1762(var1.readStringOrNull());
+				// NAMECHANGE : 6
+				if ((mask & 0x200) != 0) {
+					npc.changeName(buf.readStringOrNull());
 				}
 
-				if ((var16 & 4096) != 0) {
-					var7 = var1.readUnsignedByteADD();
-					if ((var7 & 1) == 1) {
-						var15.method1773();
+				// BODY_CUSTOMIZATION : 7
+				if ((mask & 0x1000) != 0) {
+					tmpData = buf.readUnsignedByteADD();
+					if ((tmpData & 1) == 1) {
+						npc.method1773();
 					} else {
 						var17 = null;
-						if ((var7 & 2) == 2) {
-							var9 = var1.readUnsignedByte();
-							var17 = new int[var9];
+						if ((tmpData & 2) == 2) {
+							loopType = buf.readUnsignedByte();
+							var17 = new int[loopType];
 
-							for (var10 = 0; var10 < var9; ++var10) {
-								var11 = var1.readUnsignedShortLE();
+							for (var10 = 0; var10 < loopType; ++var10) {
+								var11 = buf.readUnsignedShortLE();
 								var11 = var11 == 65535 ? -1 : var11;
 								var17[var10] = var11;
 							}
 						}
 
 						var18 = null;
-						if ((var7 & 4) == 4) {
+						if ((tmpData & 4) == 4) {
 							var10 = 0;
-							if (var15.field2605.field502 != null) {
-								var10 = var15.field2605.field502.length;
+							if (npc.definition.recolorTo != null) {
+								var10 = npc.definition.recolorTo.length;
 							}
 
 							var18 = new short[var10];
 
 							for (var11 = 0; var11 < var10; ++var11) {
-								var18[var11] = (short)var1.readUnsignedShortLE();
+								var18[var11] = (short)buf.readUnsignedShortLE();
 							}
 						}
 
 						var19 = null;
-						if ((var7 & 8) == 8) {
+						if ((tmpData & 8) == 8) {
 							var11 = 0;
-							if (var15.field2605.field511 != null) {
-								var11 = var15.field2605.field511.length;
+							if (npc.definition.retextureTo != null) {
+								var11 = npc.definition.retextureTo.length;
 							}
 
 							var19 = new short[var11];
 
 							for (var12 = 0; var12 < var11; ++var12) {
-								var19[var12] = (short)var1.readUnsignedShortADD();
+								var19[var12] = (short)buf.readUnsignedShortADD();
 							}
 						}
 
 						var21 = false;
-						if ((var7 & 16) != 0) {
-							var21 = var1.readUnsignedByte() == 1;
+						if ((tmpData & 16) != 0) {
+							var21 = buf.readUnsignedByte() == 1;
 						}
 
-						var20 = (long)(++class378.field2602 - 1);
-						var15.method1771(new class120(var20, var17, var18, var19, var21));
+						var20 = (long)(++Npc.field2602 - 1);
+						npc.method1771(new NpcTextureOverride(var20, var17, var18, var19, var21));
 					}
 				}
 
-				if ((var16 & 262144) != 0) {
-					var7 = var1.readInt();
-					var15.field335 = (var7 & 1) != 0 ? var1.readUnsignedShortLEADD() : var15.field2605.field482;
-					var15.field336 = (var7 & 2) != 0 ? var1.readUnsignedShortLEADD() : 53136165 * var15.field2605.field488 * -650094419;
-					var15.field331 = (var7 & 4) != 0 ? var1.readUnsignedShortADD() : 1652208225 * var15.field2605.field478 * 12153249;
-					var15.field338 = (var7 & 8) != 0 ? var1.readUnsignedShortLEADD() : var15.field2605.field490;
-					var15.field341 = (var7 & 16) != 0 ? var1.readUnsignedShort() : 407029447 * var15.field2605.field491 * 193862391;
-					var15.field340 = (var7 & 32) != 0 ? var1.readUnsignedShortLE() : -1457167705 * var15.field2605.field504 * 1557013783;
-					var15.field401 = (var7 & 64) != 0 ? var1.readUnsignedShortLEADD() : -1220844931 * var15.field2605.field493 * -1279088939;
-					var15.field359 = (var7 & 128) != 0 ? var1.readUnsignedShortADD() : var15.field2605.field494;
-					var15.field345 = (var7 & 256) != 0 ? var1.readUnsignedShortLE() : -1555933215 * var15.field2605.field495 * 1482173473;
-					var15.field344 = (var7 & 512) != 0 ? var1.readUnsignedShort() : var15.field2605.field522;
-					var15.field339 = (var7 & 1024) != 0 ? var1.readUnsignedShort() : 578435175 * var15.field2605.field497 * 700539735;
-					var15.field346 = (var7 & 2048) != 0 ? var1.readUnsignedShort() : 279963805 * var15.field2605.field498 * -2084184651;
-					var15.field361 = (var7 & 4096) != 0 ? var1.readUnsignedShortLE() : var15.field2605.field499;
-					var15.field348 = (var7 & 8192) != 0 ? var1.readUnsignedShortADD() : var15.field2605.field508;
-					var15.field383 = (var7 & 16384) != 0 ? var1.readUnsignedShortLEADD() : var15.field2605.field486;
+				// BASE_ANIMATIONS : 8
+				if ((mask & 0x40000) != 0) {
+					tmpData = buf.readInt();
+					npc.field335 = (tmpData & 1) != 0 ? buf.readUnsignedShortLEADD() : npc.definition.field482;
+					npc.field336 = (tmpData & 2) != 0 ? buf.readUnsignedShortLEADD() : 53136165 * npc.definition.field488 * -650094419;
+					npc.field331 = (tmpData & 4) != 0 ? buf.readUnsignedShortADD() : 1652208225 * npc.definition.field478 * 12153249;
+					npc.field338 = (tmpData & 8) != 0 ? buf.readUnsignedShortLEADD() : npc.definition.field490;
+					npc.field341 = (tmpData & 16) != 0 ? buf.readUnsignedShort() : 407029447 * npc.definition.field491 * 193862391;
+					npc.field340 = (tmpData & 32) != 0 ? buf.readUnsignedShortLE() : -1457167705 * npc.definition.field504 * 1557013783;
+					npc.field401 = (tmpData & 64) != 0 ? buf.readUnsignedShortLEADD() : -1220844931 * npc.definition.field493 * -1279088939;
+					npc.field359 = (tmpData & 128) != 0 ? buf.readUnsignedShortADD() : npc.definition.field494;
+					npc.field345 = (tmpData & 256) != 0 ? buf.readUnsignedShortLE() : -1555933215 * npc.definition.field495 * 1482173473;
+					npc.field344 = (tmpData & 512) != 0 ? buf.readUnsignedShort() : npc.definition.field522;
+					npc.field339 = (tmpData & 1024) != 0 ? buf.readUnsignedShort() : 578435175 * npc.definition.field497 * 700539735;
+					npc.field346 = (tmpData & 2048) != 0 ? buf.readUnsignedShort() : 279963805 * npc.definition.field498 * -2084184651;
+					npc.field361 = (tmpData & 4096) != 0 ? buf.readUnsignedShortLE() : npc.definition.field499;
+					npc.field348 = (tmpData & 8192) != 0 ? buf.readUnsignedShortADD() : npc.definition.field508;
+					npc.field383 = (tmpData & 16384) != 0 ? buf.readUnsignedShortLEADD() : npc.definition.field486;
 				}
 
-				if ((var16 & 131072) != 0) {
-					var7 = var1.readUnsignedByteADD();
+				// GRAPHICS : 9
+				if ((mask & 0x20000) != 0) {
+					tmpData = buf.readUnsignedByteADD();
 
-					for (var8 = 0; var8 < var7; ++var8) {
-						var9 = var1.readUnsignedByteSUB();
-						var10 = var1.readUnsignedShortLEADD();
-						var11 = var1.readUnsignedIntIME();
-						var15.method292(var9, var10, var11 >> 16, var11 & 65535);
+					for (var8 = 0; var8 < tmpData; ++var8) {
+						loopType = buf.readUnsignedByteSUB();
+						var10 = buf.readUnsignedShortLEADD();
+						var11 = buf.readUnsignedIntIME();
+						npc.method292(loopType, var10, var11 >> 16, var11 & 65535);
 					}
 				}
 
-				if ((var16 & 8192) != 0) {
-					var15.method1763(var1.readUnsignedByteSUB());
+				// FILTER_OPTION : 10
+				if ((mask & 8192) != 0) {
+					npc.filterOption(buf.readUnsignedByteSUB());
 				}
 
-				if ((var16 & 32) != 0) {
-					var15.field356 = var1.readStringOrNull();
-					var15.field352 = 100;
+				// FORCE_CHAT : 11
+				if ((mask & 32) != 0) {
+					npc.overheadText = buf.readStringOrNull();
+					npc.overheadTextTicksRemaining = 100;
 				}
 
-				if ((var16 & 16) != 0) {
-					var7 = var1.readUnsignedShort();
-					var8 = var1.readUnsignedShortLE();
-					var15.field382 = var1.readUnsignedByteADD() == 1;
+				// FACE_TILE : 12
+				if ((mask & 0x10) != 0) {
+					tmpData = buf.readUnsignedShort();
+					var8 = buf.readUnsignedShortLE();
+					npc.field382 = buf.readUnsignedByteADD() == 1;
 					if (field1841 >= 212) {
-						var15.field366 = var7;
-						var15.field367 = var8;
+						npc.field366 = tmpData;
+						npc.field367 = var8;
 					} else {
-						var9 = var15.field368 - 64 * (var7 - class80.selectedTileX - class80.selectedTileX);
-						var10 = var15.field329 - (var8 - class425.selectedTileXYIdk - class425.selectedTileXYIdk) * 64;
-						if (var9 != 0 || var10 != 0) {
-							var12 = (int)(Math.atan2((double)var9, (double)var10) * 325.94932345220167D) & 2047;
-							var15.field365 = var12;
+						loopType = npc.field368 - 64 * (tmpData - class80.selectedTileX - class80.selectedTileX);
+						var10 = npc.field329 - (var8 - class425.selectedTileXYIdk - class425.selectedTileXYIdk) * 64;
+						if (loopType != 0 || var10 != 0) {
+							var12 = (int)(Math.atan2((double)loopType, (double)var10) * 325.94932345220167D) & 2047;
+							npc.field365 = var12;
 						}
 					}
 				}
 
-				if ((var16 & 256) != 0) {
-					var15.field404 = var1.readUnsignedIntLE();
+				// CHANGE_COMBAT_LEVEL: 13
+				if ((mask & 256) != 0) {
+					npc.combatLevel = buf.readUnsignedIntLE();
 				}
 
-				if ((var16 & 4) != 0) {
-					var15.field363 = var1.readUnsignedShortLE();
-					var15.field363 += var1.readUnsignedByte() << 16;
-					var7 = 16777215;
-					if (16777215 == var15.field363) {
-						var15.field363 = -1;
+				// FACE_ENTITY : 14
+				if ((mask & 4) != 0) {
+					npc.field363 = buf.readUnsignedShortLE();
+					npc.field363 += buf.readUnsignedByte() << 16;
+					tmpData = 16777215;
+					if (16777215 == npc.field363) {
+						npc.field363 = -1;
 					}
 				}
 
-				if ((var16 & 1) != 0) {
-					var7 = var1.readUnsignedByte();
+				// HIT : 15
+				if ((mask & 0x1) != 0) {
+					tmpData = buf.readUnsignedByte();
 					int var13;
-					if (var7 > 0) {
-						for (var8 = 0; var8 < var7; ++var8) {
+					if (tmpData > 0) {
+						for (var8 = 0; var8 < tmpData; ++var8) {
 							var10 = -1;
 							var11 = -1;
 							var12 = -1;
-							var9 = var1.readUnsignedSmartByteShort();
-							if (var9 == 32767) {
-								var9 = var1.readUnsignedSmartByteShort();
-								var11 = var1.readUnsignedSmartByteShort();
-								var10 = var1.readUnsignedSmartByteShort();
-								var12 = var1.readUnsignedSmartByteShort();
-							} else if (var9 != 32766) {
-								var11 = var1.readUnsignedSmartByteShort();
+							loopType = buf.readUnsignedSmartByteShort();
+							if (loopType == 32767) {
+								loopType = buf.readUnsignedSmartByteShort();
+								var11 = buf.readUnsignedSmartByteShort();
+								var10 = buf.readUnsignedSmartByteShort();
+								var12 = buf.readUnsignedSmartByteShort();
+							} else if (loopType != 32766) {
+								var11 = buf.readUnsignedSmartByteShort();
 							} else {
-								var9 = -1;
+								loopType = -1;
 							}
 
-							var13 = var1.readUnsignedSmartByteShort();
-							var15.method297(var9, var11, var10, var12, field1846, var13);
+							var13 = buf.readUnsignedSmartByteShort();
+							npc.method297(loopType, var11, var10, var12, updateTick, var13);
 						}
 					}
 
-					var8 = var1.readUnsignedByteADD();
+					var8 = buf.readUnsignedByteADD();
 					if (var8 > 0) {
-						for (var9 = 0; var9 < var8; ++var9) {
-							var10 = var1.readUnsignedSmartByteShort();
-							var11 = var1.readUnsignedSmartByteShort();
+						for (loopType = 0; loopType < var8; ++loopType) {
+							var10 = buf.readUnsignedSmartByteShort();
+							var11 = buf.readUnsignedSmartByteShort();
 							if (var11 != 32767) {
-								var12 = var1.readUnsignedSmartByteShort();
-								var13 = var1.readUnsignedByte();
-								int var14 = var11 > 0 ? var1.readUnsignedByteNEG() : var13;
-								var15.method290(var10, field1846, var11, var12, var13, var14);
+								var12 = buf.readUnsignedSmartByteShort();
+								var13 = buf.readUnsignedByte();
+								int var14 = var11 > 0 ? buf.readUnsignedByteNEG() : var13;
+								npc.method290(var10, updateTick, var11, var12, var13, var14);
 							} else {
-								var15.method293(var10);
+								npc.method293(var10);
 							}
 						}
 					}
 				}
 
-				if ((var16 & 1024) != 0) {
-					var15.field389 = field1846 + var1.readUnsignedShort();
-					var15.field390 = field1846 + var1.readUnsignedShortLEADD();
-					var15.field391 = var1.readByteSUB();
-					var15.field392 = var1.readByte();
-					var15.field393 = var1.readByteNEG();
-					var15.field394 = (byte)var1.readUnsignedByte();
+				// TINTING : 16
+				if ((mask & 1024) != 0) {
+					npc.field389 = updateTick + buf.readUnsignedShort();
+					npc.field390 = updateTick + buf.readUnsignedShortLEADD();
+					npc.field391 = buf.readByteSUB();
+					npc.field392 = buf.readByte();
+					npc.field393 = buf.readByteNEG();
+					npc.field394 = (byte)buf.readUnsignedByte();
 				}
 
-				if ((var16 & 65536) != 0) {
-					var7 = var1.readUnsignedByteNEG();
+				// OVERHEAD_ICONS : 17
+				if ((mask & 65536) != 0) {
+					tmpData = buf.readUnsignedByteNEG();
 					var17 = new int[8];
 					var18 = new short[8];
 
 					for (var10 = 0; var10 < 8; ++var10) {
-						if ((var7 & 1 << var10) != 0) {
-							var17[var10] = var1.method2482();
-							var18[var10] = (short)var1.method2480();
+						if ((tmpData & 1 << var10) != 0) {
+							var17[var10] = buf.method2482();
+							var18[var10] = (short)buf.method2480();
 						} else {
 							var17[var10] = -1;
 							var18[var10] = -1;
 						}
 					}
 
-					var15.method1775(var17, var18);
+					npc.method1775(var17, var18);
 				}
 			}
 
-			for (var3 = 0; var3 < field1963; ++var3) {
-				var4 = field1964[var3];
-				if (field1846 != field2017[var4].field387) {
-					field2017[var4].field2605 = null;
-					field2017[var4] = null;
+			for (count = 0; count < externalNpcCount; ++count) {
+				i = externalNpcIndexes[count];
+				if (updateTick != npcs[i].lastUpdateTick) {
+					npcs[i].definition = null;
+					npcs[i] = null;
 				}
 			}
 
-			if (var1.offset != field1891.field4222) {
-				throw new RuntimeException(var1.offset + class274.field1825 + field1891.field4222);
+			if (buf.offset != serverConnection.packetLength) {
+				throw new RuntimeException(buf.offset + class274.field1825 + serverConnection.packetLength);
 			} else {
-				for (var3 = 0; var3 < field1980; ++var3) {
-					if (null == field2017[field1893[var3]]) {
-						throw new RuntimeException(var3 + class274.field1825 + field1980);
+				for (count = 0; count < Client.npcCount; ++count) {
+					if (null == npcs[localNpcIndexes[count]]) {
+						throw new RuntimeException(count + class274.field1825 + Client.npcCount);
 					}
 				}
 
@@ -9973,42 +9990,42 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		}
 	}
 
-	static final void method1311(boolean var0, PacketBuffer var1) {
+	static final void syncExternalNpcs(boolean var0, PacketBuffer buf) {
 		while (true) {
 			boolean var3 = true;
 			int var4 = 65536;
-			if (var1.method1499(field1891.field4222) >= 28) {
-				int var5 = var1.method1501(16);
-				if (65535 != var5) {
-					boolean var6 = false;
-					if (field2017[var5] == null) {
-						field2017[var5] = new class378();
-						var6 = true;
+			if (buf.getRemainderBits(serverConnection.packetLength) >= 28) {
+				int npcIndex = buf.readBits(16);
+				if (65535 != npcIndex) {
+					boolean added = false;
+					if (npcs[npcIndex] == null) {
+						npcs[npcIndex] = new Npc();
+						added = true;
 					}
 
-					class378 var7 = field2017[var5];
-					field1893[++field1980 - 1] = var5;
-					var7.field387 = field1846;
-					int var11 = var1.method1501(1);
+					Npc npc = npcs[npcIndex];
+					localNpcIndexes[++npcCount - 1] = npcIndex;
+					npc.lastUpdateTick = updateTick;
+					int var11 = buf.readBits(1);
 					if (var11 == 1) {
-						field1847[++field1894 - 1] = var5;
+						extendedNpcIndexes[++extendedNpcCount - 1] = npcIndex;
 					}
 
-					int var8 = var1.method1501(1);
-					var7.field2605 = class73.method366(var1.method1501(14));
-					int var12 = field1968[var1.method1501(3)];
-					if (var6) {
-						var7.field351 = var7.field330 = var12;
+					int var8 = buf.readBits(1);
+					npc.definition = class73.getNpcDefinition(buf.readBits(14));
+					int var12 = field1968[buf.readBits(3)];
+					if (added) {
+						npc.field351 = npc.field330 = var12;
 					}
 
 					int var9;
 					if (var0) {
-						var9 = var1.method1501(8);
+						var9 = buf.readBits(8);
 						if (var9 > 127) {
 							var9 -= 256;
 						}
 					} else {
-						var9 = var1.method1501(5);
+						var9 = buf.readBits(5);
 						if (var9 > 15) {
 							var9 -= 32;
 						}
@@ -10016,55 +10033,55 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 					int var10;
 					if (var0) {
-						var10 = var1.method1501(8);
+						var10 = buf.readBits(8);
 						if (var10 > 127) {
 							var10 -= 256;
 						}
 					} else {
-						var10 = var1.method1501(5);
+						var10 = buf.readBits(5);
 						if (var10 > 15) {
 							var10 -= 32;
 						}
 					}
 
-					boolean var13 = var1.method1501(1) == 1;
+					boolean var13 = buf.readBits(1) == 1;
 					if (var13) {
-						var1.method1501(32);
+						buf.readBits(32);
 					}
 
-					method1414(var7);
-					if (var7.field358 == 0) {
-						var7.field330 = 0;
+					loadNpcDefinitionData(npc);
+					if (npc.field358 == 0) {
+						npc.field330 = 0;
 					}
 
-					var7.method1778(class114.field720.field399[0] + var9, var10 + class114.field720.field400[0], var8 == 1);
+					npc.method1778(class114.field720.field399[0] + var9, var10 + class114.field720.field400[0], var8 == 1);
 					continue;
 				}
 			}
 
-			var1.method1504();
+			buf.method1504();
 			return;
 		}
 	}
 
-	static void method1414(class378 var0) {
-		var0.field332 = var0.field2605.field484;
-		var0.field358 = var0.field2605.field513;
-		var0.field331 = var0.field2605.field478;
-		var0.field338 = var0.field2605.field490;
-		var0.field341 = var0.field2605.field491;
-		var0.field340 = var0.field2605.field504;
-		var0.field383 = var0.field2605.field486;
-		var0.field335 = var0.field2605.field482;
-		var0.field336 = var0.field2605.field488;
-		var0.field401 = var0.field2605.field493;
-		var0.field359 = var0.field2605.field494;
-		var0.field345 = var0.field2605.field495;
-		var0.field344 = var0.field2605.field522;
-		var0.field339 = var0.field2605.field497;
-		var0.field346 = var0.field2605.field498;
-		var0.field361 = var0.field2605.field499;
-		var0.field348 = var0.field2605.field508;
+	static void loadNpcDefinitionData(Npc var0) {
+		var0.field332 = var0.definition.field484;
+		var0.field358 = var0.definition.field513;
+		var0.field331 = var0.definition.field478;
+		var0.field338 = var0.definition.field490;
+		var0.field341 = var0.definition.field491;
+		var0.field340 = var0.definition.field504;
+		var0.field383 = var0.definition.field486;
+		var0.field335 = var0.definition.field482;
+		var0.field336 = var0.definition.field488;
+		var0.field401 = var0.definition.field493;
+		var0.field359 = var0.definition.field494;
+		var0.field345 = var0.definition.field495;
+		var0.field344 = var0.definition.field522;
+		var0.field339 = var0.definition.field497;
+		var0.field346 = var0.definition.field498;
+		var0.field361 = var0.definition.field499;
+		var0.field348 = var0.definition.field508;
 	}
 
 	static final void method1375(Player var0, int var1, int var2, MovementType var3) {
@@ -10200,25 +10217,25 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			if (null != var8 && class114.field720 != var8 && null != var8.field3005 && var8.field3005.equals(var6)) {
 				class341 var9;
 				if (var0 == 1) {
-					var9 = class341.createClientPacket(ClientPacket.field3055, field1891.field4219);
+					var9 = class341.createClientPacket(ClientPacket.field3055, serverConnection.field4219);
 					var9.buffer.writeByteADD(0);
 					var9.buffer.writeShortADD(var4[var7]);
-					field1891.method2612(var9);
+					serverConnection.method2612(var9);
 				} else if (var0 == 4) {
-					var9 = class341.createClientPacket(ClientPacket.field3111, field1891.field4219);
+					var9 = class341.createClientPacket(ClientPacket.field3111, serverConnection.field4219);
 					var9.buffer.writeShortADD(var4[var7]);
 					var9.buffer.writeByteNEG(0);
-					field1891.method2612(var9);
+					serverConnection.method2612(var9);
 				} else if (var0 == 6) {
-					var9 = class341.createClientPacket(ClientPacket.field3094, field1891.field4219);
+					var9 = class341.createClientPacket(ClientPacket.field3094, serverConnection.field4219);
 					var9.buffer.writeByteNEG(0);
 					var9.buffer.writeShortLE(var4[var7]);
-					field1891.method2612(var9);
+					serverConnection.method2612(var9);
 				} else if (var0 == 7) {
-					var9 = class341.createClientPacket(ClientPacket.field3122, field1891.field4219);
+					var9 = class341.createClientPacket(ClientPacket.field3122, serverConnection.field4219);
 					var9.buffer.writeByte(0);
 					var9.buffer.writeShort(var4[var7]);
-					field1891.method2612(var9);
+					serverConnection.method2612(var9);
 				}
 
 				var5 = true;
@@ -10266,10 +10283,10 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	static void method1372(int var0, int var1) {
-		class341 var3 = class341.createClientPacket(ClientPacket.field3119, field1891.field4219);
+		class341 var3 = class341.createClientPacket(ClientPacket.field3119, serverConnection.field4219);
 		var3.buffer.writeShort(var1);
 		var3.buffer.writeIntME(var0);
-		field1891.method2612(var3);
+		serverConnection.method2612(var3);
 	}
 
 	static void method1411(int var0, int var1, int var2, int var3, String var4) {
@@ -10296,83 +10313,83 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				if (var8) {
 					class341 var11;
 					if (var0 == 1) {
-						var11 = class341.createClientPacket(ClientPacket.field3095, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3095, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 					if (var0 == 2) {
-						var11 = class341.createClientPacket(ClientPacket.field3129, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3129, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 					if (var0 == 3) {
-						var11 = class341.createClientPacket(ClientPacket.field3074, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3074, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 					if (var0 == 4) {
-						var11 = class341.createClientPacket(ClientPacket.field3120, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3120, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 					if (var0 == 5) {
-						var11 = class341.createClientPacket(ClientPacket.field3078, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3078, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 					if (var0 == 6) {
-						var11 = class341.createClientPacket(ClientPacket.field3071, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3071, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 					if (var0 == 7) {
-						var11 = class341.createClientPacket(ClientPacket.field3105, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3105, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 					if (var0 == 8) {
-						var11 = class341.createClientPacket(ClientPacket.field3131, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3131, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 					if (var0 == 9) {
-						var11 = class341.createClientPacket(ClientPacket.field3085, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3085, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 					if (var0 == 10) {
-						var11 = class341.createClientPacket(ClientPacket.field3110, field1891.field4219);
+						var11 = class341.createClientPacket(ClientPacket.field3110, serverConnection.field4219);
 						var11.buffer.writeInt(var1);
 						var11.buffer.writeShort(var2);
 						var11.buffer.writeShort(var3);
-						field1891.method2612(var11);
+						serverConnection.method2612(var11);
 					}
 
 				}
@@ -10506,20 +10523,20 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 
 					int var31;
-					class378 var33;
+					Npc var33;
 					int[] var34;
 					Player var38;
 					if (var19 == 1) {
-						class378 var28 = field2017[var27];
+						Npc var28 = npcs[var27];
 						if (null == var28) {
 							break label308;
 						}
 
-						if (var28.field2605.field484 == 1 && (var28.field368 & 127) == 64 && (var28.field329 & 127) == 64) {
-							for (var31 = 0; var31 < field1980; ++var31) {
-								var33 = field2017[field1893[var31]];
-								if (var33 != null && var28 != var33 && var33.field2605.field484 == 1 && var33.field368 == var28.field368 && var33.field329 == var28.field329) {
-									class93.method422(var33, field1893[var31], var16, var17);
+						if (var28.definition.field484 == 1 && (var28.field368 & 127) == 64 && (var28.field329 & 127) == 64) {
+							for (var31 = 0; var31 < npcCount; ++var31) {
+								var33 = npcs[localNpcIndexes[var31]];
+								if (var33 != null && var28 != var33 && var33.definition.field484 == 1 && var33.field368 == var28.field368 && var33.field329 == var28.field329) {
+									class93.method422(var33, localNpcIndexes[var31], var16, var17);
 								}
 							}
 
@@ -10544,10 +10561,10 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						}
 
 						if ((var29.field368 & 127) == 64 && (var29.field329 & 127) == 64) {
-							for (var31 = 0; var31 < field1980; ++var31) {
-								var33 = field2017[field1893[var31]];
-								if (null != var33 && var33.field2605.field484 == 1 && var33.field368 == var29.field368 && var29.field329 == var33.field329) {
-									class93.method422(var33, field1893[var31], var16, var17);
+							for (var31 = 0; var31 < npcCount; ++var31) {
+								var33 = npcs[localNpcIndexes[var31]];
+								if (null != var33 && var33.definition.field484 == 1 && var33.field368 == var29.field368 && var29.field329 == var33.field329) {
+									class93.method422(var33, localNpcIndexes[var31], var16, var17);
 								}
 							}
 
@@ -10748,7 +10765,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 				}
 
 				var11.field3666 = var12;
-				var11.field3667 = field1846;
+				var11.field3667 = updateTick;
 				if (!var11.field3523 || !method1396(var11)) {
 					if (var11.field3529 > 0) {
 						method1309(var11);
@@ -10875,7 +10892,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 							}
 
 							if (var11.field3529 == 1400) {
-								class520.field4103.method1159(var13, var14, var11.field3540, var11.field3541, field1846);
+								class520.field4103.method1159(var13, var14, var11.field3540, var11.field3541, updateTick);
 							}
 
 							if (var11.field3529 == 1401) {
@@ -10883,7 +10900,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 							}
 
 							if (var11.field3529 == 1402) {
-								class168.field1183.method344(var13, field1846);
+								class168.field1183.method344(var13, updateTick);
 							}
 						}
 
@@ -11103,16 +11120,16 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 													var36 = class114.field720.method2152();
 												}
 											} else if (var11.field3568 == 7) {
-												var36 = var11.field3581.method906((class116)null, -1, class116.method539(class114.field720.field383), class114.field720.field370);
+												var36 = var11.field3581.method906((class116)null, -1, class116.getAnimationDefinition(class114.field720.field383), class114.field720.field370);
 											} else {
 												class73 var39 = null;
-												class120 var40 = null;
+												NpcTextureOverride var40 = null;
 												if (var11.field3568 == 6) {
 													var26 = var11.field3521;
-													if (var26 >= 0 && var26 < field2017.length) {
-														class378 var43 = field2017[var26];
+													if (var26 >= 0 && var26 < npcs.length) {
+														Npc var43 = npcs[var26];
 														if (null != var43) {
-															var39 = var43.field2605;
+															var39 = var43.definition;
 															var40 = var43.method1774();
 														}
 													}
@@ -11121,7 +11138,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 												class116 var42 = null;
 												var27 = -1;
 												if (var21 != -1) {
-													var42 = class116.method539(var21);
+													var42 = class116.getAnimationDefinition(var21);
 													var27 = var11.field3657;
 												}
 
@@ -11945,7 +11962,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 										if (method1353(var10.field3599[var21][var24]) || var25) {
 											var22 = true;
-											if (null != var10.field3538 && var10.field3538[var21] > field1846) {
+											if (null != var10.field3538 && var10.field3538[var21] > updateTick) {
 												break;
 											}
 
@@ -11983,9 +12000,9 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 									if (var24 != 0) {
 										if (var10.field3538[var21] == 0) {
-											var10.field3538[var21] = var10.field3645[var21] + var24 + field1846;
+											var10.field3538[var21] = var10.field3645[var21] + var24 + updateTick;
 										} else {
-											var10.field3538[var21] = var24 + field1846;
+											var10.field3538[var21] = var24 + updateTick;
 										}
 									} else {
 										var10.field3538[var21] = Integer.MAX_VALUE;
@@ -12566,7 +12583,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 						}
 
 						if (var6 != -1) {
-							class116 var7 = class116.method539(var6);
+							class116 var7 = class116.getAnimationDefinition(var6);
 							if (!var7.method533()) {
 								for (var4.field3658 += field2022; var4.field3658 > var7.field722[var4.field3657]; method1363(var4)) {
 									var4.field3658 -= var7.field722[var4.field3657];
@@ -12826,20 +12843,20 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 		} else if (var2 == 327) {
 			var0.field3575 = 150;
-			var0.field3522 = (int)(Math.sin((double)field1846 / 40.0D) * 256.0D) & 2047;
+			var0.field3522 = (int)(Math.sin((double) updateTick / 40.0D) * 256.0D) & 2047;
 			var0.field3568 = 5;
 			var0.field3521 = 0;
 		} else if (var2 == 328) {
 			var0.field3575 = 150;
-			var0.field3522 = (int)(Math.sin((double)field1846 / 40.0D) * 256.0D) & 2047;
+			var0.field3522 = (int)(Math.sin((double) updateTick / 40.0D) * 256.0D) & 2047;
 			var0.field3568 = 5;
 			var0.field3521 = 1;
 		}
 	}
 
 	static final void method1321() {
-		class341 var1 = class341.createClientPacket(ClientPacket.field3081, field1891.field4219);
-		field1891.method2612(var1);
+		class341 var1 = class341.createClientPacket(ClientPacket.field3081, serverConnection.field4219);
+		serverConnection.method2612(var1);
 		class440.field2963 = true;
 
 		for (InterfaceComponent var2 = (InterfaceComponent) interfaceComponents.method1753(); var2 != null; var2 = (InterfaceComponent) interfaceComponents.method1754()) {
@@ -12905,9 +12922,9 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			}
 
 			if (var2 == 326) {
-				class341 var5 = class341.createClientPacket(ClientPacket.field3053, field1891.field4219);
+				class341 var5 = class341.createClientPacket(ClientPacket.field3053, serverConnection.field4219);
 				field2116.method903(var5.buffer);
-				field1891.method2612(var5);
+				serverConnection.method2612(var5);
 				return true;
 			} else {
 				return false;
@@ -12948,10 +12965,10 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 				}
 
-				for (var9 = 0; var9 < field1980; ++var9) {
-					class378 var15 = field2017[field1893[var9]];
+				for (var9 = 0; var9 < npcCount; ++var9) {
+					Npc var15 = npcs[localNpcIndexes[var9]];
 					if (var15 != null && var15.method289()) {
-						class73 var18 = var15.field2605;
+						class73 var18 = var15.definition;
 						if (var18 != null && var18.field477 != null) {
 							var18 = var18.method363();
 						}
@@ -12986,9 +13003,9 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 					}
 				}
 
-				if (field1853 != 0 && field1846 % 20 < 10) {
-					if (field1853 == 1 && field1854 >= 0 && field1854 < field2017.length) {
-						class378 var20 = field2017[field1854];
+				if (field1853 != 0 && updateTick % 20 < 10) {
+					if (field1853 == 1 && field1854 >= 0 && field1854 < npcs.length) {
+						Npc var20 = npcs[field1854];
 						if (var20 != null) {
 							var12 = var20.field368 / 32 - class114.field720.field368 / 32;
 							var13 = var20.field329 / 32 - class114.field720.field329 / 32;
@@ -13125,26 +13142,26 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 	static final void method1310(String var0) {
 		if (class257.field1749 != null) {
-			class341 var2 = class341.createClientPacket(ClientPacket.field3108, field1891.field4219);
+			class341 var2 = class341.createClientPacket(ClientPacket.field3108, serverConnection.field4219);
 			var2.buffer.writeByte(Buffer.method2535(var0));
 			var2.buffer.writeString(var0);
-			field1891.method2612(var2);
+			serverConnection.method2612(var2);
 		}
 	}
 
 	static final void method1405(String var0) {
 		if (!var0.equals("")) {
-			class341 var2 = class341.createClientPacket(ClientPacket.field3145, field1891.field4219);
+			class341 var2 = class341.createClientPacket(ClientPacket.field3145, serverConnection.field4219);
 			var2.buffer.writeByte(Buffer.method2535(var0));
 			var2.buffer.writeString(var0);
-			field1891.method2612(var2);
+			serverConnection.method2612(var2);
 		}
 	}
 
 	static final void method1421() {
-		class341 var1 = class341.createClientPacket(ClientPacket.field3145, field1891.field4219);
+		class341 var1 = class341.createClientPacket(ClientPacket.field3145, serverConnection.field4219);
 		var1.buffer.writeByte(0);
-		field1891.method2612(var1);
+		serverConnection.method2612(var1);
 	}
 
 	static final void method1458(int var0, int var1) {
@@ -13153,12 +13170,12 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 			class455 var4 = (class455)var3.field2738.get(var1);
 			if (var4.field3018 == -1) {
 				String var5 = var4.field3021.method2398();
-				class341 var6 = class341.createClientPacket(ClientPacket.field3103, field1891.field4219);
+				class341 var6 = class341.createClientPacket(ClientPacket.field3103, serverConnection.field4219);
 				var6.buffer.writeByte(3 + Buffer.method2535(var5));
 				var6.buffer.writeByte(var0);
 				var6.buffer.writeShort(var1);
 				var6.buffer.writeString(var5);
-				field1891.method2612(var6);
+				serverConnection.method2612(var6);
 			}
 		}
 	}
@@ -13167,13 +13184,13 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 		if (field2074[var0] != null) {
 			if (var1 >= 0 && var1 < field2074[var0].method1854()) {
 				class455 var4 = (class455)field2074[var0].field2738.get(var1);
-				class341 var5 = class341.createClientPacket(ClientPacket.field3054, field1891.field4219);
+				class341 var5 = class341.createClientPacket(ClientPacket.field3054, serverConnection.field4219);
 				var5.buffer.writeByte(4 + Buffer.method2535(var4.field3021.method2398()));
 				var5.buffer.writeByte(var0);
 				var5.buffer.writeShort(var1);
 				var5.buffer.writeBoolean(var2);
 				var5.buffer.writeString(var4.field3021.method2398());
-				field1891.method2612(var5);
+				serverConnection.method2612(var5);
 			}
 		}
 	}
@@ -13342,7 +13359,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	static void method1449() {
-		field1891.method2612(class341.createClientPacket(ClientPacket.field3128, field1891.field4219));
+		serverConnection.method2612(class341.createClientPacket(ClientPacket.field3128, serverConnection.field4219));
 		field1923 = 0;
 	}
 
@@ -13369,7 +13386,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 
 	static void method1338() {
 		if (class76.field535 != null) {
-			field2126 = field1846;
+			field2126 = updateTick;
 			class76.field535.method1508();
 
 			for (int var1 = 0; var1 < field2037.length; ++var1) {
@@ -13415,7 +13432,7 @@ public final class Client extends class535 implements class48, OAuthApi, class42
 	}
 
 	static void method1454(int var0) {
-		class116 var2 = class116.method539(var0);
+		class116 var2 = class116.getAnimationDefinition(var0);
 		if (var2.method533()) {
 			int var4 = var2.field729;
 			class19 var6 = (class19)class116.field728.method1678((long)var4);

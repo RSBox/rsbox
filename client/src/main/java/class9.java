@@ -246,12 +246,12 @@ public class class9 {
 			if (var1 >= 0 && var1 < Client.field2074[var0].method1854()) {
 				class455 var3 = (class455)Client.field2074[var0].field2738.get(var1);
 				if (var3.field3018 == -1) {
-					class341 var4 = class341.createClientPacket(ClientPacket.field3121, Client.field1891.field4219);
+					class341 var4 = class341.createClientPacket(ClientPacket.field3121, Client.serverConnection.field4219);
 					var4.buffer.writeByte(3 + Buffer.method2535(var3.field3021.method2398()));
 					var4.buffer.writeByte(var0);
 					var4.buffer.writeShort(var1);
 					var4.buffer.writeString(var3.field3021.method2398());
-					Client.field1891.method2612(var4);
+					Client.serverConnection.method2612(var4);
 				}
 			}
 		}

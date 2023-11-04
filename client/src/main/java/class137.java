@@ -86,7 +86,7 @@ public class class137 extends class292 {
 		class490 var3 = this.method704();
 		class490 var4;
 		if (this.field896 != -1 && var1 != -1) {
-			var4 = class116.method539(this.field896).method531(var3, var1);
+			var4 = class116.getAnimationDefinition(this.field896).method531(var3, var1);
 		} else {
 			var4 = var3.method2258(true);
 		}

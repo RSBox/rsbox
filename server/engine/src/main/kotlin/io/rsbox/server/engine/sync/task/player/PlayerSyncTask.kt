@@ -1,4 +1,4 @@
-package io.rsbox.server.engine.sync.task
+package io.rsbox.server.engine.sync.task.player
 
 import io.netty.buffer.ByteBuf
 import io.rsbox.server.common.inject
@@ -7,9 +7,9 @@ import io.rsbox.server.engine.model.World
 import io.rsbox.server.engine.model.coord.Scene
 import io.rsbox.server.engine.model.coord.Tile
 import io.rsbox.server.engine.model.entity.Player
-import io.rsbox.server.engine.net.packet.server.PlayerInfoServerPacket
-import io.rsbox.server.engine.sync.SyncTask
 import io.rsbox.server.engine.model.entity.update.PlayerUpdateFlag
+import io.rsbox.server.engine.net.packet.server.PlayerInfo
+import io.rsbox.server.engine.sync.SyncTask
 import io.rsbox.server.util.buffer.BIT_MODE
 import io.rsbox.server.util.buffer.BYTE_MODE
 import io.rsbox.server.util.buffer.JagByteBuf
@@ -24,7 +24,7 @@ class PlayerSyncTask : SyncTask {
     override suspend fun execute() {
         world.players.forEachEntry { player ->
             val buf = player.encodeSync()
-            val packet = PlayerInfoServerPacket(buf)
+            val packet = PlayerInfo(buf)
             player.session.write(packet)
         }
     }

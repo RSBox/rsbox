@@ -43,8 +43,8 @@ public class class73 extends class292 {
 	public int[] field477;
 	public String field516;
 	public String[] field489;
-	public short[] field502;
-	public short[] field511;
+	public short[] recolorTo;
+	public short[] retextureTo;
 
 	static {
 		field480 = new class352(64);
@@ -138,20 +138,20 @@ public class class73 extends class292 {
 		} else if (var2 == 40) {
 			var4 = var1.readUnsignedByte();
 			this.field501 = new short[var4];
-			this.field502 = new short[var4];
+			this.recolorTo = new short[var4];
 
 			for (var5 = 0; var5 < var4; ++var5) {
 				this.field501[var5] = (short)var1.readUnsignedShort();
-				this.field502[var5] = (short)var1.readUnsignedShort();
+				this.recolorTo[var5] = (short)var1.readUnsignedShort();
 			}
 		} else if (var2 == 41) {
 			var4 = var1.readUnsignedByte();
 			this.field500 = new short[var4];
-			this.field511 = new short[var4];
+			this.retextureTo = new short[var4];
 
 			for (var5 = 0; var5 < var4; ++var5) {
 				this.field500[var5] = (short)var1.readUnsignedShort();
-				this.field511[var5] = (short)var1.readUnsignedShort();
+				this.retextureTo[var5] = (short)var1.readUnsignedShort();
 			}
 		} else if (var2 == 60) {
 			var4 = var1.readUnsignedByte();
@@ -257,7 +257,7 @@ public class class73 extends class292 {
 
 	}
 
-	public final class490 method353(class116 var1, int var2, class116 var3, int var4, class120 var5) {
+	public final class490 method353(class116 var1, int var2, class116 var3, int var4, NpcTextureOverride var5) {
 		if (null != this.field477) {
 			class73 var12 = this.method363();
 			return null == var12 ? null : var12.method353(var1, var2, var3, var4, var5);
@@ -297,7 +297,7 @@ public class class73 extends class292 {
 		}
 	}
 
-	public final class239 method354(class120 var1) {
+	public final class239 method354(NpcTextureOverride var1) {
 		if (this.field477 != null) {
 			class73 var3 = this.method363();
 			return null == var3 ? null : var3.method354(var1);
@@ -306,7 +306,7 @@ public class class73 extends class292 {
 		}
 	}
 
-	class239 method355(int[] var1, class120 var2) {
+	class239 method355(int[] var1, NpcTextureOverride var2) {
 		int[] var4 = var1;
 		if (null != var2 && var2.field789 != null) {
 			var4 = var2.field789;
@@ -345,7 +345,7 @@ public class class73 extends class292 {
 				short[] var8;
 				int var9;
 				if (this.field501 != null) {
-					var8 = this.field502;
+					var8 = this.recolorTo;
 					if (var2 != null && null != var2.field788) {
 						var8 = var2.field788;
 					}
@@ -356,7 +356,7 @@ public class class73 extends class292 {
 				}
 
 				if (this.field500 != null) {
-					var8 = this.field511;
+					var8 = this.retextureTo;
 					if (var2 != null && null != var2.field791) {
 						var8 = var2.field791;
 					}
@@ -386,7 +386,7 @@ public class class73 extends class292 {
 			var3 = this.field477[this.field477.length - 1];
 		}
 
-		return var3 != -1 ? method366(var3) : null;
+		return var3 != -1 ? getNpcDefinition(var3) : null;
 	}
 
 	public boolean method356() {
@@ -436,7 +436,7 @@ public class class73 extends class292 {
 		return null != this.field521 && var1 < this.field521.length ? this.field521[var1] : -1;
 	}
 
-	public static class73 method366(int var0) {
+	public static class73 getNpcDefinition(int var0) {
 		class73 var2 = (class73)field480.method1678((long)var0);
 		if (var2 != null) {
 			return var2;

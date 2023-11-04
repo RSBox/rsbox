@@ -209,7 +209,7 @@ public class class171 {
 
 	public class490 method906(class116 var1, int var2, class116 var3, int var4) {
 		if (this.field1206 != -1) {
-			return class73.method366(this.field1206).method353(var1, var2, var3, var4, (class120)null);
+			return class73.getNpcDefinition(this.field1206).method353(var1, var2, var3, var4, (NpcTextureOverride)null);
 		} else {
 			long var6 = this.field1207;
 			int[] var8 = this.field1202;
@@ -333,7 +333,7 @@ public class class171 {
 
 	class239 method905() {
 		if (this.field1206 != -1) {
-			return class73.method366(this.field1206).method354((class120)null);
+			return class73.getNpcDefinition(this.field1206).method354((NpcTextureOverride)null);
 		} else {
 			boolean var2 = false;
 

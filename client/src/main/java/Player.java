@@ -286,7 +286,7 @@ public final class Player extends class65 {
 	}
 
 	int method2120() {
-		return this.field2989 != null && this.field2989.field1206 != -1 ? class73.method366(this.field2989.field1206).field484 : 1;
+		return this.field2989 != null && this.field2989.field1206 != -1 ? class73.getNpcDefinition(this.field2989.field1206).field484 : 1;
 	}
 
 	@Override
@@ -294,9 +294,9 @@ public final class Player extends class65 {
 		if (this.field2989 == null) {
 			return null;
 		} else {
-			class116 var2 = super.field373 != -1 && super.field376 == 0 ? class116.method539(super.field373) : null;
-			class116 var3 = super.field369 != -1 && !this.field3006 && (super.field383 != super.field369 || var2 == null) ? class116.method539(super.field369) : null;
-			class490 var4 = this.field2989.method906(var2, super.field334, var3, super.field370);
+			class116 var2 = super.animationId != -1 && super.animationDelay == 0 ? class116.getAnimationDefinition(super.animationId) : null;
+			class116 var3 = super.field369 != -1 && !this.field3006 && (super.field383 != super.field369 || var2 == null) ? class116.getAnimationDefinition(super.field369) : null;
+			class490 var4 = this.field2989.method906(var2, super.animationFrame, var3, super.field370);
 			if (null == var4) {
 				return null;
 			} else {
@@ -308,11 +308,11 @@ public final class Player extends class65 {
 				}
 
 				if (!this.field3006 && null != this.field2991) {
-					if (Client.field1846 >= this.field3011) {
+					if (Client.updateTick >= this.field3011) {
 						this.field2991 = null;
 					}
 
-					if (Client.field1846 >= this.field2996 && Client.field1846 < this.field3011) {
+					if (Client.updateTick >= this.field2996 && Client.updateTick < this.field3011) {
 						class490 var6 = this.field2991;
 						var6.method2272(this.field2998 - super.field368, this.field2997 - this.field2995, this.field2990 - super.field329);
 						if (super.field351 == 512) {
@@ -344,7 +344,7 @@ public final class Player extends class65 {
 				}
 
 				var4.field3454 = true;
-				if (super.field394 != 0 && Client.field1846 >= super.field389 && Client.field1846 < super.field390) {
+				if (super.field394 != 0 && Client.updateTick >= super.field389 && Client.updateTick < super.field390) {
 					var4.field3490 = super.field391;
 					var4.field3467 = super.field392;
 					var4.field3492 = super.field393;
@@ -360,15 +360,15 @@ public final class Player extends class65 {
 	}
 
 	final void moveTo(int var1, int var2, MovementType var3) {
-		if (super.field373 != -1 && class116.method539(super.field373).field746 == 1) {
-			super.field373 = -1;
+		if (super.animationId != -1 && class116.getAnimationDefinition(super.animationId).field746 == 1) {
+			super.animationId = -1;
 		}
 
 		this.method294();
 		if (var1 >= 0 && var1 < 104 && var2 >= 0 && var2 < 104) {
 			if (super.field399[0] >= 0 && super.field399[0] < 104 && super.field400[0] >= 0 && super.field400[0] < 104) {
-				if (var3 == MovementType.run) {
-					Client.method1375(this, var1, var2, MovementType.run);
+				if (var3 == MovementType.RUN) {
+					Client.method1375(this, var1, var2, MovementType.RUN);
 				}
 
 				this.method2123(var1, var2, var3);
@@ -382,7 +382,7 @@ public final class Player extends class65 {
 	}
 
 	void teleport(int var1, int var2) {
-		super.field360 = 0;
+		super.pathLength = 0;
 		super.field403 = 0;
 		super.field375 = 0;
 		super.field399[0] = var1;
@@ -393,11 +393,11 @@ public final class Player extends class65 {
 	}
 
 	final void method2123(int var1, int var2, MovementType var3) {
-		if (super.field360 < 9) {
-			++super.field360;
+		if (super.pathLength < 9) {
+			++super.pathLength;
 		}
 
-		for (int var5 = super.field360; var5 > 0; --var5) {
+		for (int var5 = super.pathLength; var5 > 0; --var5) {
 			super.field399[var5] = super.field399[var5 - 1];
 			super.field400[var5] = super.field400[var5 - 1];
 			super.field342[var5] = super.field342[var5 - 1];

@@ -76,7 +76,7 @@ public class class264 {
 						}
 
 						var15 = var0.readUnsignedSmartByteShort();
-						player.method297(var11, var13, var12, var14, Client.field1846, var15);
+						player.method297(var11, var13, var12, var14, Client.updateTick, var15);
 					}
 				}
 
@@ -89,7 +89,7 @@ public class class264 {
 							var14 = var0.readUnsignedSmartByteShort();
 							var15 = var0.readUnsignedByte();
 							var16 = var13 > 0 ? var0.readUnsignedByteNEG() : var15;
-							player.method290(var12, Client.field1846, var13, var14, var15, var16);
+							player.method290(var12, Client.updateTick, var13, var14, var15, var16);
 						} else {
 							player.method293(var12);
 						}
@@ -122,14 +122,14 @@ public class class264 {
 			// : 4
 			if ((var7 & 1024) != 0) {
 				MovementType[] var24 = movementTypesCached;
-				MovementType[] var29 = new MovementType[]{MovementType.CRAWL, MovementType.NONE, MovementType.WALK, MovementType.run};
+				MovementType[] var29 = new MovementType[]{MovementType.CRAWL, MovementType.NONE, MovementType.WALK, MovementType.RUN};
 				var24[var5] = (MovementType)class26.method87(var29, var0.readByte());
 			}
 
 			// : 5
 			if ((var7 & 256) != 0) {
-				player.field389 = Client.field1846 + var0.readUnsignedShortLE();
-				player.field390 = Client.field1846 + var0.readUnsignedShortADD();
+				player.field389 = Client.updateTick + var0.readUnsignedShortLE();
+				player.field390 = Client.updateTick + var0.readUnsignedShortADD();
 				player.field391 = var0.readByteNEG();
 				player.field392 = var0.readByteADD();
 				player.field393 = var0.readByteSUB();
@@ -138,18 +138,18 @@ public class class264 {
 
 			// : 6
 			if ((var7 & 2) != 0) {
-				player.field356 = var0.readStringOrNull();
-				if (player.field356.charAt(0) == '~') {
-					player.field356 = player.field356.substring(1);
-					class346.method1672(2, player.field3005.method2398(), player.field356);
+				player.overheadText = var0.readStringOrNull();
+				if (player.overheadText.charAt(0) == '~') {
+					player.overheadText = player.overheadText.substring(1);
+					class346.method1672(2, player.field3005.method2398(), player.overheadText);
 				} else if (class114.field720 == player) {
-					class346.method1672(2, player.field3005.method2398(), player.field356);
+					class346.method1672(2, player.field3005.method2398(), player.overheadText);
 				}
 
 				player.field350 = false;
 				player.field397 = 0;
 				player.field354 = 0;
-				player.field352 = 150;
+				player.overheadTextTicksRemaining = 150;
 			}
 
 			// : 7
@@ -158,21 +158,21 @@ public class class264 {
 				player.field328 = var0.readByteSUB();
 				player.field381 = var0.readByte();
 				player.field347 = var0.readByteADD();
-				player.field384 = var0.readUnsignedShortLE() + Client.field1846;
-				player.field385 = var0.readUnsignedShort() + Client.field1846;
+				player.field384 = var0.readUnsignedShortLE() + Client.updateTick;
+				player.field385 = var0.readUnsignedShort() + Client.updateTick;
 				player.field396 = var0.readUnsignedShortADD();
 				if (player.teleporting) {
 					player.field380 += player.field3010;
 					player.field328 += player.field3016;
 					player.field381 += player.field3010;
 					player.field347 += player.field3016;
-					player.field360 = 0;
+					player.pathLength = 0;
 				} else {
 					player.field380 += player.field399[0];
 					player.field328 += player.field400[0];
 					player.field381 += player.field399[0];
 					player.field347 += player.field400[0];
-					player.field360 = 1;
+					player.pathLength = 1;
 				}
 
 				player.field403 = 0;
@@ -199,7 +199,7 @@ public class class264 {
 			// : 10
 			if ((var7 & 32) != 0) {
 				player.field365 = var0.readUnsignedShortLEADD();
-				if (player.field360 == 0) {
+				if (player.pathLength == 0) {
 					player.field351 = player.field365;
 					player.method294();
 				}
@@ -223,10 +223,10 @@ public class class264 {
 						var0.readBytesADD(field1762.data, 0, var12);
 						field1762.offset = 0;
 						String var35 = class229.method1036(class385.method1810(class380.method1792(field1762)));
-						player.field356 = var35.trim();
+						player.overheadText = var35.trim();
 						player.field397 = appBufLength >> 8;
 						player.field354 = appBufLength & 255;
-						player.field352 = 150;
+						player.overheadTextTicksRemaining = 150;
 						player.field337 = null;
 						player.field350 = var30;
 						player.field388 = class114.field720 != player && var25.field2916 && !Client.field2064.isEmpty() && var35.toLowerCase().indexOf(Client.field2064) == -1;
@@ -267,10 +267,10 @@ public class class264 {
 						var0.readBytes(field1762.data, 0, var14);
 						field1762.offset = 0;
 						String var17 = class229.method1036(class385.method1810(class380.method1792(field1762)));
-						player.field356 = var17.trim();
+						player.overheadText = var17.trim();
 						player.field397 = appBufLength >> 8;
 						player.field354 = appBufLength & 255;
-						player.field352 = 150;
+						player.overheadTextTicksRemaining = 150;
 						byte[] var18 = null;
 						if (var11 > 0 && var11 <= 8) {
 							var18 = new byte[var11];
@@ -346,7 +346,7 @@ public class class264 {
 				} else {
 					MovementType cachedMoveType;
 					if (MovementType.NONE.id != movementType) {
-						MovementType[] movementTypes = new MovementType[]{MovementType.CRAWL, MovementType.NONE, MovementType.WALK, MovementType.run};
+						MovementType[] movementTypes = new MovementType[]{MovementType.CRAWL, MovementType.NONE, MovementType.WALK, MovementType.RUN};
 						cachedMoveType = (MovementType)class26.method87(movementTypes, movementType);
 					} else {
 						cachedMoveType = movementTypesCached[var5];
@@ -364,7 +364,7 @@ public class class264 {
 
 	static final void method1239(PacketBuffer var0) {
 		int var2 = 0;
-		var0.method1497();
+		var0.switchBitMode();
 
 		byte[] var10000;
 		int var3;
@@ -378,7 +378,7 @@ public class class264 {
 					var10000 = field1767;
 					var10000[var4] = (byte)(var10000[var4] | 2);
 				} else {
-					var5 = var0.method1501(1);
+					var5 = var0.readBits(1);
 					if (var5 == 0) {
 						var2 = method1237(var0);
 						var10000 = field1767;
@@ -394,7 +394,7 @@ public class class264 {
 		if (var2 != 0) {
 			throw new RuntimeException();
 		} else {
-			var0.method1497();
+			var0.switchBitMode();
 
 			for (var3 = 0; var3 < field1764; ++var3) {
 				var4 = field1765[var3];
@@ -404,7 +404,7 @@ public class class264 {
 						var10000 = field1767;
 						var10000[var4] = (byte)(var10000[var4] | 2);
 					} else {
-						var5 = var0.method1501(1);
+						var5 = var0.readBits(1);
 						if (var5 == 0) {
 							var2 = method1237(var0);
 							var10000 = field1767;
@@ -420,7 +420,7 @@ public class class264 {
 			if (var2 != 0) {
 				throw new RuntimeException();
 			} else {
-				var0.method1497();
+				var0.switchBitMode();
 
 				for (var3 = 0; var3 < field1766; ++var3) {
 					var4 = field1772[var3];
@@ -430,7 +430,7 @@ public class class264 {
 							var10000 = field1767;
 							var10000[var4] = (byte)(var10000[var4] | 2);
 						} else {
-							var5 = var0.method1501(1);
+							var5 = var0.readBits(1);
 							if (var5 == 0) {
 								var2 = method1237(var0);
 								var10000 = field1767;
@@ -447,7 +447,7 @@ public class class264 {
 				if (var2 != 0) {
 					throw new RuntimeException();
 				} else {
-					var0.method1497();
+					var0.switchBitMode();
 
 					for (var3 = 0; var3 < field1766; ++var3) {
 						var4 = field1772[var3];
@@ -457,7 +457,7 @@ public class class264 {
 								var10000 = field1767;
 								var10000[var4] = (byte)(var10000[var4] | 2);
 							} else {
-								var5 = var0.method1501(1);
+								var5 = var0.readBits(1);
 								if (var5 == 0) {
 									var2 = method1237(var0);
 									var10000 = field1767;
@@ -495,23 +495,23 @@ public class class264 {
 	}
 
 	static int method1237(PacketBuffer var0) {
-		int var2 = var0.method1501(2);
+		int var2 = var0.readBits(2);
 		int var3;
 		if (var2 == 0) {
 			var3 = 0;
 		} else if (var2 == 1) {
-			var3 = var0.method1501(5);
+			var3 = var0.readBits(5);
 		} else if (var2 == 2) {
-			var3 = var0.method1501(8);
+			var3 = var0.readBits(8);
 		} else {
-			var3 = var0.method1501(11);
+			var3 = var0.readBits(11);
 		}
 
 		return var3;
 	}
 
 	static boolean method1238(PacketBuffer var0, int var1) {
-		int var3 = var0.method1501(2);
+		int var3 = var0.readBits(2);
 		int var4;
 		int var5;
 		int var8;
@@ -519,13 +519,13 @@ public class class264 {
 		int var10;
 		int var11;
 		if (var3 == 0) {
-			if (var0.method1501(1) != 0) {
+			if (var0.readBits(1) != 0) {
 				method1238(var0, var1);
 			}
 
-			var4 = var0.method1501(13);
-			var5 = var0.method1501(13);
-			boolean var12 = var0.method1501(1) == 1;
+			var4 = var0.readBits(13);
+			var5 = var0.readBits(13);
+			boolean var12 = var0.readBits(1) == 1;
 			if (var12) {
 				field1773[++field1771 - 1] = var1;
 			}
@@ -552,7 +552,7 @@ public class class264 {
 				return true;
 			}
 		} else if (var3 == 1) {
-			var4 = var0.method1501(2);
+			var4 = var0.readBits(2);
 			var5 = field1768[var1];
 			field1768[var1] = (var5 & 268435455) + (((var5 >> 28) + var4 & 3) << 28);
 			return false;
@@ -560,7 +560,7 @@ public class class264 {
 			int var6;
 			int var7;
 			if (var3 == 2) {
-				var4 = var0.method1501(5);
+				var4 = var0.readBits(5);
 				var5 = var4 >> 3;
 				var6 = var4 & 7;
 				var7 = field1768[var1];
@@ -606,7 +606,7 @@ public class class264 {
 				field1768[var1] = (var9 << 14) + (var8 << 28) + var10;
 				return false;
 			} else {
-				var4 = var0.method1501(18);
+				var4 = var0.readBits(18);
 				var5 = var4 >> 16;
 				var6 = var4 >> 8 & 255;
 				var7 = var4 & 255;

@@ -13,13 +13,13 @@ import io.rsbox.server.engine.model.entity.manager.GpiManager
 import io.rsbox.server.engine.model.entity.manager.InterfaceManager
 import io.rsbox.server.engine.model.entity.manager.SceneManager
 import io.rsbox.server.engine.model.entity.manager.VarpManager
+import io.rsbox.server.engine.model.entity.update.PlayerUpdateFlag
 import io.rsbox.server.engine.model.ui.DisplayMode
 import io.rsbox.server.engine.net.Session
 import io.rsbox.server.engine.net.game.Packet
 import io.rsbox.server.engine.net.login.LoginRequest
 import io.rsbox.server.engine.net.packet.server.MessageGame
 import io.rsbox.server.engine.net.packet.server.RunClientScript
-import io.rsbox.server.engine.model.entity.update.PlayerUpdateFlag
 import org.rsmod.pathfinder.SmartPathFinder
 import org.tinylog.kotlin.Logger
 
@@ -53,6 +53,7 @@ class Player internal constructor(val session: Session) : Entity() {
     var skullIcon = -1
     var prayerIcon = -1
     var transmog = -1
+    var largeViewport = false
 
     override val updateFlags = sortedSetOf<PlayerUpdateFlag>()
     override fun flagMovement() { updateFlags.add(PlayerUpdateFlag.MOVEMENT) }
