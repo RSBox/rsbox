@@ -1,3 +1,0 @@
-package rsbox.content.npc
-
-

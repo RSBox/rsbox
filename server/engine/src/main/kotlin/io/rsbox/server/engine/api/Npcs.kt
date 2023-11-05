@@ -1,6 +1,6 @@
 package io.rsbox.server.engine.api
 
-object Npcs {
+object npcs {
     val tool_leprechaun_0 get() = 0
     val molanisk_1 get() = 1
     val aberrant_spectre_2 get() = 2

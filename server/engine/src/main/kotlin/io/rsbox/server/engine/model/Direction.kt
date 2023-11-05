@@ -69,5 +69,18 @@ enum class Direction(val npcValue: Int, val playerValue: Int) {
             }
             return NONE
         }
+
+        fun fromOrientation(orientation: Int) = when(orientation) {
+            -1 -> NONE
+            0 -> SOUTH
+            256 -> SOUTH_WEST
+            512 -> WEST
+            768 -> NORTH_WEST
+            1024 -> NORTH
+            1280 -> NORTH_EAST
+            1536 -> EAST
+            1792 -> SOUTH_EAST
+            else -> SOUTH
+        }
     }
 }

@@ -1,4 +1,4 @@
-package rsbox.content.command
+package rsbox.core.command
 
 import io.rsbox.server.engine.model.Privilege
 import io.rsbox.server.engine.model.entity.Player

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     idea
 }
@@ -13,4 +15,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
     implementation("io.github.classgraph:classgraph:_")
     implementation("com.github.rsbox:pathfinder:598abc0357")
+}
+
+tasks.withType(KotlinCompile::class).all {
+    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
 }

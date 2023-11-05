@@ -1,4 +1,4 @@
-package rsbox.content
+package rsbox.core
 
 import io.rsbox.server.engine.model.entity.Player
 import io.rsbox.server.engine.api.ext.on_login

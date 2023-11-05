@@ -80,6 +80,8 @@ class GameProtocol(session: Session) : Protocol(session) {
             } else {
                 //Logger.warn("Received unknown client packet. [opcode: $decoderOpcode, length: $decoderLength]")
             }
+
+            payload.release()
         }
     }
 

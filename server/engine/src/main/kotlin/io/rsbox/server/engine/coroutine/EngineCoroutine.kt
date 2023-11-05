@@ -6,10 +6,11 @@ import io.rsbox.server.engine.coroutine.resume.DeferResumeCondition
 import io.rsbox.server.engine.coroutine.resume.PredicateResumeCondition
 import io.rsbox.server.engine.coroutine.resume.TickResumeCondition
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED
+import kotlin.coroutines.intrinsics.suspendCoroutineUninterceptedOrReturn
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.intrinsics.suspendCoroutineUninterceptedOrReturn
-import kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED
+import kotlin.reflect.KClass
 
 
 class EngineCoroutine {
@@ -66,6 +67,14 @@ class EngineCoroutine {
     suspend inline fun <reified T : Any> wait(): T {
         return suspendCoroutineUninterceptedOrReturn {
             val condition = DeferResumeCondition(T::class)
+            suspension = EngineCoroutineSuspension(it, condition) as EngineCoroutineSuspension<Any>
+            COROUTINE_SUSPENDED
+        }
+    }
+
+    suspend fun <T : Any> wait(type: KClass<T>): T {
+        return suspendCoroutineUninterceptedOrReturn {
+            val condition = DeferResumeCondition(type)
             suspension = EngineCoroutineSuspension(it, condition) as EngineCoroutineSuspension<Any>
             COROUTINE_SUSPENDED
         }

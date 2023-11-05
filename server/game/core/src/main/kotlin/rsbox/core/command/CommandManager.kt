@@ -1,4 +1,4 @@
-package rsbox.content.command
+package rsbox.core.command
 
 import io.rsbox.server.engine.event.EventBus
 import io.rsbox.server.engine.event.PlayerCommandEvent

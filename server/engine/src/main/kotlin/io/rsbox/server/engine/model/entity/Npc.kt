@@ -18,8 +18,8 @@ class Npc(val id: Int, val spawnTile: Tile) : Entity() {
     override fun flagMovement() {}
 
     var active = false
-
     var transmogId: Int = -1
+    var wanderRadius = 0
 
     override suspend fun cycle() {
         super.cycle()

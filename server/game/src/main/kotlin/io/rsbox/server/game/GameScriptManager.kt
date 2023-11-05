@@ -11,7 +11,7 @@ class GameScriptManager {
         Logger.info("Scanning for game scripts to be loaded.")
 
         var count = 0
-        ClassGraph().enableAllInfo().acceptPackages("rsbox.content").scan().use { scan ->
+        ClassGraph().enableAllInfo().acceptPackages("rsbox.*").scan().use { scan ->
             scan.getSubclasses(GameScript::class.java).directOnly().forEach { info ->
                 try {
                     val klass = info.loadClass(GameScript::class.java)

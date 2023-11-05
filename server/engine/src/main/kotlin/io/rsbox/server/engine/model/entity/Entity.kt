@@ -18,7 +18,7 @@ abstract class Entity {
 
     private val coroutineScope = EngineCoroutineScope()
 
-    var activeCoroutine: EngineCoroutine? = null
+    var coroutine: EngineCoroutine? = null
         private set
 
     fun task(block: suspend (EngineCoroutine).() -> Unit): EngineCoroutine {
@@ -26,10 +26,10 @@ abstract class Entity {
     }
 
     fun strictTask(block: suspend EngineCoroutine.() -> Unit): EngineCoroutine {
-        activeCoroutine?.cancel()
+        coroutine?.cancel()
         val coroutine = coroutineScope.launch(block = block)
         if(coroutine.isSuspended()) {
-            activeCoroutine = coroutine
+            this.coroutine = coroutine
         }
         return coroutine
     }

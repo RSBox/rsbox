@@ -1,6 +1,6 @@
-package rsbox.content.command
+package rsbox.core.command
 
-import io.rsbox.server.engine.api.Npcs
+import io.rsbox.server.engine.api.npcs
 import io.rsbox.server.engine.model.Direction
 import io.rsbox.server.engine.model.Privilege
 import io.rsbox.server.engine.model.coord.Tile
@@ -8,7 +8,7 @@ import io.rsbox.server.engine.model.entity.Npc
 
 on_command("test") { player, args ->
     player.sendGameMessage("Spawning test NPC")
-    val npc = Npc(Npcs.man_3107, player.tile.translate(Direction.SOUTH))
+    val npc = Npc(npcs.man_3107, player.tile.translate(Direction.SOUTH))
     player.world.addNpc(npc)
     player.sendGameMessage("Successfully spawned npc")
     player.task {
