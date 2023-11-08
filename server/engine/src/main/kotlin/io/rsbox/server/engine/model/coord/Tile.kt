@@ -1,11 +1,13 @@
 package io.rsbox.server.engine.model.coord
 
 import io.rsbox.server.engine.model.Direction
+import kotlinx.serialization.Serializable
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.sqrt
 
 @JvmInline
+@Serializable
 value class Tile(val packed: Int) {
 
     constructor(x: Int, y: Int, level: Int = 0) : this(

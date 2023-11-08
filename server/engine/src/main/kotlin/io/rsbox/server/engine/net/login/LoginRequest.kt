@@ -6,7 +6,7 @@ import io.rsbox.server.engine.net.Session
 data class LoginRequest(
     val session: Session,
     val username: String,
-    val password: String?,
+    var password: String?,
     val authCode: Int?,
     val seed: Long,
     val xteas: IntArray,

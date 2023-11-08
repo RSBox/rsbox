@@ -4,6 +4,7 @@ import io.rsbox.server.cache.CacheModule
 import io.rsbox.server.cache.GameCache
 import io.rsbox.server.common.inject
 import io.rsbox.server.engine.EngineModule
+import io.rsbox.server.engine.model.coord.Tile
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -36,13 +37,15 @@ object NpcSpawnGenerator {
         npcSpawns.forEach { spawn ->
             val deltaX = spawn.maxX - spawn.minX
             val deltaY = spawn.maxY - spawn.maxY
-            val walkRadius = max(deltaX, deltaY)
-            val spawnX = spawn.minX + deltaX / 2
-            val spawnY = spawn.minY + deltaY / 2
+            val walkRadius = min(max(deltaX, deltaY), 5)
+            val centerX = spawn.minX + deltaX / 2
+            val centerY = spawn.minY + deltaY / 2
+            val centerTile = Tile(centerX, centerY, spawn.minPlane)
+            val spawnTile = spawn.points.map { Tile(it.x, it.y, it.plane) }.minBy { it.deltaTo(centerTile) }
             val name = cache.configArchive.npcs[spawn.npc]?.name ?: "null"
             val id = spawn.npc
             val direction = if(spawn.orientation == -1) 0 else spawn.orientation
-            outNpcSpawns.add(OutNpcSpawn(name, id, spawnX, spawnY, spawn.minPlane, walkRadius, direction))
+            outNpcSpawns.add(OutNpcSpawn(name, id, spawnTile.x, spawnTile.y, spawnTile.level, walkRadius, direction))
         }
 
         println("Exporting processed NPC spawns to file: 'npc_spawns.json.txt'.")

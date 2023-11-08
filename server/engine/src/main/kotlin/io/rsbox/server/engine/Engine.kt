@@ -9,6 +9,7 @@ import io.rsbox.server.engine.event.EventBus.publish
 import io.rsbox.server.engine.model.World
 import io.rsbox.server.engine.net.NetworkServer
 import io.rsbox.server.engine.net.http.HttpServer
+import io.rsbox.server.engine.service.ServiceManager
 import io.rsbox.server.engine.sync.SyncTaskList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
@@ -25,6 +26,7 @@ class Engine {
     private val httpServer: HttpServer by inject()
     private val world: World by inject()
     private val syncTasks: SyncTaskList by inject()
+    private val serviceManager: ServiceManager by inject()
     private val engineCoroutine: CoroutineScope by inject(named("engine"))
 
     var running = false
@@ -36,6 +38,7 @@ class Engine {
         running = true
 
         world.load()
+        serviceManager.startAll()
         engineCoroutine.start()
         httpServer.start()
         networkServer.start()
@@ -48,6 +51,7 @@ class Engine {
 
         running = false
 
+        serviceManager.stopAll()
         engineCoroutine.cancel()
         httpServer.stop()
         networkServer.stop()

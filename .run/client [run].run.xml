@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="client [run]" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="client [run]" type="GradleRunConfiguration" factoryName="Gradle" singleton="false">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$/client" />
@@ -18,7 +18,7 @@
     <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
     <DebugAllEnabled>false</DebugAllEnabled>
-    <RunAsTest>false</RunAsTest>
+    <ForceTestExec>false</ForceTestExec>
     <method v="2" />
   </configuration>
 </component>

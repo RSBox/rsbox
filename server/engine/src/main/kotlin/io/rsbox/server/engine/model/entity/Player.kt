@@ -20,10 +20,14 @@ import io.rsbox.server.engine.net.game.Packet
 import io.rsbox.server.engine.net.login.LoginRequest
 import io.rsbox.server.engine.net.packet.server.MessageGame
 import io.rsbox.server.engine.net.packet.server.RunClientScript
+import io.rsbox.server.engine.service.ServiceManager
+import io.rsbox.server.engine.service.serializer.JsonPlayerSerializer
 import org.rsmod.pathfinder.SmartPathFinder
 import org.tinylog.kotlin.Logger
 
 class Player internal constructor(val session: Session) : Entity() {
+
+    private val serviceManager: ServiceManager by inject()
 
     init {
         session.player = this
@@ -80,6 +84,7 @@ class Player internal constructor(val session: Session) : Entity() {
 
     fun logout() {
         Logger.info("[$username] has disconnected from the server.")
+        serviceManager[JsonPlayerSerializer::class].save(this)
         world.removePlayer(this)
         session.ctx.disconnect()
         publish(PlayerLogoutEvent(this))

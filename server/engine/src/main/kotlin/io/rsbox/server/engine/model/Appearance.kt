@@ -1,5 +1,8 @@
 package io.rsbox.server.engine.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Appearance(val looks: IntArray, val colors: IntArray, var animations: IntArray, val gender: Gender) {
 
     constructor(looks: IntArray, colors: IntArray, gender: Gender) : this(looks, colors, DEFAULT_ANIMATIONS, gender)
